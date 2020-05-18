@@ -1,6 +1,8 @@
 [tool.poetry]
 name = "vdm"
 version = "0.1.0"
+license = "MIT"
+readme = "README.md"
 description = ""
 authors = [
 			"majda_a  <majda_a@etna-alternance.net>",
