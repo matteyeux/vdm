@@ -13,6 +13,7 @@ authors = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
+flask = "^1.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
