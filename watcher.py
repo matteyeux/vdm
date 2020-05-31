@@ -3,11 +3,21 @@
 
 import os 
 import sys
+import requests
+import json
 from datetime import datetime
 
+URL = "http://127.0.0.1:5000/register"
 
-def send_json():
-    # send post request
+def send_json(json_file: str):
+    with open("jsons/"+json_file) as js:
+        json_data = json.load(js)
+
+    headers = {'Content-type': 'application/json'}
+    query_data = json.dumps(json_data)
+    query = requests.post(URL, data=query_data, headers=headers)
+    print(query.status_code)
+    print(query.text)
     # check error
     # move to other dir according to error
 
@@ -17,9 +27,11 @@ def main():
         json_date = json.split('_')[0]
         now = datetime.now()
         current_date = now.strftime("%Y%m%d%H%M%S")
-        
-        if int(current_date) - 100000000 > int(json_date):
-            print("post request")
+
+        #if int(current_date) - 100000000 > int(json_date):
+        #    print("post request")
+        send_json(json)
+
 
 if __name__ == '__main__':
     sys.exit(main())
