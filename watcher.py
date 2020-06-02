@@ -28,9 +28,9 @@ def main():
         now = datetime.now()
         current_date = now.strftime("%Y%m%d%H%M%S")
 
-        #if int(current_date) - 100000000 > int(json_date):
-        #    print("post request")
-        send_json(json)
+        if int(current_date) - 10 > int(json_date):
+            print("sending {}".format(json))
+            send_json(json)
 
 
 if __name__ == '__main__':
