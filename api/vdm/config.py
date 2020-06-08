@@ -3,7 +3,9 @@
 import pymongo
 
 
-def setup_mongo() -> pymongo.mongo_client.MongoClient:
+def setup_mongo() -> pymongo.collection.Collection:
     """Setup mongo client."""
     client = pymongo.MongoClient("mongodb://localhost:27017/")
-    return client
+    vdm_database = client["vdm"]
+    collection = vdm_database["booking"]
+    return collection
