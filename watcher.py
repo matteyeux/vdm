@@ -7,7 +7,7 @@ import requests
 import json
 from datetime import datetime
 
-URL = "http://127.0.0.1:5000/register"
+URL = "http://127.0.0.1:5000/reservation/"
 
 def send_json(json_file: str):
     with open("jsons/"+json_file) as js:

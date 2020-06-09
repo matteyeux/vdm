@@ -1,46 +1,53 @@
 from flask import Flask, jsonify, request
-import json
+from flask_restplus import Api, Resource
 import config
-
+import utilities
 
 app = Flask(__name__)
+api = Api(app=app, version='0.1.0', title='VDM Api',
+          description='Awesome API', validate=True)
 
 
-@app.route('/')
-def index():
-    """Index."""
-    return "Welcome to VDM escape game\n"
+ns_root = api.namespace('/', description="root")
+ns_reservation = api.namespace('reservation', description="reservation stuff")
+ns_reservations = api.namespace('reservations',
+                                description="reservations stuff")
 
 
-def handle_prices(data: dict) -> dict:
-    """Set price according to rate."""
-    for reservation in data['Reservation']:
-        if reservation['Tarif'] == "Plein tarif":
-            price = 9.40
-        elif reservation['Tarif'] == "Tarif reduit":
-            price = 7.40
-        elif reservation['Tarif'] == "Senior":
-            price = 6.80
-        elif reservation['Tarif'] == "Tarif étudiant":
-            price = 6.80
-        else:
-            price = None
-        reservation['prix'] = price
-    return data
+@ns_root.route('/')
+class default_root(Resource):
+    def get(self):
+        """Index."""
+        return "Welcome to VDM escape game\n"
 
 
-@app.route('/register', methods=["POST"])
-def register_data():
-    """Register booking data."""
-    mongodb_col = config.setup_mongo()
-    data = handle_prices(request.json)
-    print(json.dumps(data, indent=4))
+@ns_reservation.route("/")
+class Reservation(Resource):
+    """Reservation related operations."""
 
-    mongodb_col.insert_one(request.json)
-    return jsonify({"message": "created"}), 201
+    def post(self):
+        """reservation booking data."""
+        vdm_database = config.setup_mongo()
+        collection = vdm_database["booking"]
+
+        data = utilities.handle_prices(request.get_json())
+        collection.insert_one(data)
+
+        response = jsonify({'message': 'OK'})
+        response.status_code = 201
+        return response
 
 
-@app.route('/data', methods=["GET"])
-def get_booking_data():
-    """Return booking data."""
-    mongo_col = config.setup_mongo()
+@ns_reservations.route("/")
+class Reservations(Resource):
+    def get(self):
+        """Get reservation by ID."""
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.find({}, {"_id": 0})
+        data = []
+        for reservation in cursor:
+            data.append(reservation)
+
+        response = jsonify(data)
+        response.status_code = 200
+        return response
