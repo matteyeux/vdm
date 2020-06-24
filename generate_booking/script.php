@@ -2,7 +2,7 @@
 
 use EscapeGame\Database;
 
-// require_once 'lib/autoload.php';
+require_once 'lib/autoload.php';
 
 $faker = Faker\Factory::create();
 $escapegame = new Database();
