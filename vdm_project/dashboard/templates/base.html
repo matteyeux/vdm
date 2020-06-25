@@ -3,7 +3,8 @@
 
 <head>
     {% block title %}
-    <title>Reporting System</title>{% endblock %}
+        <title>Reporting System</title>
+    {% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -19,21 +20,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div id="topbar-menu" class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Listing des Réservations</a>
+                    <a class="nav-link" href="{% url 'list_booking' %}">Liste des Réservations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Statistiques</a>
+                    <a class="nav-link" href="#">Statistiques</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'order_report' %}">Report Builder VDM<span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'order_report' %}">Report Builder VDM</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search Report</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Chercher un rapport</button>
             </form>
         </div>
     </nav>
@@ -41,5 +42,22 @@
     {% block content %}{% endblock %}
 
 </body>
+
+    <script type="text/javascript">
+        
+        // === following js will activate the menu in left side bar based on url ====
+        $(document).ready(function() {
+            $("#topbar-menu a").each(function() {
+              var pageUrl = window.location.href.split(/[?#]/)[0];
+              if (this.href == pageUrl) { 
+                    $(this).addClass("active");
+                    $(this).parent().addClass("active"); // add active to li of the current link
+                    $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
+                    $(this).parent().parent().prev().click(); // click the item to make it drop
+                }
+            });
+        });
+
+    </script>
 
 </html>
