@@ -68,7 +68,7 @@ while (true) {
         }
     }
 	
-	$date = date("YdjHis");
+	$date = date("YmjHis");
     $json_file = $date . "_". $j . ".json";
 
 	$file = fopen("jsons/" . $json_file, 'w');
