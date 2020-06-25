@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+	<script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+	<div id="pivot"></div>
+	<div id="pivot_charts"></div>
+
+
+	<script>
+		var pivot = new Flexmonster({
+		    container: "#pivot",
+		    componentFolder: "https://cdn.flexmonster.com/",
+		    height: 600,
+		    toolbar: true,
+		    report: {}
+		});
+		var pivot_charts = new Flexmonster({
+		    container: "#pivot_charts",
+		    componentFolder: "https://cdn.flexmonster.com/",
+		    height: 600,
+		    toolbar: true,
+		    report: {}
+		});
+	</script>
+
+{% endblock %}
