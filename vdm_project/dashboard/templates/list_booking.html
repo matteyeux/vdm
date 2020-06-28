@@ -3,19 +3,46 @@
 
 {% block content %}
 
+{% load custom_filters %}
+
 	<div>
 		<h1>List Booking</h1>
 	</div>
 
-<!-- 	{% for booking in bookings %}
-		<p>{{ booking }}</p>
-	{% endfor %} -->
+	<table>
+		<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>nombre de participants</th>
+				<th>Thème Sélectionné</th>
+				<th>Date de la réservation</th>
+				<th>Montant total réservation</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for booking in bookings %}
+				<tr>
+					<td>{{ booking.Acheteur.Nom }}</td>
+					<td>{{ booking.Acheteur.Prenom }}</td>
+					<td>{{ booking.Reservation|length }}</td>
+					<td>{{ booking.Game.Nom }}</td>
+					<td>{{ booking.Game.Jour|string_to_date:'%Y-%m-%d' }} à {{ booking.Game.Horaire }}</td>
+					<td>{{ booking.Acheteur.Nom }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-	{{ bookings }}
 
-<!-- 	<script>
-		var booking = {{ bookings }};
-		console.log(booking);
-	</script> -->
+	{{ bookings.10.Reservation }}
+	{{ bookings.0.Reservation|length }}
+
+	{% with price=0 %}
+			{% for spectator in bookings.0.Reservation %}
+				{% setval price = spectator.Prix %}
+			{% endfor %}
+	{% endwith %}
+
 
 {% endblock %}
