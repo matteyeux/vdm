@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'dashboard',
 ]
 
@@ -51,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'vdm_project.urls'
+ASGI_APPLICATION = "vdm_project.routing.application"
 
 TEMPLATES = [
     {
@@ -68,7 +70,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'vdm_project.wsgi.application'
+# Work with ASGI (asinc server) 
+# WSGI_APPLICATION = 'vdm_project.wsgi.application'
 
 
 # Database

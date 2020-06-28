@@ -43,7 +43,7 @@ class Reservations(Resource):
     def get(self):
         """Get reservation by ID."""
         vdm_database = config.setup_mongo()
-        cursor = vdm_database.booking.find({}, {"_id": 0}).limit(1)
+        cursor = vdm_database.booking.find({}, {"_id": 0}).limit(20)
         data = []
         for reservation in cursor:
             data.append(reservation)

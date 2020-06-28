@@ -7,7 +7,7 @@ def handle_prices(data: dict) -> dict:
             price = 7.40
         elif reservation['Tarif'] == "Senior":
             price = 6.80
-        elif reservation['Tarif'] == "Tarif étudiant":
+        elif reservation['Tarif'] == "Tarif etudiant":
             price = 6.80
         else:
             price = None
