@@ -1,0 +1,28 @@
+{% load custom_filters %}
+
+<table>
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>nombre de participants</th>
+			<th>Thème Sélectionné</th>
+			<th>Date de la réservation</th>
+			<th>Montant total réservation</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for booking in bookings %}
+			<tr>
+				<td>{{ booking.Acheteur.Nom }}</td>
+				<td>{{ booking.Acheteur.Prenom }}</td>
+				<td>{{ booking.Reservation|length }}</td>
+				<td>{{ booking.Game.Nom }}</td>
+				<td>{{ booking.Game.Jour|string_to_date:'%Y-%m-%d' }} à {{ booking.Game.Horaire }}</td>
+				<td>
+					{{ booking.total_prix }}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
