@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{% load custom_filters %}
+
+
+
+	<div>
+		<h1>List Booking</h1>
+	</div>
+
+	<div id="wrapper">
+	    <div id="content"></div>
+	</div>
+
+
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+	function httpGet(URL) {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open("GET", URL, false);
+		xmlHttp.send(null);
+		return xmlHttp.responseText;
+	}
+
+	// (function($) {
+	//     $(document).ready(function() {
+	//         $.ajaxSetup( {
+	//             cache: true,
+	//             beforeSend: function() {
+	//                 $('#content').show();
+	//                 $('#loading').show();
+	//             },
+	//             complete: function() {
+	//                 $('#loading').hide();
+	//                 $('#content').show();
+	//             },
+	//             success: function() {
+	//                 $('#loading').hide();
+	//                 $('#content').show();
+	//             }
+	//         }).done(function());
+	//         // var $container = $('#content');
+	//         // // var new_content = httpGet("http://127.0.0.1:5000/reservations/");
+	//         // $container.load("http://127.0.0.1:5000/reservations/");
+	//         // var refreshId = setInterval(function()
+	//         // {
+	//         // 	// new_content = httpGet("http://127.0.0.1:5000/reservations/");
+	//         //     $container.load("http://127.0.0.1:5000/reservations/");
+	//         // }, 9000);
+	//     });
+	// })(jQuery);
+
+		// $.ajax({
+		// 	type: "GET",
+		// 	url: "http://127.0.0.1:5000/reservations/",
+		// }).done(function(data) {
+		// 	$('#content').append(JSON.stringify(data))
+		// });
+
+		$(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:5000/reservations/",
+                success: function(response) {
+
+                    // console.log(response);
+                    // console.log(response.sentence);
+                    // console.log(response.markov);
+                    //console.log of response works
+
+                    $('#content').html(JSON.stringify(response)).fadeIn();
+                    //$('.screen').html(response.sentence).fadeIn();
+
+                },
+                error: function(xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    console.log(err.Message);
+                }
+            });
+        });
+
+	</script>
+
+
+{% endblock %}

@@ -7,7 +7,10 @@ URL = 'http://127.0.0.1:5000/reservations/'
 def vdm_report_page(request):
     return render(request, 'order_report.html', {})
 
-def vdm_list_booking_page(request):
+def vdm_booking_list_page(request):
+    return render(request, 'booking_list.html', {})
+
+def get_booking_list(request):
     bookings_data = requests.get(URL).text
     bookings = json.loads(bookings_data)
     print(type(bookings))
@@ -21,6 +24,6 @@ def vdm_list_booking_page(request):
     	booking.update(total_price)	
     	print(booking)
     	price = 0.0
-    return render(request, 'list_booking.html', {
+    return render(request, 'get_booking_list.html', {
     	'bookings': bookings,
     	})
