@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_restplus import Api, Resource
+from flask_cors import CORS
 import config
 import utilities
 
@@ -7,6 +8,7 @@ app = Flask(__name__)
 api = Api(app=app, version='0.1.0', title='VDM Api',
           description='Awesome API', validate=True)
 
+CORS(app, resources={r"": {"origins": "*"}})
 
 ns_root = api.namespace('/', description="root")
 ns_reservation = api.namespace('reservation', description="reservation stuff")
@@ -43,11 +45,12 @@ class Reservations(Resource):
     def get(self):
         """Get reservation by ID."""
         vdm_database = config.setup_mongo()
-        cursor = vdm_database.booking.find({}, {"_id": 0}).limit(20)
+        cursor = vdm_database.booking.find({},{'_id':0}).sort("_id", -1).limit(20)
         data = []
         for reservation in cursor:
             data.append(reservation)
 
         response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
         response.status_code = 200
         return response
