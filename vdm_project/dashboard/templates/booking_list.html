@@ -1,5 +1,82 @@
 {% extends "base.html" %}
 
+{% block head_script %}
+	<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">    
+
+		// (function($)
+		// {
+		//     $(document).ready(function()
+		//     {
+		//         $.ajaxSetup(
+		//         {
+		//             cache: true,
+		//             beforeSend: function() {
+		//                 $('#content').show();
+		//                 // $('#loading').show();
+		//             },
+		//             complete: function() {
+		//                 $('#content').show();
+		//                 // $('#loading').hide();
+		//             },
+		//             success: function(data) {
+		//                 $('#content').show();
+		//                 // $('#loading').hide();
+		//                 data_json = JSON.parse(data)
+		//                 console.log(data_json); 
+		//             }
+		//         });
+		//         var $container = $("#content");
+		//         $container.load("http://127.0.0.1:5000/reservations/");
+		//         var refreshId = setInterval(function()
+		//         {
+		//             $container.load("http://127.0.0.1:5000/reservations/");
+		//         }, 15000);
+		//     });
+		// })(jQuery);
+
+	// function generateTableHead(table, data) {
+
+	// 	let thead = table.createTHead();
+	// 	let row = thead.insertRow();
+	// 	for (let key of data) {
+	//     	let th = document.createElement("th");
+	//     	let text = document.createTextNode(key);
+	//     	th.appendChild(text);
+	//     	row.appendChild(th);
+	// 	}
+	// }
+
+	function generateTable(table, data) {
+		console.log(data[0].Acheteur);
+		for (let element of data) {
+	    	let row = table.insertRow();
+	    	for (key in element) {
+	    		let cell = row.insertCell();
+	    		let text = document.createTextNode(element[key]);
+	    		cell.appendChild(text);
+	    	}
+		}
+	}
+
+	$.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:5000/reservations/",
+        dataType: "json",
+        success: function(data) {
+			let table = document.querySelector("table");
+			// generateTableHead(table, data);
+			generateTable(table, data);
+        },
+        error: function(xhr, textStatus) {
+            console.log("error..");
+        }
+    });
+
+	</script>
+
+{% endblock %}
 
 {% block content %}
 
@@ -11,78 +88,26 @@
 		<h1>List Booking</h1>
 	</div>
 
-	<div id="wrapper">
+<!-- 	<div id="wrapper">
 	    <div id="content"></div>
-	</div>
+	    <img src="loading.gif" id="loading" alt="loading" style="display:none;" />
+	</div> -->
 
+	<table class="table table-dark">
+		<thead>
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Prénom</th>
+				<th scope="col">nombre de participants</th>
+				<th scope="col">Thème Sélectionné</th>
+				<th scope="col">Date de la réservation</th>
+				<th scope="col">Montant total réservation</th>
+			</tr>
+		</thead>
+		<tbody>
 
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script>
-	function httpGet(URL) {
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open("GET", URL, false);
-		xmlHttp.send(null);
-		return xmlHttp.responseText;
-	}
-
-	// (function($) {
-	//     $(document).ready(function() {
-	//         $.ajaxSetup( {
-	//             cache: true,
-	//             beforeSend: function() {
-	//                 $('#content').show();
-	//                 $('#loading').show();
-	//             },
-	//             complete: function() {
-	//                 $('#loading').hide();
-	//                 $('#content').show();
-	//             },
-	//             success: function() {
-	//                 $('#loading').hide();
-	//                 $('#content').show();
-	//             }
-	//         }).done(function());
-	//         // var $container = $('#content');
-	//         // // var new_content = httpGet("http://127.0.0.1:5000/reservations/");
-	//         // $container.load("http://127.0.0.1:5000/reservations/");
-	//         // var refreshId = setInterval(function()
-	//         // {
-	//         // 	// new_content = httpGet("http://127.0.0.1:5000/reservations/");
-	//         //     $container.load("http://127.0.0.1:5000/reservations/");
-	//         // }, 9000);
-	//     });
-	// })(jQuery);
-
-		// $.ajax({
-		// 	type: "GET",
-		// 	url: "http://127.0.0.1:5000/reservations/",
-		// }).done(function(data) {
-		// 	$('#content').append(JSON.stringify(data))
-		// });
-
-		$(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                url: "http://127.0.0.1:5000/reservations/",
-                success: function(response) {
-
-                    // console.log(response);
-                    // console.log(response.sentence);
-                    // console.log(response.markov);
-                    //console.log of response works
-
-                    $('#content').html(JSON.stringify(response)).fadeIn();
-                    //$('.screen').html(response.sentence).fadeIn();
-
-                },
-                error: function(xhr, status, error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    console.log(err.Message);
-                }
-            });
-        });
-
-	</script>
+		</tbody>
+	</table>
 
 
 {% endblock %}

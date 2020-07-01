@@ -15,7 +15,7 @@ def handle_prices(data: dict) -> dict:
 	return data
 
 
-def handle_prices(data: dict) -> dict:
+def handle_themes(data: dict) -> dict:
 	"""Set themes according to game."""
 	for theme in data['Game']:
 		if theme['Nom'] == "Impot sur le revenu":
