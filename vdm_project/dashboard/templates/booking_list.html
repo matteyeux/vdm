@@ -49,30 +49,30 @@
 	// }
 
 	function generateTable(table, data) {
+		console.log(data)
 		console.log(data[0].Acheteur);
 		for (let element of data) {
-	    	let row = table.insertRow();
-	    	for (key in element) {
-	    		let cell = row.insertCell();
-	    		let text = document.createTextNode(element[key]);
-	    		cell.appendChild(text);
-	    	}
+			let row = table.insertRow();
+			for (key in element) {
+				let cell = row.insertCell();
+				let text = document.createTextNode(element[key]);
+				cell.appendChild(text);
+			}
 		}
 	}
 
 	$.ajax({
-        type: "GET",
-        url: "http://127.0.0.1:5000/reservations/",
-        dataType: "json",
-        success: function(data) {
+		type: "GET",
+		url: "http://127.0.0.1:5000/reservations/",
+		dataType: "json",
+		success: function(data) {
 			let table = document.querySelector("table");
-			// generateTableHead(table, data);
 			generateTable(table, data);
-        },
-        error: function(xhr, textStatus) {
-            console.log("error..");
-        }
-    });
+		},
+		error: function(xhr, textStatus) {
+			console.log("error..");
+		}
+	});
 
 	</script>
 
@@ -89,8 +89,8 @@
 	</div>
 
 <!-- 	<div id="wrapper">
-	    <div id="content"></div>
-	    <img src="loading.gif" id="loading" alt="loading" style="display:none;" />
+		<div id="content"></div>
+		<img src="loading.gif" id="loading" alt="loading" style="display:none;" />
 	</div> -->
 
 	<table class="table table-dark">
