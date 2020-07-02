@@ -15,7 +15,7 @@ if (empty($argv[1]) == true) {
 
 $j = 0;
 
-# create dir if it does not exist 
+# create dir if it does not exist
 if (!is_dir("jsons")) {
 	mkdir("jsons");
 }
@@ -67,7 +67,7 @@ while (true) {
             $result['Reservation'][$i]['Tarif'] = $otherPersonType;
         }
     }
-	
+
 	$date = date("YdjHis");
     $json_file = $date . "_". $j . ".json";
 
