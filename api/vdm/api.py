@@ -23,7 +23,7 @@ class default_root(Resource):
         return "Welcome to VDM escape game\n"
 
 
-@ns_reservation.route("/")
+@ns_reservation.route("")
 class Reservation(Resource):
     """Reservation related operations."""
 
@@ -40,7 +40,7 @@ class Reservation(Resource):
         return response
 
 
-@ns_reservations.route("/")
+@ns_reservations.route("")
 class Reservations(Resource):
     def get(self):
         """Get reservation by ID."""
