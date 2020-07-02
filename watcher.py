@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Watcher tool used to upload to our API."""
 
-import os 
+import os
 import sys
 import requests
 import json
 from datetime import datetime
 
-URL = "http://127.0.0.1:5000/reservation/"
+URL = "http://127.0.0.1:5000/reservation"
+
 
 def send_json(json_file: str):
     with open("generate_booking/jsons/"+json_file) as js:
@@ -23,14 +24,15 @@ def send_json(json_file: str):
 
 
 def main():
-    for json in os.listdir("generate_booking/jsons"):
-        json_date = json.split('_')[0]
+
+    for json_file in os.listdir("jsons"):
+        json_date = json_file.split('_')[0]
         now = datetime.now()
         current_date = now.strftime("%Y%m%d%H%M%S")
 
         if int(current_date) - 10 > int(json_date):
-            print("sending {}".format(json))
-            send_json(json)
+            print("sending {}".format(json_file))
+            send_json(json_file)
 
 
 if __name__ == '__main__':
