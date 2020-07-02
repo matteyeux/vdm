@@ -36,43 +36,67 @@
 		//     });
 		// })(jQuery);
 
-	// function generateTableHead(table, data) {
-
-	// 	let thead = table.createTHead();
-	// 	let row = thead.insertRow();
-	// 	for (let key of data) {
-	//     	let th = document.createElement("th");
-	//     	let text = document.createTextNode(key);
-	//     	th.appendChild(text);
-	//     	row.appendChild(th);
-	// 	}
-	// }
+	function numberFormatMoney(float) {
+		let number = Number.parseFloat(float).toFixed(2);
+		let money = number.replace('.', ',');
+		return money + " €"; 
+	}
 
 	function generateTable(table, data) {
-		console.log(data)
-		console.log(data[0].Acheteur);
+		// console.log(data)
+		console.log(data[0]);
 		for (let element of data) {
 			let row = table.insertRow();
-			for (key in element) {
-				let cell = row.insertCell();
-				let text = document.createTextNode(element[key]);
-				cell.appendChild(text);
+			for (key in element.Acheteur) {
+				if (key == "Nom" || key == "Prenom") {
+					let cell = row.insertCell();
+					let text = document.createTextNode(element.Acheteur[key]);
+					cell.appendChild(text);
+				}
 			}
+			let cell = row.insertCell();
+			let text = document.createTextNode((element.Reservation).length);
+			cell.appendChild(text);
+
+			cell = row.insertCell();
+			text = document.createTextNode(element.Game["Nom"]);
+			cell.appendChild(text);
+
+			cell = row.insertCell();
+			let arrayDate = (element.Game["Jour"]).split('-');
+			let date = (arrayDate[2] + "/" + arrayDate[1] + "/" + arrayDate[0]);
+			text = document.createTextNode(date);
+			cell.appendChild(text);
+
+			let price = 0;
+			for (key in element.Reservation) {
+				price += element.Reservation[key].prix;
+			}
+			cell = row.insertCell();
+			text = document.createTextNode(numberFormatMoney(price));
+			cell.appendChild(text);
 		}
 	}
 
-	$.ajax({
-		type: "GET",
-		url: "http://127.0.0.1:5000/reservations/",
-		dataType: "json",
-		success: function(data) {
-			let table = document.querySelector("table");
-			generateTable(table, data);
-		},
-		error: function(xhr, textStatus) {
-			console.log("error..");
-		}
-	});
+	setInterval(function getData() {
+		$.ajax({
+			type: "GET",
+			url: "http://127.0.0.1:5000/reservations/",
+			dataType: "json",
+			cache: true,
+			success: function(data) {
+				let tbody = document.querySelector("tbody");
+
+				while (tbody.firstChild) {
+					tbody.removeChild(tbody.firstChild);
+				}
+				generateTable(tbody, data);
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	}, 1000);
 
 	</script>
 
@@ -105,7 +129,18 @@
 			</tr>
 		</thead>
 		<tbody>
-
+			{% for booking in bookings %}
+				<tr>
+					<td>{{ booking.Acheteur.Nom }}</td>
+					<td>{{ booking.Acheteur.Prenom }}</td>
+					<td>{{ booking.Reservation|length }}</td>
+					<td>{{ booking.Game.Nom }}</td>
+					<td>{{ booking.Game.Jour|string_to_date:'%Y-%m-%d' }}</td>
+					<td>
+						{{ booking.total_prix }}
+					</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 
