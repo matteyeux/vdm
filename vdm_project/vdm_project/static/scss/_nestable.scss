@@ -1,0 +1,100 @@
+
+
+
+/* =============
+   Nestable
+============= */
+
+
+.custom-dd {
+  .dd-list {
+    .dd-item {
+      .dd-handle {
+        background: $gray-200;
+        border: none;
+        padding: 8px 16px;
+        height: auto;
+        font-weight: 600;
+        font-family: $font-secondary;
+        border-radius: 3px;
+
+        &:hover {
+          color: $custom;
+        }
+      }
+
+      button {
+        height: auto;
+        font-size: 17px;
+        margin: 8px auto;
+        color: $gray-500;
+        width: 30px;
+      }
+    }
+  }
+}
+
+.custom-dd-empty {
+  .dd-list {
+    .dd3-handle {
+      border: none;
+      background: $gray-200;
+      height: 36px !important;
+      width: 36px !important;
+
+      &:before {
+        color: inherit;
+        top: 7px;
+      }
+
+      &:hover {
+        color: $custom;
+      }
+    }
+    .dd3-content {
+      height: auto;
+      border: none;
+      padding: 8px 16px 8px 46px;
+      background: $gray-200;
+      font-weight: 600;
+      font-family: $font-secondary;
+
+      &:hover {
+        color: $custom;
+      }
+    }
+    button {
+      width: 26px;
+      height: 26px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+.dd-dragel > .dd-item .dd-handle {
+  padding: 8px 16px !important;
+  background: $gray-200;
+  height: auto;
+}
+
+.dd-placeholder, .dd-empty {
+  background: $gray-200;
+  border: 1px dashed $muted;
+}
+.dd-dragel > .dd3-item > .dd3-handle {
+  border: none;
+  background: $gray-200;
+  height: 36px !important;
+  width: 36px !important;
+
+  &:before {
+    color: inherit;
+    top: 7px;
+  }
+}
+.dd-dragel > .dd3-item > .dd3-content {
+  padding: 8px 16px 8px 46px;
+  background: $gray-200;
+  height: auto;
+}

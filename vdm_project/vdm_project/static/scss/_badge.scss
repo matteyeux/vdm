@@ -1,0 +1,73 @@
+
+
+/* Badge */
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: .2em .6em;
+  font-family: $font-secondary;
+  color: $white;
+}
+
+.badge-xs {
+  font-size: 9px;
+}
+
+.badge-xs, .badge-sm {
+  -webkit-transform: translate(0, -2px);
+  -ms-transform: translate(0, -2px);
+  -o-transform: translate(0, -2px);
+  transform: translate(0, -2px);
+}
+
+.badge-white {
+  color: $dark !important;
+}
+
+.badge-custom {
+  background-color: $custom;
+}
+
+.badge-primary {
+  background-color: $primary;
+}
+
+.badge-success {
+  background-color: $success;
+}
+
+.badge-info {
+  background-color: $info;
+}
+
+.badge-warning {
+  background-color: $warning;
+}
+
+.badge-danger {
+  background-color: $danger;
+}
+
+.badge-purple {
+  background-color: $purple;
+}
+
+.badge-pink {
+  background-color: $pink;
+}
+
+.badge-orange {
+  background-color: $orange;
+}
+
+.badge-brown {
+  background-color: $brown;
+}
+
+.badge-teal {
+  background-color: $teal;
+}
+
+.badge-inverse {
+  background-color: $inverse;
+}

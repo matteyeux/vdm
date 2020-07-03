@@ -1,0 +1,95 @@
+
+
+/* =================
+   Popover / Tooltips
+==================== */
+
+/* Popover */
+.popover {
+  font-family: inherit;
+  border: none;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  background-clip: padding-box;
+  box-shadow: 0 0 28px rgba(0, 0, 0, 0.15);
+
+  .popover-title {
+    background-color: transparent;
+    color: $custom;
+    padding: 12px 15px;
+    font-size: 15px;
+    border-bottom: 1px solid $light;
+  }
+
+  .popover-content {
+    padding: 10px 14px;
+  }
+  .popover-header{
+    margin-top: 0px;
+  }
+}
+
+/* Tooltips */
+.tooltip {
+  font-family: $font-secondary;
+
+  .tooltip-inner {
+    padding: 4px 10px;
+    border-radius: 2px;
+    background-color: $dark;
+  }
+  &.left {
+    .tooltip-arrow {
+      border-left-color: $dark;
+    }
+  }
+  &.top {
+    .tooltip-arrow {
+      border-top-color: $dark;
+    }
+  }
+  &.bottom {
+    .tooltip-arrow {
+      border-bottom-color: $dark;
+    }
+  }
+  &.right {
+    .tooltip-arrow {
+      border-right-color: $dark;
+    }
+  }
+}
+
+
+
+/* Tooltpster */
+.tooltipster-sidetip {
+  .tooltipster-box {
+    background-color: $custom;
+    border: 2px solid $custom;
+  }
+  &.tooltipster-top{
+    .tooltipster-arrow-border, .tooltipster-arrow-background{
+      border-top-color: $custom;
+    }
+  }
+
+  &.tooltipster-bottom{
+    .tooltipster-arrow-border, .tooltipster-arrow-background{
+      border-bottom-color: $custom;
+    }
+  }
+
+  &.tooltipster-left{
+    .tooltipster-arrow-border, .tooltipster-arrow-background{
+      border-left-color: $custom;
+    }
+  }
+
+  &.tooltipster-right{
+    .tooltipster-arrow-border, .tooltipster-arrow-background{
+      border-right-color: $custom;
+    }
+  }
+}

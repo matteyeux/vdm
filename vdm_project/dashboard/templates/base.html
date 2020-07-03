@@ -1,62 +1,84 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
-<head>
-    {% block title %}
-        <title>Reporting System</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>
+            {% block title %}VDM Escape Game{% endblock %}
+        </title>
+
+        {% block stylesheets %}
+
+            <!-- Table Responsive css -->
+            <link rel="stylesheet" type="text/css" href="{% static 'plugins/responsive-table/css/rwd-table.min.css' %}" media="screen">
+
+            <!-- App css -->
+            <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+            <!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" /> -->
+            <link rel="stylesheet" type="text/css" href="{% static 'css/icons.css' %}" />
+            <!-- <link rel="stylesheet" type="text/css" href="/css/icons.css" /> -->
+            <link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}" />
+            <!-- <link rel="stylesheet" type="text/css" href="/css/style.css" /> -->
+            <link rel="stylesheet" type="text/css" href="{% static 'plugins/switchery/switchery.min.css' %}" />
+            <!-- <link rel="stylesheet" href="/plugins/switchery/switchery.min.css"> -->
+
+            <!-- App js -->
+            <script src="{% static 'js/modernizr.min.js' %}"></script>
+            <!-- <script src="/js/modernizr.min.js"></script> -->
+
+            <!-- App Data Table css/js/jquery -->
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"> 
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+            <script src='https://code.jquery.com/jquery-3.1.0.js'></script>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+
+        {% block connectLink_body %}
+        {% endblock %}
+
     {% endblock %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    {% block head_script %} {% endblock %}
-</head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Reporting System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    {% block javascripts %}
 
-        <div id="topbar-menu" class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'booking_list' %}">Liste des Réservations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Statistiques</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'order_report' %}">Report Builder VDM</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" disabled>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Chercher un rapport</button>
-            </form>
-        </div>
-    </nav>
+        <script>
+            var resizefunc = [];
+        </script>
 
-    {% block content %}{% endblock %}
+        <!-- jQuery  -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <!-- <script src="/js/jquery.min.js"></script> -->
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <!-- <script src="/js/bootstrap.bundle.min.js"></script> -->
+        <script src="{% static 'js/detect.js' %}"></script>
+        <!-- <script src="/js/detect.js"></script> -->
+        <script src="{% static 'js/fastclick.js' %}"></script>
+        <!-- <script src="/js/fastclick.js"></script> -->
+        <script src="{% static 'js/jquery.blockUI.js' %}"></script>
+        <!-- <script src="/js/jquery.blockUI.js"></script> -->
+        <script src="{% static 'js/waves.js' %}"></script>
+        <!-- <script src="/js/waves.js"></script> -->
+        <script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+        <!-- <script src="/js/jquery.slimscroll.js"></script> -->
+        <script src="{% static 'js/jquery.scrollTo.min.js' %}"></script>
+        <!-- <script src="/js/jquery.scrollTo.min.js"></script> -->
+        <script src="{% static 'plugins/switchery/switchery.min.js' %}"></script>
+        <!-- <script src="/plugins/switchery/switchery.min.js"></script> -->
 
-</body>
-
-    <script type="text/javascript">
+        <!-- responsive-table-->
+        <script src="{% static 'plugins/responsive-table/js/rwd-table.min.js' %}"></script>
+        <!-- <script src="/plugins/responsive-table/js/rwd-table.min.js"></script> -->
         
-        // === following js will activate the menu in left side bar based on url ====
-        $(document).ready(function() {
-            $("#topbar-menu a").each(function() {
-              var pageUrl = window.location.href.split(/[?#]/)[0];
-              if (this.href == pageUrl) { 
-                    $(this).addClass("active");
-                    $(this).parent().addClass("active"); // add active to li of the current link
-                    $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
-                    $(this).parent().parent().prev().click(); // click the item to make it drop
-                }
-            });
-        });
+        <!-- App js -->
+        <script src="{% static 'js/jquery.core.js' %}"></script>
+        <!-- <script src="/js/jquery.core.js"></script> -->
+        <script src="{% static 'js/jquery.app.js' %}"></script>
+        <!-- <script src="/js/jquery.app.js"></script> -->
 
-    </script>
+    {% endblock %}
 
 </html>

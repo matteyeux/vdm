@@ -1,0 +1,98 @@
+/* =============
+   general
+============= */
+
+body {
+  font-family: $font-primary;
+  margin: 0;
+  font-size: $base-font;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  color: $gray-500;
+  background-color: #f8f8f8;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+  color: #505458;
+  font-family: $font-secondary;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.h2, h2 {
+  font-size: 30px;
+}
+
+.h3, h3 {
+  font-size: 24px;
+}
+
+.h4, h4 {
+  font-size: 18px;
+}
+
+.h5, h5 {
+  font-size: 15px;
+}
+
+.h6, h6 {
+  font-size: 12px;
+}
+
+p {
+  line-height: 1.6;
+}
+
+* {
+  outline: none !important;
+}
+
+b, strong {
+  font-weight: 600;
+  font-family: $font-secondary;
+}
+
+a {
+  &:hover {
+    outline: 0;
+    text-decoration: none;
+  }
+  &:active {
+    outline: 0;
+    text-decoration: none;
+  }
+  &:focus {
+    outline: 0;
+    text-decoration: none;
+  }
+}
+
+.container {
+  width: auto;
+}
+
+.container-alt {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid rgba($muted, 0.2);
+  bottom: 0;
+  padding: 19px 30px 20px;
+  position: absolute;
+  right: 0;
+  left: 225px;
+}
+
+#wrapper {
+  height: $height;
+  overflow: hidden;
+  width: $width;
+}

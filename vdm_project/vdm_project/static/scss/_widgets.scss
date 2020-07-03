@@ -1,0 +1,417 @@
+
+
+/* =============
+   Widgets
+============= */
+.widget-box-one {
+  .widget-one-icon {
+    position: absolute;
+    right: 30px;
+    font-size: 72px !important;
+    top: 0;
+    color: $gray-200;
+    overflow: hidden;
+    vertical-align: middle;
+    line-height: 2 !important;
+  }
+
+  .wigdet-one-content {
+    position: relative;
+  }
+}
+
+.widget-box-two {
+  .widget-two-icon {
+    position: absolute;
+    right: 30px;
+    font-size: 42px !important;
+    top: 30px;
+    overflow: hidden;
+    vertical-align: middle;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 50%;
+  }
+  .wigdet-two-content {
+    position: relative;
+  }
+}
+
+
+.widget-two-primary {
+  background-color: rgba($primary, 0.2);
+  border-color: rgba($primary, 0.5);
+
+  .widget-two-icon {
+    color: rgba($primary,0.5);
+    border: 2px solid rgba($primary, 0.5);
+  }
+}
+
+.widget-two-success {
+  background-color: rgba($success, 0.2);
+  border-color: rgba($success, 0.5);
+
+  .widget-two-icon {
+    color: rgba($success, 0.5);
+    border: 2px solid rgba($success, 0.5);
+  }
+}
+
+.widget-two-warning {
+  background-color: rgba($warning, 0.2);
+  border-color: rgba($warning, 0.5);
+
+  .widget-two-icon {
+    color: rgba($warning, 0.5);
+    border: 2px solid rgba($warning, 0.5);
+  }
+}
+
+.widget-two-info {
+  background-color: rgba($info, 0.2);
+  border-color: rgba($info, 0.5);
+
+  .widget-two-icon {
+    color: rgba($info, 0.5);
+    border: 2px solid rgba($info, 0.5);
+  }
+}
+
+.widget-two-danger {
+  background-color: rgba($danger, 0.2);
+  border-color: rgba($danger, 0.5);
+
+  .widget-two-icon {
+    color: rgba($danger, 0.5);
+    border: 2px solid rgba($danger, 0.5);
+  }
+}
+
+.widget-two-inverse {
+  background-color: rgba($inverse, 0.2);
+  border-color: rgba($inverse, 0.5);
+
+  .widget-two-icon {
+    color: rgba($inverse, 0.5);
+    border: 2px solid rgba($inverse, 0.5);
+  }
+}
+
+.widget-two-purple {
+  background-color: rgba($purple, 0.2);
+  border-color: rgba($purple, 0.5);
+
+  .widget-two-icon {
+    color: rgba($purple, 0.5);
+    border: 2px solid rgba($purple, 0.5);
+  }
+}
+
+.widget-two-pink {
+  background-color: rgba($pink, 0.2);
+  border-color: rgba($pink, 0.5);
+
+  .widget-two-icon {
+    color: rgba($pink, 0.5);
+    border: 2px solid rgba($pink, 0.5);
+  }
+}
+
+.widget-two-orange {
+  background-color: rgba($orange, 0.2);
+  border-color: rgba($orange, 0.5);
+
+  .widget-two-icon {
+    color: rgba($orange, 0.5);
+    border: 2px solid rgba($orange, 0.5);
+  }
+}
+
+.widget-two-brown {
+  background-color: rgba($brown, 0.2);
+  border-color: rgba($brown, 0.5);
+
+  .widget-two-icon {
+    color: rgba($brown, 0.5);
+    border: 2px solid rgba($brown, 0.5);
+  }
+}
+
+.widget-two-teal {
+  background-color: rgba($teal, 0.2);
+  border-color: rgba($teal, 0.5);
+
+  .widget-two-icon {
+    color: rgba($teal, 0.5);
+    border: 2px solid rgba($teal, 0.5);
+  }
+}
+
+.widget-two-default {
+  background-color: rgba($gray-300, 0.5);
+  border-color: darken($gray-300,5%);
+
+  .widget-two-icon {
+    color: darken($gray-300,20%);
+    border: 2px solid darken($gray-300,20%);
+  }
+}
+
+.widget-box-three .bg-icon {
+  height: 80px;
+  width: 80px;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  background-clip: padding-box;
+  border: 1px dashed $muted;
+  background-color: $gray-200;
+  margin-right: 20px;
+
+  i {
+    line-height: 80px;
+    font-size: 36px;
+    color: $muted;
+  }
+}
+
+.tilebox-two {
+  border-left: 4px solid $gray-200;
+  background-color: $white;
+  i {
+    font-size: 54px;
+    opacity: 0.3;
+  }
+}
+
+.tilebox-custom {
+  border-left-color: $custom;
+}
+.tilebox-primary {
+  border-left-color: $primary;
+}
+.tilebox-success {
+  border-left-color: $success;
+}
+.tilebox-info {
+  border-left-color: $info;
+}
+.tilebox-warning {
+  border-left-color: $warning;
+}
+.tilebox-danger {
+  border-left-color: $danger;
+}
+.tilebox-inverse {
+  border-left-color: $inverse;
+}
+.tilebox-pink {
+  border-left-color: $pink;
+}
+.tilebox-purple {
+  border-left-color: $purple;
+}
+.tilebox-dark {
+  border-left-color: $dark;
+}
+.tilebox-brown {
+  border-left-color: $brown;
+}
+.tilebox-orange {
+  border-left-color: $orange;
+}
+.tilebox-teal {
+  border-left-color: $teal;
+}
+
+
+/* Inbox-widget */
+
+.inbox-widget {
+  .inbox-item {
+    border-bottom: 1px solid rgba($gray-200, 0.9);
+    overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+    .inbox-item-img {
+      display: block;
+      float: left;
+      margin-right: 15px;
+      width: 40px;
+    }
+    img {
+      width: 40px;
+    }
+    .inbox-item-author {
+      color: $dark;
+      display: block;
+      margin: 0;
+    }
+    .inbox-item-text {
+      color: #a0a0a0;
+      display: block;
+      font-size: 12px;
+      margin: 0;
+    }
+    .inbox-item-date {
+      color: #a9a9a9;
+      font-size: 11px;
+      position: absolute;
+      right: 7px;
+      top: 10px;
+    }
+  }
+}
+
+/* Chat widget */
+.conversation-list {
+  list-style: none;
+  padding: 0 10px;
+  li {
+    margin-bottom: 24px;
+  }
+  .chat-avatar {
+    float: left;
+    text-align: center;
+    width: 42px;
+    img {
+      border-radius: 100%;
+      width: $width;
+    }
+    i {
+      font-size: 12px;
+      font-style: normal;
+    }
+  }
+  .ctext-wrap {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background: rgba($gray-200, 0.6);
+    border-radius: 3px;
+    display: inline-block;
+    padding: 12px;
+    position: relative;
+
+    i {
+      color: $dark;
+      display: block;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: bold;
+      font-family: $font-secondary;
+      position: relative;
+    }
+    p {
+      margin: 0;
+      padding-top: 3px;
+    }
+    &:after {
+      right: 100%;
+      top: 0;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-top-color: rgba($gray-200, 0.6);
+      border-width: 8px;
+      margin-left: -1px;
+      border-right-color: rgba($gray-200, 0.6);
+    }
+  }
+  .conversation-text {
+    float: left;
+    font-size: 12px;
+    margin-left: 12px;
+    width: 70%;
+  }
+  .odd {
+    .chat-avatar {
+      float: right !important;
+    }
+    .conversation-text {
+      float: right !important;
+      margin-right: 12px;
+      text-align: right;
+      width: 70% !important;
+    }
+    .ctext-wrap {
+      background-color: $danger;
+      color: $white;
+
+      i {
+        color: $white;
+      }
+      &:after {
+        border-color: rgba(238, 238, 242, 0) !important;
+        border-left-color: $danger !important;
+        border-top-color: $danger !important;
+        left: 100% !important;
+        margin-right: -1px;
+      }
+    }
+  }
+}
+
+.chat-send {
+  padding-left: 0;
+  padding-right: 30px;
+
+  button {
+    width: $width;
+  }
+}
+
+.chat-inputbar {
+  padding-left: 30px;
+}
+
+/* Todos widget */
+
+#todo-message {
+  font-size: 16px;
+}
+
+.todo-list {
+  li {
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    padding: 1px;
+    color: $muted;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .checkbox {
+      padding-left: 10px;
+      margin-top: 10px;
+    }
+  }
+  label {
+    font-family: $font-primary;
+  }
+}
+
+.todo-send {
+  padding-left: 0;
+}
+
+
+/* Avatar box */
+.avatar-sm-box {
+  height: 32px;
+  width: 32px;
+  color: $white;
+  display: block;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 50%;
+  font-family: $font-secondary;
+  font-size: 16px;
+}

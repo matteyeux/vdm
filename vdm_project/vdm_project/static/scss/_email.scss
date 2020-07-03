@@ -1,0 +1,92 @@
+
+/* =============
+   Email
+============= */
+.mails {
+  a {
+    color: #797979;
+  }
+   td {
+     vertical-align: middle !important;
+     position: relative;
+     border: 0 !important;
+  }
+  td:last-of-type {
+    width: 100px;
+    padding-right: 20px;
+  }
+  tr:hover .text-white {
+    display: none;
+  }
+  .mail-select {
+    padding: 15px 20px;
+    min-width: 134px;
+  }
+  .checkbox {
+    margin-bottom: 0;
+    margin-top: -4px;
+    vertical-align: middle;
+    display: inline-block;
+    height: 17px;
+  }
+  .checkbox label {
+    min-height: 16px;
+  }
+  .mail-list .list-group-item {
+    background-color: transparent !important;
+  }
+  .mail-list .list-group-item.active {
+    background-color: $primary;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    background-clip: padding-box;
+  }
+  .unread a {
+    font-family: $font-secondary;
+    color: $dark;
+  }
+
+  .table-detail {
+    vertical-align: top;
+  }
+
+
+  /* chat-widget */
+  .chat-right-text {
+    overflow: hidden;
+  }
+  .chat-widget .chat-item {
+    overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+  }
+  .chat-widget .chat-item .chat-item-img {
+    display: block;
+    float: left;
+    margin-right: 15px;
+    width: 40px;
+  }
+  .chat-widget .chat-item img {
+    width: 40px;
+  }
+  .chat-widget .chat-item .chat-item-author {
+    color: $dark;
+    display: block;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+  }
+  .chat-widget .chat-item .chat-item-text {
+    color: #a0a0a0;
+    display: block;
+    font-size: 12px;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+  }
+}

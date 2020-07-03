@@ -1,0 +1,131 @@
+
+
+/* ===========
+   Cards
+ =============*/
+
+.card {
+  border: 2px solid $gray-200;
+  box-shadow: none;
+  margin-bottom: 20px;
+  .card-body {
+    padding: 20px;
+
+    p{
+      margin-bottom: 0;
+      line-height: 24px;
+    }
+
+    p + p {
+      padding-top: 10px;
+    }
+  }
+}
+
+.card-heading {
+  border: none !important;
+  padding: 15px 20px;
+  margin: -1px;
+  border-radius: 4px 4px 0 0;
+}
+
+.card-default > .card-heading {
+  background-color: $gray-200;
+  border-bottom: none;
+  color: $gray-500;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-top: 0;
+  letter-spacing: 0.03em;
+  font-family: $font-secondary;
+}
+
+.card-sub-title {
+  margin-bottom: 0px;
+  color: rgba($white, 0.7);
+  margin-top: 3px;
+}
+
+.card-footer {
+  background: $gray-200;
+  border-top: 0;
+}
+
+.card-color {
+  .card-title {
+    color: $white;
+  }
+}
+
+.card-border {
+  border-radius: 3px;
+  .card-heading {
+    background-color: $white;
+    border-top: 3px solid $gray-400 !important;
+    border-radius: 3px;
+    padding: 15px 20px 0;
+    margin: -2px 0 0 0 !important;
+    .card-body {
+      padding: 15px 20px 20px 20px;
+    }
+  }
+  &.card-primary {
+    .card-heading {
+      border-color: $primary !important;
+    }
+  }
+  &.card-success {
+    .card-heading {
+      border-color: $success !important;
+    }
+  }
+  &.card-info {
+    .card-heading {
+      border-color: $info !important;
+    }
+  }
+  &.card-warning {
+    .card-heading {
+      border-color: $warning !important;
+    }
+  }
+  &.card-danger {
+    .card-heading {
+      border-color: $danger !important;
+    }
+  }
+  &.card-purple {
+    .card-heading {
+      border-color: $purple !important;
+    }
+  }
+  &.card-pink {
+    .card-heading {
+      border-color: $pink !important;
+    }
+  }
+  &.card-orange {
+    .card-heading {
+      border-color: $orange !important;
+    }
+  }
+  &.card-brown {
+    .card-heading {
+      border-color: $brown !important;
+    }
+  }
+  &.card-teal {
+    .card-heading {
+      border-color: $teal !important;
+    }
+  }
+  &.card-inverse {
+    .card-heading {
+      border-color: $inverse !important;
+    }
+  }
+}

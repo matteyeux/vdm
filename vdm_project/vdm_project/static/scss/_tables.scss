@@ -1,0 +1,374 @@
+
+/* =============
+   Tables
+============= */
+
+th {
+  font-family: $font-secondary;
+  font-weight: 600;
+}
+.table-centered {
+  th,td {
+    vertical-align: middle !important;
+  }
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+
+/* Table colored-bordered */
+
+.table-colored-bordered {
+  thead {
+    th {
+      border-bottom: 0 !important;
+      color: $white;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-primary {
+  border: 2px solid $primary;
+
+  thead {
+    th {
+      background-color: $primary;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-success {
+  border: 2px solid $success;
+
+  thead {
+    th {
+      background-color: $success;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-info {
+  border: 2px solid $info;
+
+  thead {
+    th {
+      background-color: $info;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-custom {
+  border: 2px solid $custom;
+
+  thead {
+    th {
+      background-color: $custom;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-warning {
+  border: 2px solid $warning;
+
+  thead {
+    th {
+      background-color: $warning;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-danger {
+  border: 2px solid $danger;
+
+  thead {
+    th {
+      background-color: $danger;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-inverse {
+  border: 2px solid $inverse;
+
+  thead {
+    th {
+      background-color: $inverse;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-pink {
+  border: 2px solid $pink;
+
+  thead {
+    th {
+      background-color: $pink;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-purple {
+  border: 2px solid $purple;
+
+  thead {
+    th {
+      background-color: $purple;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-orange {
+  border: 2px solid $orange;
+
+  thead {
+    th {
+      background-color: $orange;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-brown {
+  border: 2px solid $brown;
+
+  thead {
+    th {
+      background-color: $brown;
+    }
+  }
+}
+
+.table-colored-bordered.table-bordered-teal {
+  border: 2px solid $teal;
+
+  thead {
+    th {
+      background-color: $teal;
+    }
+  }
+}
+
+
+/* Table full colored */
+.table-colored-full {
+  color: $white;
+
+  thead {
+    th {
+      border-bottom: 0 !important;
+      padding: 10px !important;
+    }
+  }
+  tbody {
+    td,th {
+      border: 0 !important;
+    }
+  }
+}
+
+.table-colored-full.table-full-primary {
+  background-color: rgba($primary, 0.8);
+
+  thead {
+    th {
+      background-color: $primary;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $primary;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-success {
+  background-color: rgba($success, 0.8);
+
+  thead {
+    th {
+      background-color: $success;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $success;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-info {
+  background-color: rgba($info, 0.8);
+
+  thead {
+    th {
+      background-color: $info;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $info;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-custom {
+  background-color: rgba($custom, 0.8);
+
+  thead {
+    th {
+      background-color: $custom;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $custom;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-warning {
+  background-color: rgba($warning, 0.8);
+
+  thead {
+    th {
+      background-color: $warning;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $warning;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-danger {
+  background-color: rgba($danger, 0.8);
+
+  thead {
+    th {
+      background-color: $danger;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $danger;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-inverse {
+  background-color: rgba($inverse, 0.8);
+
+  thead {
+    th {
+      background-color: $inverse;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $inverse;
+      }
+    }
+  }
+}
+
+
+.table-colored-full.table-full-pink {
+  background-color: rgba($pink, 0.8);
+
+  thead {
+    th {
+      background-color: $pink;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $pink;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-purple {
+  background-color: rgba($purple, 0.8);
+
+  thead {
+    th {
+      background-color: $purple;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $purple;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-brown {
+  background-color: rgba($brown, 0.8);
+
+  thead {
+    th {
+      background-color: $brown;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $brown;
+      }
+    }
+  }
+}
+
+.table-colored-full.table-full-orange {
+  background-color: rgba($orange, 0.8);
+
+  thead {
+    th {
+      background-color: $orange;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $orange;
+      }
+    }
+  }
+}
+
+
+.table-colored-full.table-full-teal {
+  background-color: rgba($teal, 0.8);
+
+  thead {
+    th {
+      background-color: $teal;
+    }
+  }
+  tbody {
+    tr{
+      &:hover {
+        background-color: $teal;
+      }
+    }
+  }
+}
