@@ -144,6 +144,136 @@
 			</div>
 			<!-- End row -->
 
+			<div>
+				<!-- Start Row -->
+				<div class="row">
+					<div class="col-12">
+						<div class="page-title-box">
+							<h4 class="page-title text-center">Total (Hyper / Market / Proxi / CLCV)</h4>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-primary">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="CA Commandé">CA Commandé</p>
+								{% if "+" in kpiAmountByHour["Total"]["Evol CA Commandé"] %}
+									<h3>{{ kpiAmountByHour["Total"]["CA Commandé"] }}
+										<small><i class="mdi mdi-arrow-up text-success"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol CA Commandé"] }}</b></h5>
+								{% else %}
+									<h3>{{ kpiAmountByHour["Total"]["CA Commandé"] }}
+										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol CA Commandé"] }}</b></h5>
+								{% endif %}	
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-warning">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Commandes">Commandes</p>
+								{% if "+" in kpiAmountByHour["Total"]["Evol Commandes"] %}
+									<h3>{{ kpiAmountByHour["Total"]["Commandes"] }}
+										<small><i class="mdi mdi-arrow-up text-success"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol Commandes"] }}</b></h5>
+								{% else %}
+									<h3>{{ kpiAmountByHour["Total"]["Commandes"] }}
+										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol Commandes"] }}</b></h5>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-light">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Clients">Clients</p>
+								{% if "+" in kpiAmountByHour["Total"]["Evol Clients"] %}
+									<h3>{{ kpiAmountByHour["Total"]["Clients"] }}
+										<small><i class="mdi mdi-arrow-up text-success"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol Clients"] }}</b></h5>
+								{% else %}
+									<h3>{{ kpiAmountByHour["Total"]["Clients"] }}
+										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol Clients"] }}</b></h5>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-info">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Panier moyen">Panier moyen</p>
+								{% if "+" in kpiAmountByHour["Total"]["Evol Panier moyen"] %}
+									<h3>{{ kpiAmountByHour["Total"]["Panier moyen"] }}
+										<small><i class="mdi mdi-arrow-up text-success"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol Panier moyen"] }}</b></h5>
+								{% else %}
+									<h3>{{ kpiAmountByHour["Total"]["Panier moyen"] }}
+										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol Panier moyen"] }}</b></h5>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-info">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="NAT">Qté / panier</p>
+								{% if "+" in kpiAmountByHour["Total"]["Evol NAT"] %}
+									<h3>{{ kpiAmountByHour["Total"]["NAT"] }}
+										<small><i class="mdi mdi-arrow-up text-success"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol NAT"] }}</b></h5>
+								{% else %}
+									<h3>{{ kpiAmountByHour["Total"]["NAT"] }}
+										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol NAT"] }}</b></h5>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-info">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="PVM">PVM</p>
+								{% if "+" in kpiAmountByHour["Total"]["Evol PVM"] %}
+									<h3>{{ kpiAmountByHour["Total"]["PVM"] }}
+										<small><i class="mdi mdi-arrow-up text-success"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol PVM"] }}</b></h5>
+								{% else %}
+									<h3>{{ kpiAmountByHour["Total"]["PVM"] }}
+										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
+									</h3>
+									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol PVM"] }}</b></h5>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+					<p class="text-muted ml-2">
+						Période de comparaison : {{ kpiAmountByHour["Total"]["Date N"] }} vs {{ kpiAmountByHour["Total"]["Date N-1"] }}
+					</p>
+				</div>
+				<!-- Row End -->
+			</div>
+
 			<!-- Start Row -->
 			<div class="row">
 				<div class="col-sm-12">
