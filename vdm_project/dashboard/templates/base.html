@@ -30,9 +30,11 @@
             <!-- <script src="/js/modernizr.min.js"></script> -->
 
             <!-- App Data Table css/js/jquery -->
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"> 
-            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-            <script src='https://code.jquery.com/jquery-3.1.0.js'></script>
+            <link rel="stylesheet" type="text/css" href="{% static 'plugins/datatables/jquery.dataTables.min.css' %}">
+            <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"> -->
+            <script type="text/javascript" charset="utf8" src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+            <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
+            <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
         {% endblock %}
     </head>
 
