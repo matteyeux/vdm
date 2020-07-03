@@ -25,7 +25,7 @@ def send_json(json_file: str):
 
 def main():
     for json_file in os.listdir("jsons"):
-        json_date = json.split('_')[0]
+        json_date = json_file.split('_')[0]
         now = datetime.now()
         current_date = now.strftime("%Y%m%d%H%M%S")
 

@@ -77,4 +77,5 @@ while (true) {
 
 	$j++;
     echo PHP_EOL;
+    echo "Json generated";
 }

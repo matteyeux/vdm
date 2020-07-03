@@ -5,23 +5,39 @@ services:
     # Mongo DB
     db:
         image: mongo
+        container_name: mongo_vdm
         restart: always
-        environment:
-            # MONGO_INITDB_ROOT_USERNAME: root
-            # MONGO_INITDB_ROOT_PASSWORD: example
-            # db: booking
+        ports: 
+            - 27017:27017
 
     # Python API
     api:
-        image:
+        build:
+            context: services/api
+        image: api_vdm_img
+        container_name: api_vdm
         restart: always
+        volumes: 
+            - ./api:/home/api
+        working_dir: /home/api
+        ports: 
+            - 5000:5000
+        entrypoint: python3 vdm/main.py
+        # entrypoint: cat
         
     # Django
-    front:
-
+    # front:
+    #     build:
+    #         context:
 
     # PHP & Python
-    generator:
-        build:
-            context: services/generator
-        restart: always
+    # generator:
+    #     build:
+    #         context: services/generator
+    #     image: generator_vdm_img
+    #     container_name: generator_vdm
+    #     restart: always
+    #     volumes: 
+    #         - ./script.php:/home/script.php
+    #         - ./watcher.py:/home/watcher.py
+    #     entrypoint: php script.php
