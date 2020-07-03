@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [
+    "vdm_project/dashboard/",
+]
 
 # Application definition
 
