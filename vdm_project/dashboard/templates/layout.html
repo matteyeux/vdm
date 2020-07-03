@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+	<body class="fixed-left">
+
+		<!-- Begin page -->
+		<!-- Start Wrapper -->
+		<div id="wrapper">
+
+			<!-- Start Top Bar -->
+			<div class="topbar">
+
+				<!-- LOGO -->
+				<div class="topbar-left">
+					<a href="#" class="logo"><span>VDM<span>Escape Game</span></span><i class="mdi mdi-layers"></i></a>
+				</div>
+
+				<!-- Start Navbar -->
+				<!-- Button mobile view to collapse sidebar menu -->
+				<div class="navbar navbar-default" role="navigation">
+
+					<!-- Start Container -->
+					<div class="container-fluid">
+
+						{% block connectLink_body %}
+
+							<div class="clearfix">
+								<!-- Start Navbar-left -->
+								<ul class="nav navbar-left">
+									<li>
+										<button class="button-menu-mobile open-left waves-effect">
+											<i class="mdi mdi-menu"></i>
+										</button>
+									</li>
+									
+									<li class="dropdown d-none d-lg-inline-block">
+
+									</li>	
+								</ul>
+								<!-- Navbar-left End -->
+								
+								<!-- Start Navbar-right -->
+								<!-- Right(Notification) -->
+								<ul class="nav navbar-right">
+		
+									<li class="dropdown user-box">
+										<a href="" class="dropdown-toggle waves-effect user-link" data-toggle="dropdown" aria-expanded="true">
+											{% if app.user %}
+												<img src="#" alt="user-img" class="rounded-circle user-img">
+											{% else %}
+												<img src="#" alt="user-img" class="rounded-circle user-img">
+											{% endif %}
+										</a>
+		
+										<ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
+											
+											<li>
+												<h5>Bonjour {{ app.user.username }}</h5>
+											</li>
+											<li><a href="#" class="dropdown-item"><i class="ti-user m-r-5"></i>Profil</a></li>
+											<li><a href="#" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Déconnexion</a></li>
+										
+											<li><a href="#" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Créer un compte</a></li>  
+											<li><a href="#" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Connexion</a></li>
+											
+										</ul>
+									</li>
+
+								</ul>
+								<!-- Navbar-right End -->
+
+							</div>
+
+						{% endblock %}
+
+					</div>
+					<!-- Container End -->
+
+				</div>
+				<!-- Navbar End -->
+
+			</div>
+			<!-- Top Bar End -->
+
+			<!-- ======================================== -->
+			<!-- ========== Left Sidebar Start ========== -->
+			<!-- ======================================== -->
+
+			<!-- Start Left Sidebar -->
+			<div class="left side-menu">
+
+				<!-- Start Sidebar-inner -->
+				<div class="sidebar-inner slimscrollleft">
+
+					<!--- Start Sidemenu -->
+					<div id="sidebar-menu">
+						<ul>
+							<!-- ======================================== -->
+							<!-- ==========     Navigation     ========== -->
+							<!-- ======================================== -->
+							<li class="menu-title">Navigation</li>
+
+							<li class="has_sub">
+								<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-invert-colors"></i><span> Interface User</span><span class="menu-arrow"></span></a>
+								<ul class="list-unstyled">
+									<li><a href="#">Profil</a></li>
+								</ul>
+							</li>
+
+							<li class="has_sub">
+								<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span> Dashboard</span><span class="menu-arrow"></span></a>
+								<ul class="list-unstyled">
+									<li><a href="{% url 'booking_list' %}">Liste des Réservations</a></li>
+									<li><a href="#">Dashboard 360</a></li>
+									<li><a href="#">Perfs temps réel</a></li>
+									<li><a href="#">Perfs hebdomadaire</a></li>
+									<li><a href="#">New Perfs hebdo</a></li>
+									<li><a href="#">Mise à jour des sites</a></li>
+								</ul>
+							</li>
+
+							<!-- ======================================== -->
+							<!-- ==========       Extrat       ========== -->
+							<!-- ======================================== -->
+							<li class="menu-title">Extra</li>
+
+							<li>
+								<a href="#" class="waves-effect"><i class="fas fa-tools"></i><span>News Techniques</span></a>
+							</li>
+
+							<!-- ======================================== -->
+							<!-- ==========       A Venir      ========== -->
+							<!-- ======================================== -->
+							<li class="menu-title">A Venir</li>
+
+						</ul>
+					</div>
+					<!--- Sidemenu End -->
+
+				</div>
+				<!-- Sidebar-inner End -->
+
+			</div>
+			<!-- Left Sidebar End -->
+
+			<!-- ======================================== -->
+			<!-- ========== Left Sidebar End ============ -->
+			<!-- ======================================== -->
+
+
+			<!-- ============================================== -->
+			<!-- ========== Start right Content here ========== -->
+			<!-- ============================================== -->
+
+			<!-- Start Content Page -->
+			<div class="content-page">
+
+				{% block platform_body %}
+
+				{% endblock %}
+
+				<footer class="footer">
+					2020 - {% now 'Y' %} Powered by VDM Escape Game <span class="d-none d-sm-inline-block">and ETNA.</span>
+				</footer>
+
+			</div>
+			<!-- Content Page End -->
+
+			<!-- ============================================ -->
+			<!-- ========== End Right content here ========== -->
+			<!-- ============================================ -->
+
+
+		</div>
+		<!-- Wrapper End -->
+
+	</body>
+
+{% endblock %}

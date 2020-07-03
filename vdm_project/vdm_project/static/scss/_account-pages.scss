@@ -1,0 +1,117 @@
+
+
+/* =============
+   Account Pages
+============= */
+
+.wrapper-page {
+  margin: 5% auto;
+  position: relative;
+  max-width: 420px;
+}
+
+.account-pages {
+  box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  border-radius: 5px;
+
+  .account-content {
+    padding: 30px;
+    .fa.fa-lock{
+      font-size: 12px;
+    }
+  }
+
+  .account-btn {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+}
+
+.account-logo-box {
+  background-color: #505458;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+
+.checkmark {
+  width: 120px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: dash 2s ease-in-out;
+  -webkit-animation: dash 2s ease-in-out;
+}
+
+.spin {
+  animation: spin 2s;
+  -webkit-animation: spin 2s;
+  transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+}
+
+@-webkit-keyframes dash {
+ 0% {
+   stroke-dashoffset: 1000;
+ }
+ 100% {
+   stroke-dashoffset: 0;
+ }
+}
+
+@keyframes dash {
+ 0% {
+   stroke-dashoffset: 1000;
+ }
+ 100% {
+   stroke-dashoffset: 0;
+ }
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes text {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+  @keyframes text {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.account-pages-bg {
+  background: url("../images/dust.png");
+}
+.home-wrapper {
+  margin: 10% 0;
+}

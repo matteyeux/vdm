@@ -1,8 +1,12 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 
-{% block head_script %}
-	<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% block title %}
+	Liste Booking - {{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 	<script type="text/javascript">    
 
 		// (function($)
@@ -102,47 +106,79 @@
 
 {% endblock %}
 
-{% block content %}
+{% block platform_body %}
 
-{% load custom_filters %}
+	{% load custom_filters %}
 
+	<!-- Start content -->
+	<div class="content">
 
+		<!-- Start Container -->
+		<div class="container-fluid">
 
-	<div>
-		<h1>List Booking</h1>
-	</div>
+			<!-- Start row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4 class="page-title">Liste des réservations</h4>
+						<ol class="breadcrumb p-0 m-0">
+							<li class="breadcrumb-item">
+								<a href="#">Plateforme VDM Escape Game</a>
+							</li>
+							<li class="breadcrumb-item active">
+								Liste des réservations
+							</li>
+						</ol>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<!-- End row -->
 
-<!-- 	<div id="wrapper">
-		<div id="content"></div>
-		<img src="loading.gif" id="loading" alt="loading" style="display:none;" />
-	</div> -->
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card-box table-responsive">
+ 						<div class="table-rep-plugin">
+							<div class="table-responsive mb-0" data-pattern="priority-columns"> 
+								<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+									<thead>
+										<tr>
+											<th scope="col">Nom</th>
+											<th scope="col">Prénom</th>
+											<th scope="col">nombre de participants</th>
+											<th scope="col">Thème Sélectionné</th>
+											<th scope="col">Date de la réservation</th>
+											<th scope="col">Montant total réservation</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for booking in bookings %}
+											<tr>
+												<td>{{ booking.Acheteur.Nom }}</td>
+												<td>{{ booking.Acheteur.Prenom }}</td>
+												<td>{{ booking.Reservation|length }}</td>
+												<td>{{ booking.Game.Nom }}</td>
+												<td>{{ booking.Game.Jour|string_to_date:'%Y-%m-%d' }}</td>
+												<td>
+													{{ booking.total_prix }}
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
 
-	<table class="table table-dark">
-		<thead>
-			<tr>
-				<th scope="col">Nom</th>
-				<th scope="col">Prénom</th>
-				<th scope="col">nombre de participants</th>
-				<th scope="col">Thème Sélectionné</th>
-				<th scope="col">Date de la réservation</th>
-				<th scope="col">Montant total réservation</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for booking in bookings %}
-				<tr>
-					<td>{{ booking.Acheteur.Nom }}</td>
-					<td>{{ booking.Acheteur.Prenom }}</td>
-					<td>{{ booking.Reservation|length }}</td>
-					<td>{{ booking.Game.Nom }}</td>
-					<td>{{ booking.Game.Jour|string_to_date:'%Y-%m-%d' }}</td>
-					<td>
-						{{ booking.total_prix }}
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
 
+		</div> 
+		<!-- container-fluid End -->
+
+	</div> 
+	<!-- content End -->
 
 {% endblock %}

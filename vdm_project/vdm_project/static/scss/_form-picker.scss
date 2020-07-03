@@ -1,0 +1,88 @@
+
+/* =============
+   Form picker
+============= */
+
+// Timepicker
+.bootstrap-timepicker-widget table td input {
+  border: 1px solid rgba($dark, 0.3);
+  width: 35px;
+}
+
+
+// Datepicker
+
+.datepicker{
+  > div{
+    display: block;
+  }
+}
+.datepicker-dropdown {
+  padding: 10px !important;
+}
+
+.datepicker td, .datepicker th {
+    width: 30px;
+    height: 30px;
+}
+
+.datepicker table tr td.active:hover, .datepicker table tr td.active:hover:hover,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active.disabled:hover:hover,
+.datepicker table tr td.active:active, .datepicker table tr td.active:hover:active,
+.datepicker table tr td.active.disabled:active,
+.datepicker table tr td.active.disabled:hover:active,
+.datepicker table tr td.active.active, .datepicker table tr td.active:hover.active,
+.datepicker table tr td.active.disabled.active,
+.datepicker table tr td.active.disabled:hover.active,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active:hover.disabled,
+.datepicker table tr td.active.disabled.disabled,
+.datepicker table tr td.active.disabled:hover.disabled,
+.datepicker table tr td.active[disabled], .datepicker table tr td.active:hover[disabled],
+.datepicker table tr td.active.disabled[disabled],
+.datepicker table tr td.active.disabled:hover[disabled],
+.datepicker table tr td.selected, .datepicker table tr td.selected:hover,
+.datepicker table tr td.selected.disabled, .datepicker table tr td.selected.disabled:hover{
+  background-color: $custom !important;
+  color: $white !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+.datepicker table tr td.today, .datepicker table tr td.today:hover, .datepicker table tr td.today.disabled, .datepicker table tr td.today.disabled:hover {
+  background-color: $success !important;
+  color: $white !important;
+  background-image: none !important;
+}
+
+.datepicker-inline {
+    border: 2px solid rgba($dark, 0.1);
+}
+
+//Daterange Picker
+
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: $custom;
+}
+.daterangepicker .input-mini.active {
+    border: 1px solid rgba($dark, 0.3);
+}
+.daterangepicker .ranges li {
+  border-radius: 2px;
+  color: $dark;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: $font-secondary;
+}
+.daterangepicker select.hourselect, .daterangepicker select.minuteselect,
+.daterangepicker select.secondselect, .daterangepicker select.ampmselect{
+  border: 1px solid rgba($dark, 0.3);
+  padding: 2px;
+  width: 60px;
+}
+.daterangepicker .ranges li.active, .daterangepicker .ranges li:hover {
+  background-color: $custom;
+  border: 1px solid $custom;
+  color: $white;
+}
