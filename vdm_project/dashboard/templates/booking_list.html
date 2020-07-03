@@ -111,6 +111,28 @@
 	// 	});
 	// }, 30000);
 
+
+	// Exemple to load line by line in datatable
+	$(document).ready(function() {
+	    var t = $('#example').DataTable();
+	    var counter = 1;
+	 
+	    $('#addRow').on( 'click', function () {
+	        t.row.add( [
+	            counter +'.1',
+	            counter +'.2',
+	            counter +'.3',
+	            counter +'.4',
+	            counter +'.5'
+	        ] ).draw( false );
+	 
+	        counter++;
+	    } );
+	 
+	    // Automatically add a first row of data
+	    $('#addRow').click();
+	} );
+
 	</script>
 
 {% endblock %}
@@ -144,12 +166,19 @@
 			</div>
 			<!-- End row -->
 
+
+
+<table id="example" class="display" style="width:100%"> <thead> <tr> <th>Column 1</th> <th>Column 2</th> <th>Column 3</th> <th>Column 4</th> <th>Column 5</th> </tr> </thead> <tfoot> <tr> <th>Column 1</th> <th>Column 2</th> <th>Column 3</th> <th>Column 4</th> <th>Column 5</th> </tr> </tfoot> </table><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(document).ready(</code><code class="js keyword">function</code><code class="js plain">() {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">t = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">counter = 1;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#addRow'</code><code class="js plain">).on( </code><code class="js string">'click'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">t.row.add( [</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.1'</code><code class="js plain">,</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.2'</code><code class="js plain">,</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.3'</code><code class="js plain">,</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.4'</code><code class="js plain">,</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.5'</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">] ).draw( </code><code class="js keyword">false</code> <code class="js plain">);</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter++;</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// Automatically add a first row of data</code></div><div class="line number18 index17 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#addRow'</code><code class="js plain">).click();</code></div><div class="line number19 index18 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2" style="display: none;">1</div></td><td class="code"><div class="container" style="display: none;"><div class="line number1 index0 alt2" style="display: none;">&nbsp;</div></div></td></tr></tbody></table>
+
+
+			
+
 			<div>
 				<!-- Start Row -->
 				<div class="row">
 					<div class="col-12">
 						<div class="page-title-box">
-							<h4 class="page-title text-center">Total (Hyper / Market / Proxi / CLCV)</h4>
+							<h4 class="page-title text-center">Indicateurs de Performance du {% now "d/m/Y" %}</h4>
 						</div>
 					</div>
 				</div>
@@ -157,18 +186,8 @@
 					<div class="col-xl-2 col-lg-4 col-sm-6">
 						<div class="card-box widget-box-two widget-two-primary">
 							<div class="wigdet-two-content">
-								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="CA Commandé">CA Commandé</p>
-								{% if "+" in kpiAmountByHour["Total"]["Evol CA Commandé"] %}
-									<h3>{{ kpiAmountByHour["Total"]["CA Commandé"] }}
-										<small><i class="mdi mdi-arrow-up text-success"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol CA Commandé"] }}</b></h5>
-								{% else %}
-									<h3>{{ kpiAmountByHour["Total"]["CA Commandé"] }}
-										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol CA Commandé"] }}</b></h5>
-								{% endif %}	
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="CA Cumulé">CA Cumulé</p>
+								<h3>89 250</h3>
 							</div>
 						</div>
 					</div>
@@ -176,18 +195,17 @@
 					<div class="col-xl-2 col-lg-4 col-sm-6">
 						<div class="card-box widget-box-two widget-two-warning">
 							<div class="wigdet-two-content">
-								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Commandes">Commandes</p>
-								{% if "+" in kpiAmountByHour["Total"]["Evol Commandes"] %}
-									<h3>{{ kpiAmountByHour["Total"]["Commandes"] }}
-										<small><i class="mdi mdi-arrow-up text-success"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol Commandes"] }}</b></h5>
-								{% else %}
-									<h3>{{ kpiAmountByHour["Total"]["Commandes"] }}
-										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol Commandes"] }}</b></h5>
-								{% endif %}
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Réservation">Nb Réservations</p>
+								<h3>2975</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-4 col-sm-6">
+						<div class="card-box widget-box-two widget-two-info">
+							<div class="wigdet-two-content">
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Prix de vente moyen d'une réservations">Prix par Réservation</p>
+								<h3>30</h3>
 							</div>
 						</div>
 					</div>
@@ -195,18 +213,8 @@
 					<div class="col-xl-2 col-lg-4 col-sm-6">
 						<div class="card-box widget-box-two widget-two-light">
 							<div class="wigdet-two-content">
-								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Clients">Clients</p>
-								{% if "+" in kpiAmountByHour["Total"]["Evol Clients"] %}
-									<h3>{{ kpiAmountByHour["Total"]["Clients"] }}
-										<small><i class="mdi mdi-arrow-up text-success"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol Clients"] }}</b></h5>
-								{% else %}
-									<h3>{{ kpiAmountByHour["Total"]["Clients"] }}
-										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol Clients"] }}</b></h5>
-								{% endif %}
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Spectateurs">Nb de Spectateurs</p>
+								<h3>11 900</h3>
 							</div>
 						</div>
 					</div>
@@ -214,18 +222,8 @@
 					<div class="col-xl-2 col-lg-4 col-sm-6">
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
-								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Panier moyen">Panier moyen</p>
-								{% if "+" in kpiAmountByHour["Total"]["Evol Panier moyen"] %}
-									<h3>{{ kpiAmountByHour["Total"]["Panier moyen"] }}
-										<small><i class="mdi mdi-arrow-up text-success"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol Panier moyen"] }}</b></h5>
-								{% else %}
-									<h3>{{ kpiAmountByHour["Total"]["Panier moyen"] }}
-										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol Panier moyen"] }}</b></h5>
-								{% endif %}
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Spectateurs par Réservations">Spectateurs / Réservations</p>
+								<h3>4</h3>
 							</div>
 						</div>
 					</div>
@@ -233,43 +231,11 @@
 					<div class="col-xl-2 col-lg-4 col-sm-6">
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
-								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="NAT">Qté / panier</p>
-								{% if "+" in kpiAmountByHour["Total"]["Evol NAT"] %}
-									<h3>{{ kpiAmountByHour["Total"]["NAT"] }}
-										<small><i class="mdi mdi-arrow-up text-success"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol NAT"] }}</b></h5>
-								{% else %}
-									<h3>{{ kpiAmountByHour["Total"]["NAT"] }}
-										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol NAT"] }}</b></h5>
-								{% endif %}
+								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Prix de vente moyen d'un spectateur">Prix par Spectateur</p>
+								<h3>7.5 €</h3>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-xl-2 col-lg-4 col-sm-6">
-						<div class="card-box widget-box-two widget-two-info">
-							<div class="wigdet-two-content">
-								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="PVM">PVM</p>
-								{% if "+" in kpiAmountByHour["Total"]["Evol PVM"] %}
-									<h3>{{ kpiAmountByHour["Total"]["PVM"] }}
-										<small><i class="mdi mdi-arrow-up text-success"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-success m-0"> {{ kpiAmountByHour["Total"]["Evol PVM"] }}</b></h5>
-								{% else %}
-									<h3>{{ kpiAmountByHour["Total"]["PVM"] }}
-										<small><i class="mdi mdi-arrow-down text-danger"></i></small>
-									</h3>
-									<h5 class="text-muted m-0">Evol :<b class="text-danger m-0"> {{ kpiAmountByHour["Total"]["Evol PVM"] }}</b></h5>
-								{% endif %}
-							</div>
-						</div>
-					</div>
-					<p class="text-muted ml-2">
-						Période de comparaison : {{ kpiAmountByHour["Total"]["Date N"] }} vs {{ kpiAmountByHour["Total"]["Date N-1"] }}
-					</p>
 				</div>
 				<!-- Row End -->
 			</div>
@@ -316,6 +282,17 @@
 
 		</div> 
 		<!-- container-fluid End -->
+
+
+		<table class="table table-bordered table-condensed" id="tblAccounts"></table>
+
+		<script type="text/template" id="tmpl_Grid">
+			<td><%= Id %></td>
+			<td><%= Amount %></td>
+			<td><%= Date %></td>
+			<td><%= Type %></td>
+		</script>
+
 
 	</div> 
 	<!-- content End -->
