@@ -10,8 +10,7 @@ this is the REST API for the VDM project.
 - run poetry to install dependancies : `poetry install`
 
 ### Running
-TODO
-
+- `python3 api/vdm/main.py`
 
 ### Testing
 TODO
