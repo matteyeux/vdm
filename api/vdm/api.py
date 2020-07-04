@@ -14,6 +14,7 @@ ns_root = api.namespace('/', description="root")
 ns_reservation = api.namespace('reservation', description="reservation stuff")
 ns_reservations = api.namespace('reservations',
                                 description="reservations stuff")
+ns_bookinglist = api.namespace('bookinglist', description="booking list stuff")
 
 
 @ns_root.route('/')
@@ -45,7 +46,33 @@ class Reservations(Resource):
     def get(self):
         """Get reservation by ID."""
         vdm_database = config.setup_mongo()
-        cursor = vdm_database.booking.find({},{'_id':0}).sort("_id", -1)
+        cursor = vdm_database.booking.find({},{'_id':0}).sort("_id", -1).limit(100)
+        data = []
+        for reservation in cursor:
+            data.append(reservation)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+@ns_bookinglist.route("/")
+class BookingList(Resource):
+    def get(self):
+        """Get reservation by ID."""
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {project:
+                { 
+                    "Acheteur.Nom":1, 
+                    "Acheteur.Prenom":1, 
+                    NbSpectateur:{size:"$Reservation"}, 
+                    "Game.Nom":1,
+                    "Game.Jour":1, 
+                    TotalPrice:{sum:"$Reservation.prix"} 
+                }
+            } 
+        ])
         data = []
         for reservation in cursor:
             data.append(reservation)
