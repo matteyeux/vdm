@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_restplus import Api, Resource
 from flask_cors import CORS
+from bson import Binary, Code
+from bson.json_util import loads, dumps
+import json
 import config
 import utilities
 
@@ -12,8 +15,7 @@ CORS(app, resources={r"": {"origins": "*"}})
 
 ns_root = api.namespace('/', description="root")
 ns_reservation = api.namespace('reservation', description="reservation stuff")
-ns_reservations = api.namespace('reservations',
-                                description="reservations stuff")
+ns_reservations = api.namespace('reservations', description="reservations stuff")
 ns_bookinglist = api.namespace('bookinglist', description="booking list stuff")
 
 
@@ -62,20 +64,23 @@ class BookingList(Resource):
         """Get reservation by ID."""
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
-            {project:
-                { 
-                    "Acheteur.Nom":1, 
-                    "Acheteur.Prenom":1, 
-                    NbSpectateur:{size:"$Reservation"}, 
+            {"$project":
+                {
+                    "_id": 1,
+                    "Acheteur.Nom":1,
+                    "Acheteur.Prenom":1,
+                    "NbSpectateur":{"$size":"$Reservation"},
                     "Game.Nom":1,
-                    "Game.Jour":1, 
-                    TotalPrice:{sum:"$Reservation.prix"} 
+                    "Game.Jour":1,
+                    "TotalPrice":{"$sum":"$Reservation.prix"}
                 }
-            } 
+            },
+            { "$limit" : 40 } 
         ])
         data = []
         for reservation in cursor:
-            data.append(reservation)
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
 
         response = jsonify(data)
         response.headers.add('Access-Control-Allow-Origin', '*')
