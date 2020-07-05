@@ -109,29 +109,44 @@
 	// 			console.log("error..");
 	// 		}
 	// 	});
+
 	// }, 30000);
 
-
+	/************************************************/
 	// Exemple to load line by line in datatable
+	// $(document).ready(function() {
+	//     var t = $('#example').DataTable();
+	//     var counter = 1;
+	 
+	//     $('#addRow').on( 'click', function () {
+	//         t.row.add( [
+	//             counter +'.1',
+	//             counter +'.2',
+	//             counter +'.3',
+	//             counter +'.4',
+	//             counter +'.5'
+	//         ] ).draw( false );
+	 
+	//         counter++;
+	//     } );
+	 
+	//     // Automatically add a first row of data
+	//     $('#addRow').click();
+	// });
+
+
+	/**********************************************/
 	$(document).ready(function() {
-	    var t = $('#example').DataTable();
-	    var counter = 1;
-	 
-	    $('#addRow').on( 'click', function () {
-	        t.row.add( [
-	            counter +'.1',
-	            counter +'.2',
-	            counter +'.3',
-	            counter +'.4',
-	            counter +'.5'
-	        ] ).draw( false );
-	 
-	        counter++;
-	    } );
-	 
-	    // Automatically add a first row of data
-	    $('#addRow').click();
-	} );
+		$.ajax({
+			type: "GET",
+			url: "http://127.0.0.1:5000/bookinglist/",
+			dataType: "json",
+			cache: true,
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	});
 
 	</script>
 
@@ -168,61 +183,33 @@
 
 
 
-<table id="example" class="display" style="width:100%"> 
-	<thead> 
-		<tr> 
-			<th>Column 1</th> 
-			<th>Column 2</th> 
-			<th>Column 3</th> 
-			<th>Column 4</th> 
-			<th>Column 5</th> 
-		</tr> 
-	</thead> 
-	<tfoot> 
-		<tr> 
-			<th>Column 1</th> 
-			<th>Column 2</th> 
-			<th>Column 3</th> 
-			<th>Column 4</th> 
-			<th>Column 5</th> 
-		</tr> 
-	</tfoot> 
-</table>
 
-<table cellspacing="0" cellpadding="0" border="0">
-	<tbody>
-		<tr>
-			<td class="gutter">
-				<div class="line number1 index0 alt2">1</div>
-				<div class="line number2 index1 alt1">2</div>
-				<div class="line number3 index2 alt2">3</div>
-				<div class="line number4 index3 alt1">4</div>
-				<div class="line number5 index4 alt2">5</div>
-				<div class="line number6 index5 alt1">6</div>
-				<div class="line number7 index6 alt2">7</div>
-				<div class="line number8 index7 alt1">8</div>
-				<div class="line number9 index8 alt2">9</div>
-				<div class="line number10 index9 alt1">10</div>
-				<div class="line number11 index10 alt2">11</div>
-				<div class="line number12 index11 alt1">12</div>
-				<div class="line number13 index12 alt2">13</div>
-				<div class="line number14 index13 alt1">14</div>
-				<div class="line number15 index14 alt2">15</div>
-				<div class="line number16 index15 alt1">16</div>
-				<div class="line number17 index16 alt2">17</div>
-				<div class="line number18 index17 alt1">18</div>
-				<div class="line number19 index18 alt2">19</div>
-			</td>
-			<td class="code">
-				<div class="container">
-					<div class="line number1 index0 alt2">
-						<code class="js plain">$(document).ready(</code>
-						<code class="js keyword">function</code>
-						<code class="js plain">() {</code>
-					</div><div class="line number2 index1 alt1">
-						<code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>
-						<code class="js keyword">var</code> 
-						<code class="js plain">t = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">counter = 1;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#addRow'</code><code class="js plain">).on( </code><code class="js string">'click'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">t.row.add( [</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.1'</code><code class="js plain">,</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.2'</code><code class="js plain">,</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.3'</code><code class="js plain">,</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.4'</code><code class="js plain">,</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter +</code><code class="js string">'.5'</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">] ).draw( </code><code class="js keyword">false</code> <code class="js plain">);</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">counter++;</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// Automatically add a first row of data</code></div><div class="line number18 index17 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#addRow'</code><code class="js plain">).click();</code></div><div class="line number19 index18 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2" style="display: none;">1</div></td><td class="code"><div class="container" style="display: none;"><div class="line number1 index0 alt2" style="display: none;">&nbsp;</div></div></td></tr></tbody></table>
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card-box">
+
+						<div class="table-rep-plugin">
+							<div class="table-responsive mb-0" data-pattern="priority-columns">
+								<table id="booking_list" class="display table-bordered table_cluster">
+									<thead>
+										<tr>
+											<th scope="col">Nom</th>
+											<th scope="col">Prénom</th>
+											<th scope="col">nombre de participants</th>
+											<th scope="col">Thème Sélectionné</th>
+											<th scope="col">Date de la réservation</th>
+											<th scope="col">Montant total réservation</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
 
 
 
@@ -295,9 +282,10 @@
 			</div>
 
 			<!-- Start Row -->
-			<div class="row">
+<!-- 			<div class="row">
 				<div class="col-sm-12">
 					<div class="card-box">
+
 						<div class="table-rep-plugin">
 							<div class="table-responsive mb-0" data-pattern="priority-columns">
 								<table id="booking_list" class="display table-bordered table_cluster">
@@ -331,22 +319,11 @@
 
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- Row End -->
 
 		</div> 
 		<!-- container-fluid End -->
-
-
-		<table class="table table-bordered table-condensed" id="tblAccounts"></table>
-
-		<script type="text/template" id="tmpl_Grid">
-			<td><%= Id %></td>
-			<td><%= Amount %></td>
-			<td><%= Date %></td>
-			<td><%= Type %></td>
-		</script>
-
 
 	</div> 
 	<!-- content End -->
