@@ -10,5 +10,7 @@ lib
 generate_booking/json
 generate_booking/lib
 
+watcher/processed
+watcher/failed
 # use Flexmonster ? 
 vdm_project/pivot-mongo/*
