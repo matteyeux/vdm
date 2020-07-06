@@ -38,7 +38,8 @@ class Reservation(Resource):
         vdm_database = config.setup_mongo()
         collection = vdm_database["booking"]
 
-        data = utilities.handle_prices(request.get_json())
+        # data = utilities.handle_prices(request.get_json())
+        data = utilities.handle_utilities(request.get_json())
         collection.insert_one(data)
 
         response = jsonify({'message': 'OK'})
@@ -101,7 +102,6 @@ class KpiBookingList(Resource):
             {"$project":
                 {
                     "_id": 1,
-                    # "NbResa":{"$count":"Reservation"},
                     "NbSpectateur":{"$size":"$Reservation"},
                     "TotalPrice":{"$sum":"$Reservation.prix"}
                 }

@@ -1,3 +1,5 @@
+import datetime
+
 def handle_prices(data: dict) -> dict:
 	"""Set price according to rate."""
 	for reservation in data['Reservation']:
@@ -13,7 +15,6 @@ def handle_prices(data: dict) -> dict:
 			price = None
 		reservation['prix'] = price
 	return data
-
 
 def handle_themes(data: dict) -> dict:
 	"""Set themes according to game."""
@@ -51,3 +52,15 @@ def handle_themes(data: dict) -> dict:
 		theme['theme_pricipal'] = first_theme
 		theme['theme_secondaire'] = second_theme
 	return data
+
+def handle_datetime(data: dict) -> dict:
+	"""Set fields CreatedAt."""
+	data['CreatedAt'] = datetime.datetime.now()
+	return data
+
+def handle_utilities(data: dict) -> dict:
+	"""Call each function to transform the data dict."""
+	data_w_price = handle_prices(data)
+	# data_w_theme = handle_themes(data_w_price)
+	data_w_date = handle_datetime(data_w_price)
+	return data_w_date
