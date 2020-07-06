@@ -33,7 +33,6 @@ class default_root(Resource):
 @ns_reservation.route("")
 class Reservation(Resource):
     """Reservation related operations."""
-
     def post(self):
         """reservation booking data."""
         vdm_database = config.setup_mongo()
@@ -113,7 +112,6 @@ class IncrementBookingList(Resource):
                     "TotalPrice":{"$sum":"$Reservation.prix"}
                 }
             },
-            # {"$match": { "_id": { "$gt": ObjectId("5ef8ce087d4c386ea0025db0")}}},
             {"$match": { "_id": { "$gt": ObjectId(lastId)}}},
             # { "$limit" : 2 }
         ])
