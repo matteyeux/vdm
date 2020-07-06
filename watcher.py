@@ -11,7 +11,7 @@ URL = "http://127.0.0.1:5000/reservation"
 
 
 def send_json(json_file: str):
-    with open("jsons/"+json_file) as js:
+    with open("generate_booking/jsons/"+json_file) as js:
         json_data = json.load(js)
 
     headers = {'Content-type': 'application/json'}
@@ -24,7 +24,7 @@ def send_json(json_file: str):
 
 
 def main():
-    for json_file in os.listdir("jsons"):
+    for json in os.listdir("generate_booking/jsons"):
         json_date = json.split('_')[0]
         now = datetime.now()
         current_date = now.strftime("%Y%m%d%H%M%S")

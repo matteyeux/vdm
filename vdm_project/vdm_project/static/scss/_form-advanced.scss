@@ -1,0 +1,519 @@
+
+
+
+/* =============
+   Form Advanced
+============= */
+
+
+/* Bootstrap tagsinput */
+.bootstrap-tagsinput {
+  box-shadow: none;
+  padding: 5px 7px 5px;
+  width: 100%;
+  border: 1px solid #e3e3e3;
+
+  .badge-info {
+    background-color: $custom !important;
+    display: inline-block;
+    padding: 5px;
+    margin: 3px 1px;
+  }
+}
+
+/* CSS Switch */
+input[data-switch] {
+  display: none;
+}
+input[data-switch] + label {
+  font-size: 1em;
+  line-height: 1;
+  width: 56px;
+  height: 24px;
+  background-color: #ddd;
+  background-image: none;
+  border-radius: 2rem;
+  padding: 0.16667rem;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  font-family: inherit;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+input[data-switch] + label:before {
+  color: $dark;
+  content: attr(data-off-label);
+  display: block;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 21px;
+  position: absolute;
+  right: 2px;
+  margin: 0.21667rem;
+  top: 0;
+  text-align: center;
+  min-width: 1.66667rem;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+input[data-switch] + label:after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 2px;
+  background-color: #f7f7f7;
+  box-shadow: none;
+  border-radius: 2rem;
+  height: 20px;
+  width: 20px;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+input[data-switch]:checked + label {
+  background-color: $custom;
+}
+input[data-switch]:checked + label:before {
+  color: $white;
+  content: attr(data-on-label);
+  right: auto;
+  left: 2px;
+}
+input[data-switch]:checked + label:after {
+  left: 33px;
+  background-color: #f7f7f7;
+}
+
+input[data-switch="bool"] + label {
+  background-color: $danger;
+}
+input[data-switch="bool"] + label:before,input[data-switch="bool"]:checked + label:before,
+input[data-switch="default"]:checked + label:before{
+  color: $white !important;
+}
+
+input[data-switch="bool"]:checked + label {
+  background-color: $success;
+}
+
+input[data-switch="default"]:checked + label {
+  background-color: #a2a2a2;
+}
+
+input[data-switch="primary"]:checked + label {
+  background-color: $primary;
+}
+
+input[data-switch="success"]:checked + label {
+  background-color: $success;
+}
+
+input[data-switch="info"]:checked + label {
+  background-color: $info;
+}
+
+input[data-switch="warning"]:checked + label {
+  background-color: $warning;
+}
+
+input[data-switch="inverse"]:checked + label {
+  background-color: $inverse;
+}
+
+input[data-switch="pink"]:checked + label {
+  background-color: $pink;
+}
+
+input[data-switch="purple"]:checked + label {
+  background-color: $purple;
+}
+
+input[data-switch="orange"]:checked + label {
+  background-color: $orange;
+}
+
+input[data-switch="brown"]:checked + label {
+  background-color: $brown;
+}
+
+input[data-switch="teal"]:checked + label {
+  background-color: $teal;
+}
+
+
+/* Button Switch css */
+
+.btn-switch {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.btn-switch > input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  left: -100%;
+  top: -100%;
+}
+.btn-switch > input[type="checkbox"] + .btn {
+  background-color: transparent !important;
+  border-color: $custom;
+  color: $custom !important;
+}
+.btn-switch > input[type="checkbox"] + .btn > em {
+  display: inline-block;
+  border: 1px solid $custom;
+  border-radius: 50%;
+  padding: 2px;
+  margin: 0 4px 0 0;
+  top: 1px;
+  font-size: 10px;
+  text-align: center;
+}
+.btn-switch > input[type="checkbox"] + .btn > em:before {
+  opacity: 0;
+}
+.btn-switch > input[type="checkbox"]:checked + .btn {
+  background-color: $custom !important;
+  color: $white !important;
+}
+.btn-switch > input[type="checkbox"]:checked + .btn > em {
+  background-color: $white;
+  color: $custom !important;
+}
+.btn-switch > input[type="checkbox"]:checked + .btn > em:before {
+  opacity: 1;
+}
+
+.btn-switch-primary > input[type="checkbox"] + .btn,
+.btn-switch-primary > input[type="checkbox"]:checked + .btn > em{
+  color: $primary !important;
+}
+.btn-switch-primary > input[type="checkbox"] + .btn,
+.btn-switch-primary > input[type="checkbox"] + .btn > em{
+  border-color: $primary !important;
+}
+.btn-switch-primary > input[type="checkbox"]:checked + .btn {
+  background-color: $primary !important;
+}
+
+.btn-switch-success > input[type="checkbox"] + .btn,
+.btn-switch-success > input[type="checkbox"]:checked + .btn > em{
+  color: $success !important;
+}
+.btn-switch-success > input[type="checkbox"] + .btn,
+.btn-switch-success > input[type="checkbox"] + .btn > em{
+  border-color: $success !important;
+}
+.btn-switch-success > input[type="checkbox"]:checked + .btn {
+  background-color: $success !important;
+}
+
+.btn-switch-info > input[type="checkbox"] + .btn,
+.btn-switch-info > input[type="checkbox"]:checked + .btn > em{
+  color: $info !important;
+}
+.btn-switch-info > input[type="checkbox"] + .btn,
+.btn-switch-info > input[type="checkbox"] + .btn > em{
+  border-color: $info !important;
+}
+.btn-switch-info > input[type="checkbox"]:checked + .btn {
+  background-color: $info !important;
+}
+
+.btn-switch-warning > input[type="checkbox"] + .btn,
+.btn-switch-warning > input[type="checkbox"]:checked + .btn > em{
+  color: $warning !important;
+}
+.btn-switch-warning > input[type="checkbox"] + .btn,
+.btn-switch-warning > input[type="checkbox"] + .btn > em{
+  border-color: $warning !important;
+}
+.btn-switch-warning > input[type="checkbox"]:checked + .btn {
+  background-color: $warning !important;
+}
+
+.btn-switch-danger > input[type="checkbox"] + .btn,
+.btn-switch-danger > input[type="checkbox"]:checked + .btn > em{
+  color: $danger !important;
+}
+.btn-switch-danger > input[type="checkbox"] + .btn,
+.btn-switch-danger > input[type="checkbox"] + .btn > em{
+  border-color: $danger !important;
+}
+.btn-switch-danger > input[type="checkbox"]:checked + .btn {
+  background-color: $danger !important;
+}
+
+.btn-switch-inverse > input[type="checkbox"] + .btn,
+.btn-switch-inverse > input[type="checkbox"]:checked + .btn > em{
+  color: $inverse !important;
+}
+.btn-switch-inverse > input[type="checkbox"] + .btn,
+.btn-switch-inverse > input[type="checkbox"] + .btn > em{
+  border-color: $inverse !important;
+}
+.btn-switch-inverse > input[type="checkbox"]:checked + .btn {
+  background-color: $inverse !important;
+}
+
+.btn-switch-pink > input[type="checkbox"] + .btn,
+.btn-switch-pink > input[type="checkbox"]:checked + .btn > em{
+  color: $pink !important;
+}
+.btn-switch-pink > input[type="checkbox"] + .btn,
+.btn-switch-pink > input[type="checkbox"] + .btn > em{
+  border-color: $pink !important;
+}
+.btn-switch-pink > input[type="checkbox"]:checked + .btn {
+  background-color: $pink !important;
+}
+
+.btn-switch-purple > input[type="checkbox"] + .btn,
+.btn-switch-purple > input[type="checkbox"]:checked + .btn > em{
+  color: $purple !important;
+}
+.btn-switch-purple > input[type="checkbox"] + .btn,
+.btn-switch-purple > input[type="checkbox"] + .btn > em{
+  border-color: $purple !important;
+}
+.btn-switch-purple > input[type="checkbox"]:checked + .btn {
+  background-color: $purple !important;
+}
+
+.btn-switch-orange > input[type="checkbox"] + .btn,
+.btn-switch-orange > input[type="checkbox"]:checked + .btn > em{
+  color: $orange !important;
+}
+.btn-switch-orange > input[type="checkbox"] + .btn,
+.btn-switch-orange > input[type="checkbox"] + .btn > em{
+  border-color: $orange !important;
+}
+.btn-switch-orange > input[type="checkbox"]:checked + .btn {
+  background-color: $orange !important;
+}
+
+.btn-switch-brown > input[type="checkbox"] + .btn,
+.btn-switch-brown > input[type="checkbox"]:checked + .btn > em{
+  color: $brown !important;
+}
+.btn-switch-brown > input[type="checkbox"] + .btn,
+.btn-switch-brown > input[type="checkbox"] + .btn > em{
+  border-color: $brown !important;
+}
+.btn-switch-brown > input[type="checkbox"]:checked + .btn {
+  background-color: $brown !important;
+}
+
+.btn-switch-teal > input[type="checkbox"] + .btn,
+.btn-switch-teal > input[type="checkbox"]:checked + .btn > em{
+  color: $teal !important;
+}
+.btn-switch-teal > input[type="checkbox"] + .btn,
+.btn-switch-teal > input[type="checkbox"] + .btn > em{
+  border-color: $teal !important;
+}
+.btn-switch-teal > input[type="checkbox"]:checked + .btn {
+  background-color: $teal !important;
+}
+
+
+/* Multiple select */
+.search-input {
+  margin-bottom: 10px;
+}
+
+.ms-container {
+  background: transparent url('../../../plugins/multiselect/img/multiple-arrow.png') no-repeat 50% 50%;
+  width: 100% !important;
+  max-width: 360px !important;
+
+  .ms-list {
+    box-shadow: none;
+    border: 1px solid rgba($dark, 0.2);
+  }
+  .ms-list.ms-focus {
+    box-shadow: none;
+    border: 1px solid rgba($dark, 0.4);
+  }
+  .ms-selectable {
+    box-shadow: none;
+    outline: none !important;
+
+    li.ms-elem-selectable{
+      border: none;
+      padding: 5px 10px;
+    }
+    li.ms-hover {
+      background-color: $custom;
+    }
+  }
+  .ms-selection {
+    li.ms-elem-selection{
+      border: none;
+      padding: 5px 10px;
+    }
+    li.ms-hover {
+      background-color: $custom;
+    }
+  }
+}
+
+
+/* Select 2 */
+.select2-container {
+  width: 100% !important;
+
+  .select2-selection--single {
+    border: 1px solid #E3E3E3 !important;
+    height: 38px !important;
+
+    .select2-selection__rendered {
+      line-height: 36px !important;
+      padding-left: 12px !important;
+    }
+
+    .select2-selection__arrow {
+      height: 34px;
+      width: 34px;
+      right: 3px;
+
+      b{
+        border-color: #999 transparent transparent transparent;
+        border-width: 6px 6px 0 6px;
+      }
+    }
+  }
+}
+
+.select2-container--open {
+  .select2-selection--single {
+
+    .select2-selection__arrow {
+
+      b{
+        border-color: transparent transparent #999 transparent !important;
+        border-width: 0 6px 6px 6px !important;
+      }
+    }
+  }
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: $custom;
+}
+.select2-results__option {
+  padding: 6px 12px;
+}
+
+.select2-dropdown {
+  border: 1px solid #e3e3e3 !important;
+  padding-top: 5px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+}
+.select2-search {
+  input{
+    border: 1px solid #e3e3e3 !important;
+  }
+}
+
+.select2-container .select2-selection--multiple {
+  min-height: 38px !important;
+  border: 1px solid #e3e3e3 !important;
+
+  .select2-selection__rendered {
+    padding: 2px 10px;
+  }
+  .select2-search__field {
+    margin-top: 7px;
+    border: 0 !important;
+  }
+  .select2-selection__choice {
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 1px;
+    padding: 0 7px;
+  }
+}
+
+
+/* AUTOCOMPLETE */
+.autocomplete-suggestions {
+  border: 1px solid #f9f9f9;
+  background: $white;
+  cursor: default;
+  overflow: auto;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.autocomplete-suggestion {
+  padding: 2px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.autocomplete-no-suggestion {
+  padding: 2px 5px;
+}
+
+.autocomplete-selected {
+  background: rgba($muted, 0.3);
+  cursor: pointer;
+}
+
+.autocomplete-suggestions strong {
+  font-weight: bold;
+  color: $dark;
+}
+
+.autocomplete-group {
+  padding: 2px 5px;
+}
+
+.autocomplete-group strong {
+  font-weight: bold;
+  font-size: 16px;
+  color: $dark;
+  display: block;
+}
+
+/* Bootstrap-select */
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+  width: 100% !important;
+}
+.bootstrap-select  {
+  .dropdown-toggle {
+    &:focus {
+      outline: none !important;
+    }
+  }
+  .dropdown-menu{
+    .dropdown-item{
+      &.active, &:active{
+        background: $custom;
+      }
+    }
+  }
+}
+
+.dropify-wrapper{
+  border: 2px dashed $light;
+}
+
+
+/* Bootstrap-touchSpin */
+.bootstrap-touchspin {
+  .input-group-btn-vertical {
+    i {
+      top: 4px;
+      left: 8px;
+    }
+  }
+
+}

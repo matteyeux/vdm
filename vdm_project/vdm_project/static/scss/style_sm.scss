@@ -1,0 +1,106 @@
+/*
+Template Name: Zircos - Bootstrap 4 Admin Dashboard
+Author: CoderThemes
+Email: support@coderthemes.com
+File: Main Style scss
+Version : 2.0
+*/
+
+
+/* Google font */
+
+@import url('https://fonts.googleapis.com/css?family=Sarabun:400,500,600');
+
+
+/************************************
+01.General
+02.Helper
+03.Bootsrap custom
+04.Waves
+05.Menu sm
+06.Demo only
+07.Buttons
+08.Cards
+09.Portlets
+10.Modals
+11.Checkbox & Radio
+12.Tabs
+13.Progressbars
+14.Notification
+15.alerts
+16.Video
+17.Popover & Tooltips
+18.Badge
+19.Pagination
+20.Sweetalert2
+21.Widgets
+22.Nestable
+23.Calender
+24.Email
+25.Form Elements
+26.Form Advanced
+27.Form Validation
+28.Form Picker
+29.Form Wizard
+30.Form Editor
+31.Form upload
+32.Tables
+33.Table Datatable
+34.Table Responsive
+35.Table Editable
+36.Tablesaw
+37.charts
+38.Maps
+39.Account pages
+40.Extas pages
+41.Invoice
+42.Blog
+43.Real Estate
+44.Responsive
+*************************************/
+
+@import "variables";
+@import "general";
+@import "helper";
+@import "bootstrap-custom";
+@import "waves";
+@import "menu_sm";
+@import "demo-only";
+@import "buttons";
+@import "cards";
+@import "portlets";
+@import "modals";
+@import "checkbox-radio";
+@import "tabs";
+@import "progressbars";
+@import "notification";
+@import "alerts";
+@import "video";
+@import "popover-tooltips";
+@import "badge";
+@import "pagination";
+@import "sweetalert2";
+@import "widgets";
+@import "nestable";
+@import "calender";
+@import "email";
+@import "form-elements";
+@import "form-advanced";
+@import "form-validation";
+@import "form-picker";
+@import "form-wizard";
+@import "form-editor";
+@import "form-upload";
+@import "tables";
+@import "table-datatable";
+@import "table-responsive";
+@import "table-editable";
+@import "tablesaw";
+@import "charts";
+@import "maps";
+@import "account-pages";
+@import "extras-pages";
+@import "invoice";
+@import "blog";
+@import "real-estate";
+@import "responsive";

@@ -1,0 +1,88 @@
+
+
+/* =============
+   Form editor
+============= *
+
+
+/* Summernote */
+.note-editor {
+    position: relative;
+  
+    .btn-light {
+      background-color: transparent;
+      border-color: transparent !important;
+    }
+    .btn-group-sm > .btn, .btn-sm {
+      padding: 8px 12px !important;
+    }
+    .note-toolbar {
+      background-color: $gray-200;
+      border-bottom: 1px solid $light;
+      margin: 0;
+    }
+    .note-statusbar {
+      background-color: $white;
+      .note-resizebar {
+        border-top: none;
+        height: 15px;
+        padding-top: 3px;
+      }
+    }
+    .note-status-output{
+      display: block;
+    }
+  }
+  .note-editor.note-frame {
+    border: 1px solid $light !important;
+  }
+  
+  .note-popover {
+    .popover {
+      .popover-content {
+        padding: 5px 0 10px 5px;
+      }
+    }
+  
+    .btn-light {
+      background-color: transparent;
+      border-color: transparent !important;
+    }
+    .btn-group-sm > .btn, .btn-sm {
+      padding: 8px 12px !important;
+    }
+  }
+  
+  .note-toolbar {
+    padding: 5px 0 10px 5px;
+  }
+  
+  
+  
+  /* Wysiwig css */
+  
+  .mce-panel {
+    border: 1px solid $gray-200 !important;
+    background-color: $gray-200 !important;
+  }
+  .mce-menu {
+    background-color: $white !important;
+    box-shadow: 0 0px 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+  }
+  .mce-menubar .mce-menubtn:hover, .mce-menubar .mce-menubtn.mce-active, .mce-menubar .mce-menubtn:focus {
+    border-color: $gray-200 !important;
+  }
+  .mce-menu-item:hover, .mce-menu-item.mce-selected, .mce-menu-item:focus,.mce-menu-item-normal.mce-active,
+  .mce-primary{
+    background-color: $custom !important;
+  }
+  .mce-window-head .mce-title {
+    font-family: $font-secondary;
+  }
+  .mce-window {
+    padding: 20px !important;
+  }
+  .mce-window-head {
+    padding-bottom: 20px !important;
+    border-bottom: 0 !important;
+  }

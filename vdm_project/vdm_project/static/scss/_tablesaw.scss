@@ -1,0 +1,65 @@
+
+
+.tablesaw {
+  thead {
+    background: rgba($gray-200, 0.7);
+    background-image: none;
+    border: none;
+
+    th {
+      text-shadow: none;
+      letter-spacing: 0.06em;
+    }
+
+    tr:first-child th {
+      font-weight: 600;
+      border: none;
+      font-family: $font-secondary;
+    }
+  }
+  td {
+    border-top: 1px solid rgba($gray-200, 0.7) !important;
+  }
+}
+
+.tablesaw td, .tablesaw tbody th {
+  font-size: inherit;
+  line-height: inherit;
+  padding: 10px !important;
+}
+.tablesaw-stack tbody tr ,.tablesaw tbody tr{
+  border-bottom: none;
+}
+.tablesaw-sortable .tablesaw-sortable-head.tablesaw-sortable-ascending button:after, .tablesaw-sortable .tablesaw-sortable-head.tablesaw-sortable-descending button:after {
+  font-family: FontAwesome;
+  font-size: 10px;
+}
+.tablesaw-sortable .tablesaw-sortable-head.tablesaw-sortable-ascending button:after {
+  content: "\f176";
+}
+.tablesaw-sortable .tablesaw-sortable-head.tablesaw-sortable-descending button:after {
+  content: "\f175";
+}
+.tablesaw-bar .btn-select.btn-small:after, .tablesaw-bar .btn-select.btn-micro:after {
+  font-size: 8px;
+  padding-right: 10px;
+}
+.tablesaw-swipe .tablesaw-cell-persist {
+  box-shadow: none;
+}
+.tablesaw-enhanced .tablesaw-bar .btn {
+  text-shadow: none;
+  background-image: none;
+}
+.tablesaw-enhanced .tablesaw-bar .btn.btn-select {
+  &:hover {
+    background: $white;
+  }
+}
+.tablesaw-enhanced .tablesaw-bar .btn:hover, .tablesaw-enhanced .tablesaw-bar .btn:focus,.tablesaw-enhanced .tablesaw-bar .btn:active {
+  color: $custom !important;
+  background-color: $gray-200;
+  outline: none !important;
+  box-shadow: none !important;
+  background-image: none;
+}

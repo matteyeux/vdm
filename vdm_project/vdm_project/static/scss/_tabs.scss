@@ -1,0 +1,75 @@
+
+
+
+/* =============
+   Tabs
+============= */
+
+.tab-content {
+  padding: 20px 0 0 0;
+}
+
+.nav-tabs{
+  .nav-item{
+    .nav-link{
+      color: $dark;
+      font-weight: 600;
+      font-family: $font-secondary;
+      &:hover {
+        background-color: rgba($muted, 0.1);
+      }
+      &.active{
+        color: $custom;
+      }
+    }
+  }
+}
+
+/* Vertial tab */
+.tabs-vertical-env {
+  .nav{
+    .nav-link{
+      color: $dark;
+      white-space: nowrap;
+      font-weight: 600;
+      font-family: $font-secondary;
+      &.active{
+        background-color: rgba($muted, 0.1);
+        border: 0;
+        color: $custom;
+      }
+    }
+  }
+}
+
+.tabs-bordered {
+  border-bottom: 2px solid rgba($muted, 0.2) !important;
+  .nav-item{
+    .nav-link{
+      border: 0 !important;
+      background-color: $white !important;
+      padding: 10px 20px !important;
+      &.active{
+        border-bottom: 2px solid $custom !important;
+        margin-bottom: -1px;
+        color: $custom;
+      }
+    }
+  }
+}
+
+
+
+/* Navpills */
+
+.nav-pills{
+  .nav-item{
+    .nav-link{
+      color: $dark;
+      &.active{
+        color: $white;
+        background-color: $custom;
+      }
+    }
+  }
+}

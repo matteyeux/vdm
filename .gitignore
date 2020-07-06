@@ -2,4 +2,13 @@
 env
 dist
 vdm.egg-info
+# TODO Choose between both 
+# script.php generating booking at the root of main folder 
+# script.php generating booking in folder generate_booking
 jsons
+lib 
+generate_booking/json
+generate_booking/lib
+
+# use Flexmonster ? 
+vdm_project/pivot-mongo/*

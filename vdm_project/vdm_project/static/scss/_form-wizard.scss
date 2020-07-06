@@ -1,0 +1,157 @@
+
+
+/* =============
+   Form wizard
+============= */
+
+.wizard > .content {
+  background: $white;
+  min-height: 240px;
+  padding: 20px !important;
+  margin-top: 10px !important;
+}
+
+.wizard > .content > .body {
+  padding: 0px;
+  position: relative;
+  width: 100%;
+
+  input {
+    border: 1px solid darken($gray-200,4%);
+  }
+
+  ul > li {
+    display: block;
+    line-height: 30px;
+  }
+  label.error {
+    color: $danger;
+    margin-left: 0;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  label {
+    display: inline-block;
+    margin-top: 10px;
+  }
+}
+
+.wizard > .steps {
+
+  a{
+    font-size: 16px;
+    text-align: center;
+    font-weight: 700;
+    font-family: $font-secondary;
+  }
+
+  .number {
+    font-size: 54px;
+    line-height: 78px;
+    font-family: $font-secondary;
+    position: absolute;
+    left: 10px;
+    top: -14px;
+    opacity: 0.1;
+  }
+
+  .disabled {
+    a {
+      background: $gray-200;
+      color: lighten($dark,5%) !important;
+      cursor: default;
+      border: 1px solid darken($gray-200,5%);
+      &:hover {
+        background: darken($gray-200,5%);
+        border: 1px solid darken($gray-200,10%);
+      }
+      &:active {
+        background: darken($gray-200,5%);
+        border: 1px solid darken($gray-200,10%);
+      }
+    }
+  }
+  .current {
+    a {
+      background: $custom;
+      &:hover {
+        background: $custom;
+        .number {
+          color: $white;
+          opacity: 0.4;
+        }
+      }
+      &:active {
+        background: $custom;
+        .number {
+          color: $white;
+          opacity: 0.4;
+        }
+      }
+      .number {
+        color: $white;
+        opacity: 0.4;
+      }
+    }
+  }
+  .done {
+    a {
+      background: $gray-200 !important;
+      color: lighten($dark,5%) !important;
+    }
+  }
+}
+
+.wizard > .steps a, .wizard > .steps a:hover, .wizard > .steps a:active, .wizard > .content {
+  border-radius: 2px;
+  position: relative;
+}
+
+.wizard > .actions {
+  margin-top: 15px !important;
+
+  a {
+    background: $custom;
+    border-radius: 2px !important;
+    color: $white;
+
+    &:hover {
+      background: darken($custom,15%);
+      color: $white;
+    }
+    &:active {
+      background: darken($custom,15%);
+      color: $white;
+    }
+  }
+  .disabled {
+    a {
+      background: $white;
+      color: $dark;
+      cursor: default;
+      border: 1px solid #eaeaea;
+      &:hover {
+        background: $gray-200;
+        color: $dark;
+        cursor: default;
+        border: 1px solid #eaeaea;
+      }
+      &:active {
+        background: $gray-200;
+        color: $dark;
+        cursor: default;
+        border: 1px solid #eaeaea;
+      }
+    }
+  }
+}
+
+.wizard.vertical > .content {
+  margin-top: 0px !important;
+}
+
+@media (max-width: 560px) {
+  .wizard.vertical > .steps,.wizard.vertical > .content {
+    width: 100%;
+  }
+}
