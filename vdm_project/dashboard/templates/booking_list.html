@@ -63,44 +63,133 @@
 
 	function numberFormatMoney(float) {
 		let number;
-		let money;
+		let numberFormat;
 		if (float < 1000) {
 			number = Number.parseFloat(float).toFixed(2);
-			money = number.replace('.', ',');
-			return money + " €";
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " €";
 		} else if (float < 1000000) {
 			float = float / 1000;
 			number = Number.parseFloat(float).toFixed(2);
-			money = number.replace('.', ',');
-			return money + "K €";
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " K €";
 		} else if (float < 1000000000) {
 			float = float / 1000000;
 			number = Number.parseFloat(float).toFixed(2);
-			money = number.replace('.', ',');
-			return money + "M €";
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " M €";
 		}
 	}
 
 	function numberFormat(float) {
 		let number;
-		let money;
+		let numberFormat;
 		if (float < 1000) {
 			number = Number.parseFloat(float).toFixed(2);
-			money = number.replace('.', ',');
-			return money;
+			numberFormat = number.replace('.', ',');
+			return numberFormat;
 		} else if (float < 1000000) {
 			float = float / 1000;
 			number = Number.parseFloat(float).toFixed(2);
-			money = number.replace('.', ',');
-			return money + "K";
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " K";
 		} else if (float < 1000000000) {
 			float = float / 1000000;
 			number = Number.parseFloat(float).toFixed(2);
-			money = number.replace('.', ',');
-			return money + "M";
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " M";
 		}
 	}
 
+	function numberFormatInt(float) {
+		let number;
+		let numberFormat;
+		if (float < 1000) {
+			number = Number.parseFloat(float).toFixed(0);
+			numberFormat = number.replace('.', ',');
+			return numberFormat;
+		} else if (float < 1000000) {
+			float = float / 1000;
+			number = Number.parseFloat(float).toFixed(2);
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " K";
+		} else if (float < 1000000000) {
+			float = float / 1000000;
+			number = Number.parseFloat(float).toFixed(2);
+			numberFormat = number.replace('.', ',');
+			return numberFormat + " M";
+		}
+	}
+
+	$(document).ready(function() {
+		setInterval(function getData() {
+			$.ajax({
+				type: "GET",
+				url: "http://127.0.0.1:5000/kpiBookingList/",
+				dataType: "json",
+				cache: true,
+				success: function(data) {
+					console.log(data);
+					total_amount = 0;
+					nb_spectateur = 0;
+					nb_resa = 0;
+					for (const line in data) {
+						total_amount += data[line].TotalPrice;
+						nb_spectateur += data[line].NbSpectateur;
+						nb_resa += 1
+					}
+					avg_price_resa = (total_amount/nb_resa);
+					avg_spec = (nb_spectateur/nb_resa);
+					avg_price = (total_amount/nb_spectateur);
+					$("#total_amount").text(numberFormatMoney(total_amount));
+					$("#nb_resa").text(numberFormatInt(nb_resa));
+					$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
+					$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
+					$("#avg_spec").text(numberFormat(avg_spec));
+					$("#avg_price").text(numberFormatMoney(avg_price));
+					console.log(avg_price);
+
+				},
+				error: function(xhr, textStatus) {
+					console.log("error..");
+				}
+			});
+		}, 2000);
+	});
+
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "http://127.0.0.1:5000/kpiBookingList/",
+			dataType: "json",
+			cache: true,
+			success: function(data) {
+				console.log(data);
+				total_amount = 0;
+				nb_spectateur = 0;
+				nb_resa = 0;
+				for (const line in data) {
+					total_amount += data[line].TotalPrice;
+					nb_spectateur += data[line].NbSpectateur;
+					nb_resa += 1
+				}
+				avg_price_resa = (total_amount/nb_resa);
+				avg_spec = (nb_spectateur/nb_resa);
+				avg_price = (total_amount/nb_spectateur);
+				$("#total_amount").text(numberFormatMoney(total_amount));
+				$("#nb_resa").text(numberFormatInt(nb_resa));
+				$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
+				$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
+				$("#avg_spec").text(numberFormat(avg_spec));
+				$("#avg_price").text(numberFormatMoney(avg_price));
+				console.log(avg_price);
+
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
 
 	$(document).ready(function() {
 		$.ajax({
@@ -150,42 +239,6 @@
 		});
 	});
 
-	$(document).ready(function() {
-		setInterval(function getData() {
-			$.ajax({
-				type: "GET",
-				url: "http://127.0.0.1:5000/kpiBookingList/",
-				dataType: "json",
-				cache: true,
-				success: function(data) {
-					console.log(data);
-					total_amount = 0;
-					nb_spectateur = 0;
-					nb_resa = 0;
-					for (const line in data) {
-						total_amount += data[line].TotalPrice;
-						nb_spectateur += data[line].NbSpectateur;
-						nb_resa += 1
-					}
-					avg_price_resa = (total_amount/nb_resa);
-					avg_spec = (nb_spectateur/nb_resa);
-					avg_price = (total_amount/nb_spectateur);
-					$("#total_amount").text(numberFormatMoney(total_amount));
-					$("#nb_resa").text(numberFormat(nb_resa));
-					$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
-					$("#nb_spectateur").text(numberFormat(nb_spectateur));
-					$("#avg_spec").text(numberFormat(avg_spec));
-					$("#avg_price").text(numberFormatMoney(avg_price));
-					console.log(avg_price);
-
-				},
-				error: function(xhr, textStatus) {
-					console.log("error..");
-				}
-			});
-
-		}, 1000);
-	});
 
 	// function updateData(lastData) {
 	// 	console.log("TESSSSSSSSSSSSSST")
@@ -265,7 +318,7 @@
 						<div class="card-box widget-box-two widget-two-primary">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="CA Cumulé">CA Cumulé</p>
-								<h3 id="total_amount">{{ kpi.total_amount }}</h3>
+								<h3 id="total_amount"><!-- {{ kpi.total_amount }} --></h3>
 							</div>
 						</div>
 					</div>
@@ -274,7 +327,7 @@
 						<div class="card-box widget-box-two widget-two-warning">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Réservation">Nb Réservations</p>
-								<h3 id="nb_resa">{{ kpi.nb_resa }}</h3>
+								<h3 id="nb_resa"><!-- {{ kpi.nb_resa }} --></h3>
 							</div>
 						</div>
 					</div>
@@ -283,7 +336,7 @@
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Prix de vente moyen d'une réservations">Prix par Réservation</p>
-								<h3 id="avg_price_resa">30</h3>
+								<h3 id="avg_price_resa"><!-- 30 --></h3>
 							</div>
 						</div>
 					</div>
@@ -292,7 +345,7 @@
 						<div class="card-box widget-box-two widget-two-light">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Spectateurs">Nb de Spectateurs</p>
-								<h3 id="nb_spectateur">{{ kpi.nb_spectateur }}</h3>
+								<h3 id="nb_spectateur"><!-- {{ kpi.nb_spectateur }} --></h3>
 							</div>
 						</div>
 					</div>
@@ -301,7 +354,7 @@
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Spectateurs par Réservations">Spectateurs / Réservations</p>
-								<h3 id="avg_spec">4</h3>
+								<h3 id="avg_spec"><!-- 4 --></h3>
 							</div>
 						</div>
 					</div>
@@ -310,7 +363,7 @@
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Prix de vente moyen d'un spectateur">Prix par Spectateur</p>
-								<h3 id="avg_price">7.5 €</h3>
+								<h3 id="avg_price"><!-- 7.5 € --></h3>
 							</div>
 						</div>
 					</div>
