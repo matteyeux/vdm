@@ -143,7 +143,7 @@ class KpiBookingList(Resource):
                     "TotalPrice":{"$sum":"$Reservation.prix"}
                 },
             },
-            {"$match": { "CreatedAt": { "$gte": datetime(2019, 7, 6, 0, 0)}}},
+            # {"$match": { "CreatedAt": { "$gte": datetime(2019, 7, 6, 0, 0)}}},
         ])
         data = []
         for reservation in cursor:
