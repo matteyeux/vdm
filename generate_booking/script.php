@@ -17,7 +17,7 @@ $j = 0;
 
 # create dir if it does not exist
 if (!is_dir("jsons")) {
-	mkdir("jsons");
+    mkdir("jsons");
 }
 
 # delete all jsons before generating more crap
@@ -71,10 +71,10 @@ while (true) {
 	$date = date("YmjHis");
     $json_file = $date . "_". $j . ".json";
 
-	$file = fopen("jsons/" . $json_file, 'w');
-	fwrite($file, json_encode($result));
-	fclose($file);
+    $file = fopen("jsons/" . $json_file, 'w');
+    fwrite($file, json_encode($result));
+    fclose($file);
 
-	$j++;
+    $j++;
     echo PHP_EOL;
 }
