@@ -4,6 +4,7 @@ from flask_cors import CORS
 from bson import Binary, Code
 from bson.objectid import ObjectId
 from bson.json_util import loads, dumps
+from datetime import datetime
 import json
 import config
 import utilities
@@ -80,32 +81,8 @@ class BookingList(Resource):
                     "TotalPrice":{"$sum":"$Reservation.prix"}
                 }
             },
-            { "$sort" : {"_id": -1}}
-        ])
-        data = []
-        for reservation in cursor:
-            res_str = json.loads(dumps(reservation))
-            data.append(res_str)
-
-        response = jsonify(data)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.status_code = 200
-        return response
-
-
-@ns_kpiBookingList.route("/")
-class KpiBookingList(Resource):
-    def get(self):
-        """Get bookinglist information."""
-        vdm_database = config.setup_mongo()
-        cursor = vdm_database.booking.aggregate([
-            {"$project":
-                {
-                    "_id": 1,
-                    "NbSpectateur":{"$size":"$Reservation"},
-                    "TotalPrice":{"$sum":"$Reservation.prix"}
-                }
-            }
+            { "$sort" : {"_id": 1}},
+            { "$limit" : 40 }
         ])
         data = []
         for reservation in cursor:
@@ -138,7 +115,35 @@ class IncrementBookingList(Resource):
             },
             # {"$match": { "_id": { "$gt": ObjectId("5ef8ce087d4c386ea0025db0")}}},
             {"$match": { "_id": { "$gt": ObjectId(lastId)}}},
-            { "$limit" : 2 }
+            # { "$limit" : 2 }
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_kpiBookingList.route("/")
+class KpiBookingList(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {"$project":
+                {
+                    "_id": 1,
+                    "NbSpectateur":{"$size":"$Reservation"},
+                    "TotalPrice":{"$sum":"$Reservation.prix"}
+                },
+            },
+            {"$match": { "CreatedAt": { "$gte": datetime(2019, 7, 6, 0, 0)}}},
         ])
         data = []
         for reservation in cursor:
