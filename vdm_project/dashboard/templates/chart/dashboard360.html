@@ -130,38 +130,38 @@
 		});
 	});
 
-	$(document).ready(function() {
-		setInterval(function getData() {
-			$.ajax({
-				type: "GET",
-				url: "http://127.0.0.1:5000/kpiBookingList/",
-				dataType: "json",
-				cache: true,
-				success: function(data) {
-					total_amount = 0;
-					nb_spectateur = 0;
-					nb_resa = 0;
-					for (const line in data) {
-						total_amount += data[line].TotalPrice;
-						nb_spectateur += data[line].NbSpectateur;
-						nb_resa += 1
-					}
-					avg_price_resa = (total_amount/nb_resa);
-					avg_spec = (nb_spectateur/nb_resa);
-					avg_price = (total_amount/nb_spectateur);
-					$("#total_amount").text(numberFormatMoney(total_amount));
-					$("#nb_resa").text(numberFormatInt(nb_resa));
-					$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
-					$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
-					$("#avg_spec").text(numberFormat(avg_spec));
-					$("#avg_price").text(numberFormatMoney(avg_price));
-				},
-				error: function(xhr, textStatus) {
-					console.log("error..");
-				}
-			});
-		}, 2000);
-	});
+	// $(document).ready(function() {
+	// 	setInterval(function getData() {
+	// 		$.ajax({
+	// 			type: "GET",
+	// 			url: "http://127.0.0.1:5000/kpiBookingList/",
+	// 			dataType: "json",
+	// 			cache: true,
+	// 			success: function(data) {
+	// 				total_amount = 0;
+	// 				nb_spectateur = 0;
+	// 				nb_resa = 0;
+	// 				for (const line in data) {
+	// 					total_amount += data[line].TotalPrice;
+	// 					nb_spectateur += data[line].NbSpectateur;
+	// 					nb_resa += 1
+	// 				}
+	// 				avg_price_resa = (total_amount/nb_resa);
+	// 				avg_spec = (nb_spectateur/nb_resa);
+	// 				avg_price = (total_amount/nb_spectateur);
+	// 				$("#total_amount").text(numberFormatMoney(total_amount));
+	// 				$("#nb_resa").text(numberFormatInt(nb_resa));
+	// 				$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
+	// 				$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
+	// 				$("#avg_spec").text(numberFormat(avg_spec));
+	// 				$("#avg_price").text(numberFormatMoney(avg_price));
+	// 			},
+	// 			error: function(xhr, textStatus) {
+	// 				console.log("error..");
+	// 			}
+	// 		});
+	// 	}, 2000);
+	// });
 
 
 

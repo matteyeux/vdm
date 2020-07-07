@@ -221,16 +221,29 @@ class CaThemeDays(Resource):
         cursor = vdm_database.booking.aggregate([
             {
                 "$project": {
+                    "_id": 0,
                     "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
-                    "Game.theme_pricipal":1,
-                    "CA": {"$sum": "$Reservation.prix"}
+                    "Game.theme_pricipal": 1,
+                    "Game.theme_secondaire": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
                 }
             },
             {
                 "$group": {
-                    "_id": "$date",
-                    "Game.theme_pricipal":1,
-                    "CA": {"$sum": "$CA"}
+                    "_id": {"date": "$date", "first_theme": "$Game.theme_pricipal", "second_theme": "$Game.theme_secondaire"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            },
+            {
+                "$project": {
+                    "date": 1,
+                    "first_theme": 1,
+                    "second_theme": 1,
+                    "CA": 1,
+                    "Nb_Spec": 1
+
                 }
             }
         ])
