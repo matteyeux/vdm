@@ -25,17 +25,20 @@ def vdm_booking_list_page(request):
 	# }
 	return render(request, 'booking_list.html', {})
 
-def get_booking_list(request):
-	bookings_data = requests.get(URL).text
-	bookings = json.loads(bookings_data)
-	price = 0.0
-	for booking in bookings:
-		for spectator in booking['Reservation']:
-			price += spectator['prix']
-		price = float("'%.2f".format(price))	
-		total_price = {'total_prix': price}
-		booking.update(total_price)
-		price = 0.0
-	return render(request, 'get_booking_list.html', {
-		'bookings': bookings,
-		})
+# def get_booking_list(request):
+# 	bookings_data = requests.get(URL).text
+# 	bookings = json.loads(bookings_data)
+# 	price = 0.0
+# 	for booking in bookings:
+# 		for spectator in booking['Reservation']:
+# 			price += spectator['prix']
+# 		price = float("'%.2f".format(price))	
+# 		total_price = {'total_prix': price}
+# 		booking.update(total_price)
+# 		price = 0.0
+# 	return render(request, 'get_booking_list.html', {
+# 		'bookings': bookings,
+# 		})
+
+def dashboard360(request):
+	return render(request, 'chart/dashboard360.html', {})

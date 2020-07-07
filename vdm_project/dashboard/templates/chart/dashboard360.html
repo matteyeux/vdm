@@ -163,79 +163,42 @@
 		}, 2000);
 	});
 
-	/*************************************************/
-	/************  Api call get Data list ************/
-	/*************************************************/
+
+
+	/* CA Days */
 	$(document).ready(function() {
 		$.ajax({
-			url: 'http://127.0.0.1:5000/bookingList/',
-			method: 'get',
-			dataType: 'json',
-			cache: true,	
+			type: "GET",
+			url: "http://127.0.0.1:5000/caDays/",
+			dataType: "json",
+			cache: true,
 			success: function(data) {
+				console.log("CA Days");
 				console.log(data);
-				var bookingListTable = $('#booking_list').DataTable({
-					"order": [[0, 'dsc']],
-					dom: 'Bfrtip',
-					buttons: [
-						'copy', 'csv', 'excel', 'pdf'
-					],
-					'columnDefs': [
-						{ 'width': '25px', 'targets': [0] },
-						{ 'sortable': true, 'targets': [0] }
-					],
-				});
-				counter = 0;
-				for (const line in data) {
-					bookingListTable.row.add([
-						counter,
-						data[line].Acheteur.Nom,
-						data[line].Acheteur.Prenom,
-						data[line].NbSpectateur,
-						data[line].Game.Nom,
-						data[line].Game.Jour,
-						data[line].TotalPrice
-					]).draw(false);
-					counter++;
-				}
-				lastData = data[data.length - 1];
-				updateData(lastData, counter);
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
 			}
 		});
 	});
 
-	function updateData(lastData, counter) {
-		objectId = lastData._id.$oid;
+	/* CA per theme */
+	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: 'http://127.0.0.1:5000/incrementBookingList/?lastId='+objectId,
+			url: "http://127.0.0.1:5000/caThemeDays/",
 			dataType: "json",
 			cache: true,
 			success: function(data) {
-				var bookingListTable = $('#booking_list').DataTable();
+				console.log("CA Theme per days");
 				console.log(data);
-				for (const line in data) {
-					bookingListTable.row.add([
-						counter,
-						data[line].Acheteur.Nom,
-						data[line].Acheteur.Prenom,
-						data[line].NbSpectateur,
-						data[line].Game.Nom,
-						data[line].Game.Jour,
-						data[line].TotalPrice
-					]).draw(false);
-					counter++
-				}
-			if (data.length > 0) {
-				lastData = data[data.length - 1];
-			}
-			setTimeout(function(){updateData(lastData, counter)}, 3000);
-			// setTimeout(updateData(lastData, counter), 5000);
-			// setInterval(updateData(lastData, counter), 3000);
-			// updateData(lastData, counter);
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
 			}
 		});
-	}
+	});
+
 
 	</script>
 
@@ -285,7 +248,7 @@
 						<div class="card-box widget-box-two widget-two-primary">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="CA Cumulé">CA Cumulé</p>
-								<h3 id="total_amount"></h3>
+								<h3 id="total_amount"><!-- {{ kpi.total_amount }} --></h3>
 							</div>
 						</div>
 					</div>
@@ -294,7 +257,7 @@
 						<div class="card-box widget-box-two widget-two-warning">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Réservation">Nb Réservations</p>
-								<h3 id="nb_resa"></h3>
+								<h3 id="nb_resa"><!-- {{ kpi.nb_resa }} --></h3>
 							</div>
 						</div>
 					</div>
@@ -303,7 +266,7 @@
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Prix de vente moyen d'une réservations">Prix par Réservation</p>
-								<h3 id="avg_price_resa"></h3>
+								<h3 id="avg_price_resa"><!-- 30 --></h3>
 							</div>
 						</div>
 					</div>
@@ -312,7 +275,7 @@
 						<div class="card-box widget-box-two widget-two-light">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Spectateurs">Nb de Spectateurs</p>
-								<h3 id="nb_spectateur"></h3>
+								<h3 id="nb_spectateur"><!-- {{ kpi.nb_spectateur }} --></h3>
 							</div>
 						</div>
 					</div>
@@ -321,7 +284,7 @@
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Nombre de Spectateurs par Réservations">Spectateurs / Réservations</p>
-								<h3 id="avg_spec"></h3>
+								<h3 id="avg_spec"><!-- 4 --></h3>
 							</div>
 						</div>
 					</div>
@@ -330,7 +293,7 @@
 						<div class="card-box widget-box-two widget-two-info">
 							<div class="wigdet-two-content">
 								<p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Prix de vente moyen d'un spectateur">Prix par Spectateur</p>
-								<h3 id="avg_price"></h3>
+								<h3 id="avg_price"><!-- 7.5 € --></h3>
 							</div>
 						</div>
 					</div>
@@ -338,29 +301,7 @@
 				<!-- Row End -->
 			</div>
 			
-			<!-- Start Row -->
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="card-box">
 
-						<table id="booking_list" class="table table-striped table-bordered">
-							<thead>
-								<tr>
-									<th scope="col">N°</th>
-									<th scope="col">Nom</th>
-									<th scope="col">Prénom</th>
-									<th scope="col">nombre de participants</th>
-									<th scope="col">Thème Sélectionné</th>
-									<th scope="col">Date de la réservation</th>
-									<th scope="col">Montant total réservation</th>
-								</tr>
-							</thead>
-						</table>
-
-					</div>
-				</div>
-			</div>
-			<!-- Row End -->
 
 		</div> 
 		<!-- container-fluid End -->

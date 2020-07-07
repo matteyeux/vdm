@@ -63,6 +63,6 @@ def handle_datetime(data: dict) -> dict:
 def handle_utilities(data: dict) -> dict:
 	"""Call each function to transform the data dict."""
 	data_w_price = handle_prices(data)
-	# data_w_theme = handle_themes(data_w_price)
-	data_w_date = handle_datetime(data_w_price)
+	data_w_theme = handle_themes(data_w_price)
+	data_w_date = handle_datetime(data_w_theme)
 	return data_w_date
