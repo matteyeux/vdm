@@ -67,8 +67,8 @@ while (true) {
             $result['Reservation'][$i]['Tarif'] = $otherPersonType;
         }
     }
-	
-	$date = date("YmjHis");
+
+    $date = date("YmjHis");
     $json_file = $date . "_". $j . ".json";
 
     $file = fopen("jsons/" . $json_file, 'w');
