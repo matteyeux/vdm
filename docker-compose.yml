@@ -11,19 +11,27 @@ services:
             - 27017:27017
 
     # Python API
-    api:
-        build:
-            context: services/api
-        image: api_vdm_img
-        container_name: api_vdm
-        restart: always
-        volumes: 
-            - ./api:/home/api
-        working_dir: /home/api
-        ports: 
-            - 5000:5000
-        entrypoint: python3 vdm/main.py
-        # entrypoint: cat
+    # api:
+    #     build:
+    #         context: .
+    #     image: api_vdm_img
+    #         # context: services/api
+    #     container_name: api_vdm
+    #     restart: always
+    #     volumes: 
+    #         - ./api:/home/api
+    #         # - "./api:/home/api:delegated"
+    #         # - "./api/vdm:/home/api/vdm:delegated"
+    #     working_dir: /home/api
+    #     ports: 
+    #         - 5000:5000
+    #     # command: ls -l
+    #     # command: 
+    #         # bash -c "echo \"Test...\n\" pip3 install && python3 vdm/main.py"
+    #         # python /home/api/vdm/main.py
+    #     # command: python3 --version
+    #     entrypoint: python3 vdm/main.py
+    #     # entrypoint: cat
         
     # Django
     # front:
