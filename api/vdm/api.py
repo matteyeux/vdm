@@ -22,8 +22,13 @@ ns_bookingList = api.namespace('bookingList', description="booking list stuff")
 ns_incrementBookingList = api.namespace('incrementBookingList', description="incremental booking list stuff")
 ns_kpiBookingList = api.namespace('kpiBookingList', description="kpi of page booking list")
 ns_caDays = api.namespace('caDays', description="CA per day")
-ns_caSplitOldNew = api.namespace('caSplitOldNew', description="CA per day")
+ns_caSplitOldNew = api.namespace('caSplitOldNew', description="CA per split customer Old / New")
+ns_caRoomDays = api.namespace('caRoomDays', description="CA per rooms and days")
+ns_cadRoom = api.namespace('cadRoom', description="CAD per rooms")
 ns_caThemeDays = api.namespace('caThemeDays', description="CA per theme and days")
+ns_cadTheme = api.namespace('cadTheme', description="CAD per theme")
+ns_ptThemeDays = api.namespace('ptThemeDays', description="Points per theme and days")
+ns_ptdTheme = api.namespace('ptdTheme', description="Points to date per theme")
 
 
 @ns_root.route('/')
@@ -211,6 +216,87 @@ class CaSplitOldNew(Resource):
         return response
 
 
+@ns_caRoomDays.route("/")
+class CaRoomDays(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
+                    "Game.Nom": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"date": "$date", "Room": "$Game.Nom"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            },
+            {
+                "$group":{
+                    "_id": "$_id.date",
+                    "Rooms": { "$push": {
+                        "Room": "$_id.Room",
+                        "CA": "$CA",
+                        "Nb_Spec": "$Nb_Spec",
+                    }}
+                }
+            }
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_cadRoom.route("/")
+class CadRoom(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "Game.Nom": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"Rooms": "$Game.Nom"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            },
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
 @ns_caThemeDays.route("/")
 class CaThemeDays(Resource):
     def get(self):
@@ -236,16 +322,6 @@ class CaThemeDays(Resource):
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
             },
-            {
-                "$project": {
-                    "date": 1,
-                    "first_theme": 1,
-                    "second_theme": 1,
-                    "CA": 1,
-                    "Nb_Spec": 1
-
-                }
-            }
         ])
         data = []
         for reservation in cursor:
@@ -257,3 +333,112 @@ class CaThemeDays(Resource):
         response.status_code = 200
         return response
 
+
+@ns_cadTheme.route("/")
+class CadTheme(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
+                    "Game.theme_pricipal": 1,
+                    "Game.theme_secondaire": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"date": "$date", "first_theme": "$Game.theme_pricipal", "second_theme": "$Game.theme_secondaire"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            },
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_ptThemeDays.route("/")
+class PtThemeDays(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
+                    "Game.theme_pricipal": 1,
+                    "Game.theme_secondaire": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"date": "$date", "first_theme": "$Game.theme_pricipal", "second_theme": "$Game.theme_secondaire"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            },
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_ptdTheme.route("/")
+class PtdTheme(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "Game.theme_pricipal": 1,
+                    "Game.theme_secondaire": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"first_theme": "$Game.theme_pricipal", "second_theme": "$Game.theme_secondaire"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            },
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
