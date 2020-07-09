@@ -24,7 +24,7 @@ def get_CA_days(request, *args, **kwargs):
 	CAdays = [
 		['Jour', 'CA', {"role": "annotation"}]
 		]
-	for i in reversed(range(len(CAdays_list))):
+	for i in range(len(CAdays_list)):
 		date = CAdays_list[i]['_id']
 		CA = CAdays_list[i]['CA']
 		CA_anno = numFormat.formatNumberMoney(CA)
@@ -136,12 +136,12 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 	CAThemedays = [
 		[
 			'Jour',
-			'Braquage', {"role": "annotation"}, 
+			'Braquage', {"role": "annotation"},
 			'Stress', {"role": "annotation"},
 			'Rapidité', {"role": "annotation"},
 			'Mythologique', {"role": "annotation"},
 			'Stratégie', {"role": "annotation"},
-			'Psychologie', {"role": "annotation"},
+			'Psychologique', {"role": "annotation"},
 			'Santé', {"role": "annotation"},
 			'Amour', {"role": "annotation"},
 			'Horreur', {"role": "annotation"},
@@ -150,7 +150,8 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 	# CATheme1, CATheme2, CATheme3, CATheme4, CATheme5, CATheme6, CATheme7, CATheme8, CATheme9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
 	# CATheme1_anno, CATheme2_anno, CATheme3_anno, CATheme4_anno, CATheme5_anno = "0", "0", "0", "0", "0"
 	# CATheme6_anno, CATheme7_anno, CATheme8_anno, CATheme9_anno = "0", "0", "0", "0"
-	for i in reversed(range(len(CAThemedays_list))):
+	print(type(CAThemedays_list))
+	for i in range(len(CAThemedays_list)):
 		CATheme1 = 0
 		CATheme1_anno = "0"
 		CATheme2 = 0
@@ -170,34 +171,41 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 		CATheme9 = 0
 		CATheme9_anno = "0"
 		date = CAThemedays_list[i]['_id']
+		print("here")
 		for elem in CAThemedays_list[i]['Themes']:
 			if elem['First_theme'] == 'Braquage' or elem['Second_theme'] == 'Braquage':
+				print("###################### Braquage ###################")
 				CATheme1 += elem['CA']
 				CATheme1_anno = numFormat.formatNumberMoney(CATheme1)
-			elif elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
+			if elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
 				CATheme2 += elem['CA']
 				CATheme2_anno = numFormat.formatNumberMoney(CATheme2)
-			elif elem['First_theme'] == 'Rapidité' or elem['Second_theme'] == 'Rapidité':
+			if elem['First_theme'] == 'Rapidité' or elem['Second_theme'] == 'Rapidité':
 				CATheme3 += elem['CA']
 				CATheme3_anno = numFormat.formatNumberMoney(CATheme3)
-			elif elem['First_theme'] == 'Mythologique' or elem['Second_theme'] == 'Mythologique':
+			if elem['First_theme'] == 'Mythologique' or elem['Second_theme'] == 'Mythologique':
 				CATheme4 += elem['CA']
 				CATheme4_anno = numFormat.formatNumberMoney(CATheme4)
-			elif elem['First_theme'] == 'Stratégie' or elem['Second_theme'] == 'Stratégie':
+			if elem['First_theme'] == 'Stratégie' or elem['Second_theme'] == 'Stratégie':
 				CATheme5 += elem['CA']
 				CATheme5_anno = numFormat.formatNumberMoney(CATheme5)
-			elif elem['First_theme'] == 'Psychologique' or elem['Second_theme'] == 'Psychologique':
+			if elem['First_theme'] == 'Psychologique' or elem['Second_theme'] == 'Psychologique':
+				print("###################### Psychologique ###################")
 				CATheme6 += elem['CA']
 				CATheme6_anno = numFormat.formatNumberMoney(CATheme6)
-			elif elem['First_theme'] == 'Santé' or elem['Second_theme'] == 'Santé':
+			if elem['First_theme'] == 'Santé' or elem['Second_theme'] == 'Santé':
 				CATheme7 += elem['CA']
 				CATheme7_anno = numFormat.formatNumberMoney(CATheme7)
-			elif elem['First_theme'] == 'Amour' or elem['Second_theme'] == 'Amour':
+			if elem['First_theme'] == 'Amour' or elem['Second_theme'] == 'Amour':
 				CATheme8 += elem['CA']
 				CATheme8_anno = numFormat.formatNumberMoney(CATheme8)
-			elif elem['First_theme'] == 'Horreur' or elem['Second_theme'] == 'Horreur':
+			if elem['First_theme'] == 'Horreur' or elem['Second_theme'] == 'Horreur':
 				CATheme9 += elem['CA']
 				CATheme9_anno = numFormat.formatNumberMoney(CATheme9)
+			print("=====================================")
+			print(elem['First_theme'])
+			print(elem['Second_theme'])
+			print("=====================================")
 		CAThemeday = [
 			date, 
 			CATheme1, CATheme1_anno,
