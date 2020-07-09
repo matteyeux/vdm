@@ -259,7 +259,6 @@
 
     <script type="text/javascript">
     	google.charts.setOnLoadCallback(drawChart1);
-    	var CARoomDays = {{ CARoomDays| safe }};
       function drawChart1() {
         var data = google.visualization.arrayToDataTable([
           ['Year', 'Sales', 'Expenses'],
@@ -279,6 +278,8 @@
 
         chart.draw(data, options);
       }	
+    	// var CARoomDays = {{ CARoomDays| safe }}
+
 
     </script>
 
