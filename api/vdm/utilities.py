@@ -27,7 +27,7 @@ def handle_themes(data: dict) -> dict:
         second_theme = "Mythologique"
     elif data['Game']['Nom'] == "Interminable attente chez le medecin":
         first_theme = "Stratégie"
-        second_theme = "Psychologie"
+        second_theme = "Psychologique"
     elif data['Game']['Nom'] == "Soutenance finale":
         first_theme = "Stress"
         second_theme = "Rapidité"

@@ -112,35 +112,49 @@
 		});
 	});
 
+	</script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+	/*************************************************/
+	/*********  Api call get Data to Chart  **********/
+	/*************************************************/
+
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.load('current', {'packages':['sankey']});
+
 	/* CA Days */
-	// $(document).ready(function() {
-	// 	$.ajax({
-	// 		type: "GET",
-	// 		url: "http://127.0.0.1:5000/caDays/",
-	// 		dataType: "json",
-	// 		cache: true,
-	// 		success: function(data) {
-	// 			console.log("CA Days");
-	// 			console.log(data);
-	// 		},
-	// 		error: function(xhr, textStatus) {
-	// 			console.log("error..");
-	// 		}
-	// 	});
-	// });
-
-	/* CAD Days split Old/New Customer */
-
-	/* CA per rooms per days */
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:5000/caRoomDays/",
+			// url: "http://127.0.0.1:5000/caDays/",
+			url: "/api/get_CA_days",
 			dataType: "json",
 			cache: true,
-			success: function(data) {
-				console.log("CA Rooms per days");
-				console.log(data);
+			success: function(dataCaDays) {
+				// console.log("CA Days");
+				// console.log(dataCaDays);
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per Days
+					var data = google.visualization.arrayToDataTable(dataCaDays);
+
+					var options = {
+						title: 'CA journalier',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// animation: {
+						// 	duration: 2000,
+						// 	easing: 'out',
+						// 	"startup": true
+						// }
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_CADays'));
+					chart.draw(data, options);
+				}
 			},
 			error: function(xhr, textStatus) {
 				console.log("error..");
@@ -148,39 +162,249 @@
 		});
 	});
 
-	// /* CAD per rooms */
-	// $(document).ready(function() {
-	// 	$.ajax({
-	// 		type: "GET",
-	// 		url: "http://127.0.0.1:5000/cadRoom/",
-	// 		dataType: "json",
-	// 		cache: true,
-	// 		success: function(data) {
-	// 			console.log("CAD Rooms");
-	// 			console.log(data);
-	// 		},
-	// 		error: function(xhr, textStatus) {
-	// 			console.log("error..");
-	// 		}
-	// 	});
-	// });
+	// TODO
+	/* CAD Days split Old/New Customer */
 
-	// /* CA per theme per days */
-	// $(document).ready(function() {
-	// 	$.ajax({
-	// 		type: "GET",
-	// 		url: "http://127.0.0.1:5000/caThemeDays/",
-	// 		dataType: "json",
-	// 		cache: true,
-	// 		success: function(data) {
-	// 			console.log("CA Theme per days");
-	// 			console.log(data);
-	// 		},
-	// 		error: function(xhr, textStatus) {
-	// 			console.log("error..");
-	// 		}
-	// 	});
-	// });
+	/* CA per rooms per days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_CA_Rooms_Days",
+			dataType: "json",
+			cache: true,
+			success: function(dataCaRoomsDays) {
+				// console.log("CA Rooms per days");
+				// console.log(dataCaRoomsDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCaRoomsDays);
+
+					var options = {
+						title: 'CA journalier',
+						legend: {position: 'top', maxLines: 3},
+						vAxis: { format:'short'},
+						isStacked: true,
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						}
+					};
+
+			        var chart = new google.visualization.ColumnChart(document.getElementById('chart_caRoomDays'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD per rooms */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_CA_Rooms",
+			dataType: "json",
+			cache: true,
+			success: function(dataCaRoomsDays) {
+				// console.log("CAD Rooms");
+				// console.log(dataCaRoomsDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCaRoomsDays);
+
+					var options = {
+						title: 'CAD par Salles',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_cadRooms'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Spectator per rooms */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Rooms",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectRoomsDays) {
+				// console.log("CAD Rooms");
+				// console.log(dataCaRoomsDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataSpectRoomsDays);
+
+					var options = {
+						title: 'Nombre de spectateurs par Salles',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_spectRooms'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CA per theme per days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_CA_Themes_Days",
+			dataType: "json",
+			cache: true,
+			success: function(dataCaThemesDays) {
+				console.log("CA Theme per days");
+				console.log(dataCaThemesDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCaThemesDays);
+
+					var options = {
+						title: 'Projection de CA par Tème',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.ColumnChart(document.getElementById('chart_caThemesDays'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD per Themes */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_CA_Themes",
+			dataType: "json",
+			cache: true,
+			success: function(dataCadThemes) {
+				// console.log("CAD Rooms");
+				// console.log(dataCaRoomsDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCadThemes);
+
+					var options = {
+						title: 'Projection du CAD par Thèmes',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_cadThemes'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD per Themes */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Themes",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectThemes) {
+				// console.log("CAD Rooms");
+				// console.log(dataCaRoomsDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataSpectThemes);
+
+					var options = {
+						title: 'Projection du Nombre de Spectateurs par Thèmes',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_spectThemes'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Correlation between Room and Thems with Points */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Points_Themes",
+			dataType: "json",
+			cache: true,
+			success: function(dataCorrPointsRoomsThemes) {
+				// console.log("CAD Rooms");
+				// console.log(dataCaRoomsDays);
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCorrPointsRoomsThemes);
+
+					var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f','#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+
+				    var options = {
+				    	// height: 650,
+				    	sankey: {
+				    		node: {
+				        		colors: colors
+				        	},
+				        	link: {
+				        		colorMode: 'gradient',
+				        		colors: colors
+				        	}
+				      	}
+				    };
+
+			        var chart = new google.visualization.Sankey(document.getElementById('chart_corrPointsRoomThemes'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
 
 	// /* CAD per theme */
 	// $(document).ready(function() {
@@ -198,88 +422,6 @@
 	// 		}
 	// 	});
 	// });
-
-	</script>
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-		google.charts.load('current', {'packages':['corechart']});
-		google.charts.setOnLoadCallback(drawChart);
-
-		var CAdays = {{ CAdays| safe }};
-		// var CAdays_vf = JSON.parse(CAdays);
-		console.log("CAdays");
-		console.log(CAdays);
-		// var CARoomDays = {{ CARoomDays| safe }};
-		// function drawChart() {
-		// 	// Draw Chart CA per Days
-		// 	var data = google.visualization.arrayToDataTable(CAdays);
-
-		// 	var options = {
-		// 		title: 'CA journalier',
-		// 		curveType: 'function',
-		// 		legend: { position: 'top' },
-		// 		vAxis: { format:'short'}
-		// 	};
-
-		// 	var chart = new google.visualization.LineChart(document.getElementById('chart_CADays'));
-		// 	chart.draw(data, options);
-
-		// 	// Draw Chart CA per rooms and days
-		// 	// var CARoomDays_data = google.visualization.arrayToDataTable(CARoomDays);
-
-		// 	// var CARoomDays_options = {
-		// 	// 	title: 'CA journalier',
-		// 	// 	curveType: 'function',
-		// 	// 	legend: { position: 'top' },
-		// 	// 	vAxis: { format:'short'},
-		// 	// 	isStacked: true
-		// 	// };
-
-	 //  //       var chart_CARoomDays = new google.visualization.BarChart(document.getElementById('chart_caRoomDays'));
-	 //  //       chart_CARoomDays.draw(CARoomDays_data, CARoomDays_options);
-		// }
-		
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(CAdays);
-
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_CADays'));
-
-        chart.draw(data, options);
-      }	
-
-    </script>
-
-    <script type="text/javascript">
-    	google.charts.setOnLoadCallback(drawChart1);
-      function drawChart1() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_caRoomDays'));
-
-        chart.draw(data, options);
-      }	
-    	// var CARoomDays = {{ CARoomDays| safe }}
-
 
     </script>
 
@@ -314,7 +456,7 @@
 			</div>
 			<!-- End row -->
 
-{{CARoomdays}}
+
 			<div id="ChartCAdays" data="12"/>
 			<div>
 				<!-- Start Row -->
@@ -405,7 +547,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4><u>CA Total journalier par Salle & Répartition du CAD par Salle</u></h4>
+						<h4><u>CA Total journalier par Salles & Répartition du CAD par Salles & Nombre de spectateurs par Salles</u></h4>
 					</div>
 				</div>
 			</div>
@@ -413,9 +555,54 @@
 			
 			<!-- Start Row -->
 			<div class="row">
-				<div id="chart_caRoomDays" style="min-height: 350px; width: 65%"></div>
+				<div id="chart_caRoomDays" style="min-height: 800px; width: 65%"></div>
 				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
-				<div id="#" style="min-height: 350px; width: 30%"></div>
+				<div class="col">
+					<div id="chart_cadRooms" style="min-height: 400px; width: 100%"></div>
+					<div id="chart_spectRooms" style="min-height: 400px; width: 100%"></div>
+				</div>
+			</div>
+			<!-- Row End -->
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4><u>Projection de CA & du nombre de Spectateurs attribués à chaque thèmes</u></h4>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
+			
+			<!-- Start Row -->
+			<div class="row">
+				<div id="chart_caThemesDays" style="min-height: 800px; width: 65%"></div>
+				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div class="col">
+					<div id="chart_cadThemes" style="min-height: 400px; width: 100%"></div>
+					<div id="chart_spectThemes" style="min-height: 400px; width: 100%"></div>
+				</div>
+			</div>
+			<!-- Row End -->
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4><u>Corrélation entre le CA par salles et le CA par thème</u></h4>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
+			
+			<!-- Start Row -->
+			<div class="row">
+				<div id="chart_corrPointsRoomThemes" style="min-height: 800px; width: 65%"></div>
+				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div class="col">
+					<div id="#" style="min-height: 400px; width: 100%"></div>
+					<div id="#" style="min-height: 400px; width: 100%"></div>
+				</div>
 			</div>
 			<!-- Row End -->
 

@@ -1,6 +1,7 @@
 import requests 
 import json
 from django.shortcuts import render
+from django.http import JsonResponse
 
 from . import numFormat
 
@@ -10,40 +11,14 @@ def vdm_report_page(request):
 	return render(request, 'order_report.html', {})
 
 def vdm_booking_list_page(request):
-	# bookings_kpi = requests.get('http://127.0.0.1:5000/kpiBookingList/').text
-	# kpi_list = json.loads(bookings_kpi)
-	# total_amount = 0
-	# nb_resa = 0
-	# nb_spectateur = 0
-	# for elem in kpi_list:
-	# 	total_amount += elem['TotalPrice']
-	# 	nb_resa += 1
-	# 	nb_spectateur += elem['NbSpectateur']
-
-	# kpi = {
-	# 	'total_amount': total_amount,
-	# 	'nb_resa': nb_resa,
-	# 	'nb_spectateur': nb_spectateur
-	# }
 	return render(request, 'booking_list.html', {})
 
-# def get_booking_list(request):
-# 	bookings_data = requests.get(URL).text
-# 	bookings = json.loads(bookings_data)
-# 	price = 0.0
-# 	for booking in bookings:
-# 		for spectator in booking['Reservation']:
-# 			price += spectator['prix']
-# 		price = float("'%.2f".format(price))	
-# 		total_price = {'total_prix': price}
-# 		booking.update(total_price)
-# 		price = 0.0
-# 	return render(request, 'get_booking_list.html', {
-# 		'bookings': bookings,
-# 		})
-
 def dashboard360(request):
-	# Request Chart CA per Days
+	return render(request, 'chart/dashboard360.html', {})
+
+
+# Request Chart CA per Days
+def get_CA_days(request, *args, **kwargs):
 	bookings_CAdays = requests.get('http://127.0.0.1:5000/caDays/').text
 	CAdays_list = json.loads(bookings_CAdays)
 	CAdays = [
@@ -55,8 +30,11 @@ def dashboard360(request):
 		CA_anno = numFormat.formatNumberMoney(CA)
 		CAday = [date, CA, CA_anno]
 		CAdays.append(CAday)
+	return JsonResponse(CAdays, safe=False) # http response
 
-	# Request Chart CA per Rooms and per Days
+
+# Request Chart CA per Rooms and per Days
+def get_CA_Rooms_Days(request, *args, **kwargs):
 	bookings_CARoomdays = requests.get('http://127.0.0.1:5000/caRoomDays/').text
 	CARoomdays_list = json.loads(bookings_CARoomdays)
 	CARoomdays = [
@@ -74,7 +52,6 @@ def dashboard360(request):
 		]
 	]
 	for i in reversed(range(len(CARoomdays_list))):
-		date = CARoomdays_list[i]['_id']
 		for elem in CARoomdays_list[i]['Rooms']:
 			if elem['Room'] == 'Interminable attente chez le medecin':
 				CARoom1 = elem['CA']
@@ -103,6 +80,7 @@ def dashboard360(request):
 			elif elem['Room'] == 'Mariage sans alcool':
 				CARoom9 = elem['CA']
 				CARoom9_anno = numFormat.formatNumberMoney(CARoom9)
+		date = CARoomdays_list[i]['_id']
 		CARoomday = [
 			date, 
 			CARoom1, CARoom1_anno,
@@ -116,8 +94,202 @@ def dashboard360(request):
 			CARoom9, CARoom9_anno,
 			]
 		CARoomdays.append(CARoomday)
+	return JsonResponse(CARoomdays, safe=False) # http response
 
-	return render(request, 'chart/dashboard360.html', {
-		'CAdays': CAdays,
-		'CARoomdays': CARoomdays
-		})
+
+# Request Chart CA per Days
+def get_CA_Rooms(request, *args, **kwargs):
+	bookings_CArooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
+	CArooms_list = json.loads(bookings_CArooms)
+	CArooms = [
+		['Salle', 'CA', {"role": "annotation"}]
+		]
+	for i in reversed(range(len(CArooms_list))):
+		room = CArooms_list[i]['_id']['Rooms']
+		CA = CArooms_list[i]['CA']
+		CA_anno = numFormat.formatNumberMoney(CA)
+		CAroom = [room, CA, CA_anno]
+		CArooms.append(CAroom)
+	return JsonResponse(CArooms, safe=False) # http response
+
+
+# Request Chart CA per Days
+def get_Spect_Rooms(request, *args, **kwargs):
+	bookings_Spectrooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
+	Spectrooms_list = json.loads(bookings_Spectrooms)
+	Spectrooms = [
+		['Salle', 'Nombre de Spectateurs', {"role": "annotation"}]
+		]
+	for i in reversed(range(len(Spectrooms_list))):
+		room = Spectrooms_list[i]['_id']['Rooms']
+		Spect = Spectrooms_list[i]['Nb_Spec']
+		Spect_anno = numFormat.formatNumberMoney(Spect)
+		Spectroom = [room, Spect, Spect_anno]
+		Spectrooms.append(Spectroom)
+	return JsonResponse(Spectrooms, safe=False) # http response
+
+
+# Request Chart CA per thems and per Days
+def get_CA_Themes_Days(request, *args, **kwargs):
+	bookings_CAThemedays = requests.get('http://127.0.0.1:5000/caThemeDays/').text
+	CAThemedays_list = json.loads(bookings_CAThemedays)
+	CAThemedays = [
+		[
+			'Jour',
+			'Braquage', {"role": "annotation"}, 
+			'Stress', {"role": "annotation"},
+			'Rapidité', {"role": "annotation"},
+			'Mythologique', {"role": "annotation"},
+			'Stratégie', {"role": "annotation"},
+			'Psychologie', {"role": "annotation"},
+			'Santé', {"role": "annotation"},
+			'Amour', {"role": "annotation"},
+			'Horreur', {"role": "annotation"},
+		]
+	]
+	# CATheme1, CATheme2, CATheme3, CATheme4, CATheme5, CATheme6, CATheme7, CATheme8, CATheme9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+	# CATheme1_anno, CATheme2_anno, CATheme3_anno, CATheme4_anno, CATheme5_anno = "0", "0", "0", "0", "0"
+	# CATheme6_anno, CATheme7_anno, CATheme8_anno, CATheme9_anno = "0", "0", "0", "0"
+	for i in reversed(range(len(CAThemedays_list))):
+		CATheme1 = 0
+		CATheme1_anno = "0"
+		CATheme2 = 0
+		CATheme2_anno = "0"
+		CATheme3 = 0
+		CATheme3_anno = "0"
+		CATheme4 = 0
+		CATheme4_anno = "0"
+		CATheme5 = 0
+		CATheme5_anno = "0"
+		CATheme6 = 0
+		CATheme6_anno = "0"
+		CATheme7 = 0
+		CATheme7_anno = "0"
+		CATheme8 = 0
+		CATheme8_anno = "0"
+		CATheme9 = 0
+		CATheme9_anno = "0"
+		date = CAThemedays_list[i]['_id']
+		for elem in CAThemedays_list[i]['Themes']:
+			if elem['First_theme'] == 'Braquage' or elem['Second_theme'] == 'Braquage':
+				CATheme1 += elem['CA']
+				CATheme1_anno = numFormat.formatNumberMoney(CATheme1)
+			elif elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
+				CATheme2 += elem['CA']
+				CATheme2_anno = numFormat.formatNumberMoney(CATheme2)
+			elif elem['First_theme'] == 'Rapidité' or elem['Second_theme'] == 'Rapidité':
+				CATheme3 += elem['CA']
+				CATheme3_anno = numFormat.formatNumberMoney(CATheme3)
+			elif elem['First_theme'] == 'Mythologique' or elem['Second_theme'] == 'Mythologique':
+				CATheme4 += elem['CA']
+				CATheme4_anno = numFormat.formatNumberMoney(CATheme4)
+			elif elem['First_theme'] == 'Stratégie' or elem['Second_theme'] == 'Stratégie':
+				CATheme5 += elem['CA']
+				CATheme5_anno = numFormat.formatNumberMoney(CATheme5)
+			elif elem['First_theme'] == 'Psychologique' or elem['Second_theme'] == 'Psychologique':
+				CATheme6 += elem['CA']
+				CATheme6_anno = numFormat.formatNumberMoney(CATheme6)
+			elif elem['First_theme'] == 'Santé' or elem['Second_theme'] == 'Santé':
+				CATheme7 += elem['CA']
+				CATheme7_anno = numFormat.formatNumberMoney(CATheme7)
+			elif elem['First_theme'] == 'Amour' or elem['Second_theme'] == 'Amour':
+				CATheme8 += elem['CA']
+				CATheme8_anno = numFormat.formatNumberMoney(CATheme8)
+			elif elem['First_theme'] == 'Horreur' or elem['Second_theme'] == 'Horreur':
+				CATheme9 += elem['CA']
+				CATheme9_anno = numFormat.formatNumberMoney(CATheme9)
+		CAThemeday = [
+			date, 
+			CATheme1, CATheme1_anno,
+			CATheme2, CATheme2_anno,
+			CATheme3, CATheme3_anno,
+			CATheme4, CATheme4_anno,
+			CATheme5, CATheme5_anno,
+			CATheme6, CATheme6_anno,
+			CATheme7, CATheme7_anno,
+			CATheme8, CATheme8_anno,
+			CATheme9, CATheme9_anno,
+			]
+		CAThemedays.append(CAThemeday)
+	return JsonResponse(CAThemedays, safe=False) # http response
+
+
+# Request Chart CA per Themes
+def get_CA_Themes(request, *args, **kwargs):
+	bookings_CAthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
+	bookings_CAthemesS = requests.get('http://127.0.0.1:5000/cadThemeSecond/').text
+	CAthemesF_list = json.loads(bookings_CAthemesF)
+	CAthemesS_list = json.loads(bookings_CAthemesS)
+	CAthemes = [
+		['Thèmes', 'CA', {"role": "annotation"}]
+		]
+
+	for elem in CAthemesF_list:
+		theme = elem['_id']['ThemeF']
+		CA = elem['CA']
+		CA_anno = numFormat.formatNumberMoney(CA)
+		CAtheme = [theme, CA, CA_anno]
+		CAthemes.append(CAtheme)
+
+	for elem in CAthemesS_list:
+		for i in range(len(CAthemes)):
+			if elem['_id']['ThemeS'] == CAthemes[i][0]:
+				CAthemes[i][1] = CAthemes[i][1] + elem['CA']
+				CAthemes[i][2] = numFormat.formatNumberMoney(CAthemes[i][1])
+	return JsonResponse(CAthemes, safe=False) # http response
+
+
+# Request Chart CA per Themes
+def get_Spect_Themes(request, *args, **kwargs):
+	bookings_SpectthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
+	bookings_SpectthemesS = requests.get('http://127.0.0.1:5000/cadThemeSecond/').text
+	SpectthemesF_list = json.loads(bookings_SpectthemesF)
+	SpectthemesS_list = json.loads(bookings_SpectthemesS)
+	Spectthemes = [
+		['Thèmes', 'Nombre de Spectateurs', {"role": "annotation"}]
+		]
+
+	for elem in SpectthemesF_list:
+		theme = elem['_id']['ThemeF']
+		Spect = elem['Nb_Spec']
+		Spect_anno = numFormat.formatNumberMoney(Spect)
+		Specttheme = [theme, Spect, Spect_anno]
+		Spectthemes.append(Specttheme)
+
+	for elem in SpectthemesS_list:
+		for i in range(len(Spectthemes)):
+			if elem['_id']['ThemeS'] == Spectthemes[i][0]:
+				Spectthemes[i][1] = Spectthemes[i][1] + elem['Nb_Spec']
+				Spectthemes[i][2] = numFormat.formatNumberMoney(Spectthemes[i][1])
+	return JsonResponse(Spectthemes, safe=False) # http response
+
+
+# Request Chart Points per Themes
+def get_Points_Themes(request, *args, **kwargs):
+	bookings_pointThemesF = requests.get('http://127.0.0.1:5000/ptRoomThemesF/').text
+	bookings_pointThemesS = requests.get('http://127.0.0.1:5000/ptRoomThemesS/').text
+	pointThemesF_list = json.loads(bookings_pointThemesF)
+	pointThemesS_list = json.loads(bookings_pointThemesS)
+	pointThemes = [
+		['Salles', 'Thèmes', 'Points' , {"role": "annotation"}]
+		]
+
+	for elem in pointThemesF_list:
+		room = elem['_id']['Salle']
+		theme = elem['_id']['ThemeF']
+		point = elem['Nb_Spec']*3
+		point_anno = numFormat.formatNumberInt(point)
+		pointTheme = [room, theme, point, point_anno]
+		pointThemes.append(pointTheme)
+
+	for elem in pointThemesS_list:
+		room = elem['_id']['Salle']
+		theme = elem['_id']['ThemeS']
+		point = elem['Nb_Spec']
+		point_anno = numFormat.formatNumberInt(point)
+		pointTheme = [room, theme, point, point_anno]
+		pointThemes.append(pointTheme)
+
+	return JsonResponse(pointThemes, safe=False) # http response
+
+

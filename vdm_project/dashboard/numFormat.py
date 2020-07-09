@@ -3,7 +3,7 @@ def formatNumberInt(number):
 		num_anno = str(int(number))
 	elif number < 1000000:
 		num_tmp = number/1000
-		num_anno = str(int(num_tmp)) + " K"
+		num_anno = str(num_tmp) + " K"
 
 	return num_anno
 

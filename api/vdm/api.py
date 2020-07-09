@@ -26,9 +26,15 @@ ns_caSplitOldNew = api.namespace('caSplitOldNew', description="CA per split cust
 ns_caRoomDays = api.namespace('caRoomDays', description="CA per rooms and days")
 ns_cadRoom = api.namespace('cadRoom', description="CAD per rooms")
 ns_caThemeDays = api.namespace('caThemeDays', description="CA per theme and days")
-ns_cadTheme = api.namespace('cadTheme', description="CAD per theme")
+
+ns_cadThemeFirst = api.namespace('cadThemeFirst', description="CAD per First theme")
+ns_cadThemeSecond = api.namespace('cadThemeSecond', description="CAD per Second theme")
+
 ns_ptThemeDays = api.namespace('ptThemeDays', description="Points per theme and days")
 ns_ptdTheme = api.namespace('ptdTheme', description="Points to date per theme")
+
+ns_ptRoomThemesF = api.namespace('ptRoomThemesF', description="Points distributed per rooms and themes First")
+ns_ptRoomThemesS = api.namespace('ptRoomThemesS', description="Points distributed per rooms and themes Second")
 
 
 @ns_root.route('/')
@@ -140,8 +146,6 @@ class IncrementBookingList(Resource):
 class KpiBookingList(Resource):
     def get(self):
         """Get bookinglist information."""
-        today = datetime.today().date().isoformat()
-        print(today)
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {"$project":
@@ -168,8 +172,6 @@ class KpiBookingList(Resource):
 class CADays(Resource):
     def get(self):
         """Get bookinglist information."""
-        today = datetime.today().date().isoformat()
-        print(today)
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -200,8 +202,6 @@ class CADays(Resource):
 class CaSplitOldNew(Resource):
     def get(self):
         """Get bookinglist information."""
-        today = datetime.today().date().isoformat()
-        print(today)
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
         ])
@@ -220,8 +220,6 @@ class CaSplitOldNew(Resource):
 class CaRoomDays(Resource):
     def get(self):
         """Get bookinglist information."""
-        today = datetime.today().date().isoformat()
-        print(today)
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -266,8 +264,6 @@ class CaRoomDays(Resource):
 class CadRoom(Resource):
     def get(self):
         """Get bookinglist information."""
-        today = datetime.today().date().isoformat()
-        print(today)
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -301,8 +297,6 @@ class CadRoom(Resource):
 class CaThemeDays(Resource):
     def get(self):
         """Get bookinglist information."""
-        today = datetime.today().date().isoformat()
-        print(today)
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -322,6 +316,17 @@ class CaThemeDays(Resource):
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
             },
+            {
+                "$group":{
+                    "_id": "$_id.date",
+                    "Themes": { "$push": {
+                        "First_theme": "$_id.first_theme",
+                        "Second_theme": "$_id.second_theme",
+                        "CA": "$CA",
+                        "Nb_Spec": "$Nb_Spec",
+                    }}
+                }
+            }
         ])
         data = []
         for reservation in cursor:
@@ -334,8 +339,8 @@ class CaThemeDays(Resource):
         return response
 
 
-@ns_cadTheme.route("/")
-class CadTheme(Resource):
+@ns_cadThemeFirst.route("/")
+class CadThemeFirst(Resource):
     def get(self):
         """Get bookinglist information."""
         today = datetime.today().date().isoformat()
@@ -345,20 +350,18 @@ class CadTheme(Resource):
             {
                 "$project": {
                     "_id": 0,
-                    "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
                     "Game.theme_pricipal": 1,
-                    "Game.theme_secondaire": 1,
                     "CA": {"$sum": "$Reservation.prix"},
                     "Nb_Spec": {"$size":"$Reservation"}
                 }
             },
             {
                 "$group": {
-                    "_id": {"date": "$date", "first_theme": "$Game.theme_pricipal", "second_theme": "$Game.theme_secondaire"},
+                    "_id": {"ThemeF": "$Game.theme_pricipal"},
                     "CA": {"$sum": "$CA"},
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
-            },
+            }
         ])
         data = []
         for reservation in cursor:
@@ -371,6 +374,44 @@ class CadTheme(Resource):
         return response
 
 
+@ns_cadThemeSecond.route("/")
+class CadThemeSecond(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "Game.theme_secondaire": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"ThemeS": "$Game.theme_secondaire"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            }
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+# #################################
+# TODO
+# #################################
 @ns_ptThemeDays.route("/")
 class PtThemeDays(Resource):
     def get(self):
@@ -407,7 +448,9 @@ class PtThemeDays(Resource):
         response.status_code = 200
         return response
 
-
+# #################################
+# TODO
+# #################################
 @ns_ptdTheme.route("/")
 class PtdTheme(Resource):
     def get(self):
@@ -432,6 +475,78 @@ class PtdTheme(Resource):
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
             },
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_ptRoomThemesF.route("/")
+class PtRoomThemesF(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "Game.Nom": 1,
+                    "Game.theme_pricipal": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"Salle": "$Game.Nom", "ThemeF": "$Game.theme_pricipal"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            }
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_ptRoomThemesS.route("/")
+class PtRoomThemesS(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        today = datetime.today().date().isoformat()
+        print(today)
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project": {
+                    "_id": 0,
+                    "Game.Nom": 1,
+                    "Game.theme_secondaire": 1,
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Spec": {"$size":"$Reservation"}
+                }
+            },
+            {
+                "$group": {
+                    "_id": {"Salle": "$Game.Nom", "ThemeS": "$Game.theme_secondaire"},
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
+                }
+            }
         ])
         data = []
         for reservation in cursor:
