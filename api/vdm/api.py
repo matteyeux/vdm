@@ -234,13 +234,15 @@ class CADays(Resource):
             {
                 "$project": {
                     "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
-                    "CA": {"$sum": "$Reservation.prix"}
+                    "CA": {"$sum": "$Reservation.prix"},
+                    "Nb_Booking": {"$sum": 1}
                 }
             },
             {
                 "$group": {
                     "_id": "$date",
-                    "CA": {"$sum": "$CA"}
+                    "CA": {"$sum": "$CA"},
+                    "Nb_Booking": {"$sum": "$Nb_Booking"}
                 }
             }
         ])
@@ -266,13 +268,15 @@ class NbBookingDays(Resource):
             {
                 "$project": {
                     "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
-                    "Nb_Booking": {"$sum": 1}
+                    "Nb_Booking": {"$sum": 1},
+                    "Nb_Spec": {"$size":"$Reservation"}
                 }
             },
             {
                 "$group": {
                     "_id": "$date",
-                    "Nb_Booking": {"$sum": "$Nb_Booking"}
+                    "Nb_Booking": {"$sum": "$Nb_Booking"},
+                    "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
             }
         ])
@@ -298,12 +302,14 @@ class NbSpectDays(Resource):
             {
                 "$project": {
                     "date": {"$dateToString": {"format": "%d/%m/%Y", "date": "$CreatedAt" }},
+                    "CA": {"$sum": "$Reservation.prix"},
                     "Nb_Spec": {"$size":"$Reservation"}
                 }
             },
             {
                 "$group": {
                     "_id": "$date",
+                    "CA": {"$sum": "$CA"},
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
             }

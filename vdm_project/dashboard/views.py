@@ -24,13 +24,15 @@ def get_CA_days(request, *args, **kwargs):
 	bookings_CAdays = requests.get('http://127.0.0.1:5000/caDays/').text
 	CAdays_list = json.loads(bookings_CAdays)
 	CAdays = [
-		['Jour', 'CA', {"role": "annotation"}]
+		['Jour', 'CA', {"role": "annotation"}, "Prix Moyen des réservations", {"role": "annotation"}]
 		]
 	for i in reversed(range(len(CAdays_list))):
 		date = CAdays_list[i]['_id']
 		CA = CAdays_list[i]['CA']
 		CA_anno = numFormat.formatNumberMoney(CA)
-		CAday = [date, CA, CA_anno]
+		PM = CAdays_list[i]['CA']/CAdays_list[i]['Nb_Booking']
+		PM_anno = numFormat.formatNumberMoney(PM)
+		CAday = [date, CA, CA_anno, PM, PM_anno]
 		CAdays.append(CAday)
 	return JsonResponse(CAdays, safe=False) # http response
 
@@ -39,13 +41,15 @@ def get_Nb_Bookings(request, *args, **kwargs):
 	bookings_NbBooks = requests.get('http://127.0.0.1:5000/nbBookingDays/').text
 	NbBooks_list = json.loads(bookings_NbBooks)
 	NbBooks = [
-		['Jour', 'Nombre de réservation', {"role": "annotation"}]
+		['Jour', 'Nombre de réservation', {"role": "annotation"}, 'Nombre de spectateurs par réservations', {"role": "annotation"}]
 		]
 	for i in reversed(range(len(NbBooks_list))):
 		date = NbBooks_list[i]['_id']
 		Nb_books = NbBooks_list[i]['Nb_Booking']
 		Nb_books_anno = numFormat.formatNumberInt(Nb_books)
-		NbBook = [date, Nb_books, Nb_books_anno]
+		M_spec = NbBooks_list[i]['Nb_Spec']/NbBooks_list[i]['Nb_Booking']
+		M_spec_anno = numFormat.formatNumberFloat(M_spec)
+		NbBook = [date, Nb_books, Nb_books_anno, M_spec, M_spec_anno]
 		NbBooks.append(NbBook)
 	return JsonResponse(NbBooks, safe=False) # http response
 
@@ -54,13 +58,15 @@ def get_Nb_Spectators(request, *args, **kwargs):
 	bookings_NbSpects = requests.get('http://127.0.0.1:5000/nbSpectDays/').text
 	NbSpects_list = json.loads(bookings_NbSpects)
 	NbSpects = [
-		['Jour', 'Nombre de spectateurs', {"role": "annotation"}]
+		['Jour', 'Nombre de spectateurs', {"role": "annotation"}, 'Prix Moyen par spectateurs', {"role": "annotation"}]
 		]
 	for i in reversed(range(len(NbSpects_list))):
 		date = NbSpects_list[i]['_id']
 		Nb_Spects = NbSpects_list[i]['Nb_Spec']
 		Nb_Spects_anno = numFormat.formatNumberInt(Nb_Spects)
-		NbSpect = [date, Nb_Spects, Nb_Spects_anno]
+		PM_Spects = NbSpects_list[i]['CA']/NbSpects_list[i]['Nb_Spec']
+		PM_Spects_anno = numFormat.formatNumberMoney(PM_Spects)
+		NbSpect = [date, Nb_Spects, Nb_Spects_anno, PM_Spects, PM_Spects_anno]
 		NbSpects.append(NbSpect)
 	return JsonResponse(NbSpects, safe=False) # http response 
 

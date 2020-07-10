@@ -140,6 +140,10 @@
 						legend: { position: 'top' },
 						vAxis: { format:'short'},
 						// colors:['#003366'],
+						series: {
+				        	0: {targetAxisIndex: 0},
+				        	1: {targetAxisIndex: 1}
+				        },
 					};
 
 					var chart = new google.visualization.LineChart(document.getElementById('chart_CADays'));
@@ -171,7 +175,11 @@
 						curveType: 'function',
 						legend: { position: 'top' },
 						vAxis: { format:'short'},
-						colors:['#367355'],
+						colors:['#367355', '#4b0082'],
+						series: {
+				        	0: {targetAxisIndex: 0},
+				        	1: {targetAxisIndex: 1}
+				        },
 					};
 
 					var chart = new google.visualization.LineChart(document.getElementById('chart_NbBookingsDays'));
@@ -203,7 +211,11 @@
 						curveType: 'function',
 						legend: { position: 'top' },
 						vAxis: { format:'short'},
-						colors:['#4b0082'],
+						colors:['#4b0082', '#3366CC'],
+						series: {
+				        	0: {targetAxisIndex: 0},
+				        	1: {targetAxisIndex: 1}
+				        },
 					};
 
 					var chart = new google.visualization.LineChart(document.getElementById('chart_NbSpectatorsDays'));
@@ -565,7 +577,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4><u>CA Total journalier & ******************************</u></h4>
+						<h4><u>CA Total journalier & Prix Moyen par réservation</u></h4>
 					</div>
 				</div>
 			</div>
@@ -573,9 +585,7 @@
 			
 			<!-- Start Row -->
 			<div class="row">
-				<div id="chart_CADays" style="min-height: 350px; width: 65%"></div>
-				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
-				<div id="#" style="min-height: 350px; width: 30%"></div>
+				<div id="chart_CADays" style="min-height: 450px; width: 100%"></div>
 			</div>
 			<!-- Row End -->
 
@@ -583,7 +593,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4><u>Nombres de réservations journalière & ******************************</u></h4>
+						<h4><u>Nombres de réservations journalière & Nombre de spectateurs par réservation</u></h4>
 					</div>
 				</div>
 			</div>
@@ -591,9 +601,7 @@
 			
 			<!-- Start Row -->
 			<div class="row">
-				<div id="chart_NbBookingsDays" style="min-height: 350px; width: 65%"></div>
-				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
-				<div id="#" style="min-height: 350px; width: 30%"></div>
+				<div id="chart_NbBookingsDays" style="min-height: 450px; width: 100%"></div>
 			</div>
 			<!-- Row End -->
 
@@ -601,7 +609,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4><u>Nombres de spectateurs journalier & ******************************</u></h4>
+						<h4><u>Nombres de spectateurs journalier & Prix Moyen par Scpectateurs</u></h4>
 					</div>
 				</div>
 			</div>
@@ -609,9 +617,7 @@
 			
 			<!-- Start Row -->
 			<div class="row">
-				<div id="chart_NbSpectatorsDays" style="min-height: 350px; width: 65%"></div>
-				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
-				<div id="#" style="min-height: 350px; width: 30%"></div>
+				<div id="chart_NbSpectatorsDays" style="min-height: 450px; width: 100%"></div>
 			</div>
 			<!-- Row End -->
 
