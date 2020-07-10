@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-	Dashboard 360 - {{ block.super }}
+	Détails Salles - {{ block.super }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -120,34 +120,34 @@
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.load('current', {'packages':['sankey']});
 
-	/* CA Days */
+	/* CA per rooms per days */
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "/api/get_CA_days",
+			url: "/api/get_CA_Rooms_Days",
 			dataType: "json",
 			cache: true,
-			success: function(dataCaDays) {
+			success: function(dataCaRoomsDays) {
+
 				google.charts.setOnLoadCallback(drawChart);
 
 				function drawChart() {
-					// Draw Chart CA per Days
-					var data = google.visualization.arrayToDataTable(dataCaDays);
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCaRoomsDays);
 
 					var options = {
 						title: 'CA journalier',
-						curveType: 'function',
-						legend: { position: 'top' },
+						legend: {position: 'top', maxLines: 3},
 						vAxis: { format:'short'},
-						// colors:['#003366'],
-						series: {
-				        	0: {targetAxisIndex: 0},
-				        	1: {targetAxisIndex: 1}
-				        },
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						}
 					};
 
-					var chart = new google.visualization.LineChart(document.getElementById('chart_CADays'));
-					chart.draw(data, options);
+			        var chart = new google.visualization.ColumnChart(document.getElementById('chart_caRoomDays'));
+			        chart.draw(data, options);
 				}
 			},
 			error: function(xhr, textStatus) {
@@ -156,34 +156,28 @@
 		});
 	});
 
-	/* Nb Bookings Days */
+	/* CAD per rooms */
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "/api/get_Nb_Bookings",
+			url: "/api/get_CA_Rooms",
 			dataType: "json",
 			cache: true,
-			success: function(dataNbBookingDays) {
+			success: function(dataCaRoomsDays) {
+
 				google.charts.setOnLoadCallback(drawChart);
 
 				function drawChart() {
-					// Draw Chart CA per Days
-					var data = google.visualization.arrayToDataTable(dataNbBookingDays);
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCaRoomsDays);
 
 					var options = {
-						title: 'Nombre de réservations journalière',
-						curveType: 'function',
-						legend: { position: 'top' },
-						vAxis: { format:'short'},
-						colors:['#367355', '#4b0082'],
-						series: {
-				        	0: {targetAxisIndex: 0},
-				        	1: {targetAxisIndex: 1}
-				        },
+						title: 'CAD par Salles',
+						legend: {position: 'top', maxLines: 3}
 					};
 
-					var chart = new google.visualization.LineChart(document.getElementById('chart_NbBookingsDays'));
-					chart.draw(data, options);
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_cadRooms'));
+			        chart.draw(data, options);
 				}
 			},
 			error: function(xhr, textStatus) {
@@ -192,34 +186,28 @@
 		});
 	});
 
-	/* Nb Spectators Days */
+	/* Spectator per rooms */
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "/api/get_Nb_Spectators",
+			url: "/api/get_Spect_Rooms",
 			dataType: "json",
 			cache: true,
-			success: function(dataNbSpectDays) {
+			success: function(dataSpectRoomsDays) {
+
 				google.charts.setOnLoadCallback(drawChart);
 
 				function drawChart() {
-					// Draw Chart CA per Days
-					var data = google.visualization.arrayToDataTable(dataNbSpectDays);
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataSpectRoomsDays);
 
 					var options = {
-						title: 'Nombre de Spectateurs journalier',
-						curveType: 'function',
-						legend: { position: 'top' },
-						vAxis: { format:'short'},
-						colors:['#4b0082', '#3366CC'],
-						series: {
-				        	0: {targetAxisIndex: 0},
-				        	1: {targetAxisIndex: 1}
-				        },
+						title: 'Nombre de spectateurs par Salles',
+						legend: {position: 'top', maxLines: 3}
 					};
 
-					var chart = new google.visualization.LineChart(document.getElementById('chart_NbSpectatorsDays'));
-					chart.draw(data, options);
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_spectRooms'));
+			        chart.draw(data, options);
 				}
 			},
 			error: function(xhr, textStatus) {
@@ -246,13 +234,13 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4 class="page-title">Dashboard 360</h4>
+						<h4 class="page-title">Détails Salles</h4>
 						<ol class="breadcrumb p-0 m-0">
 							<li class="breadcrumb-item">
 								<a href="{% url 'homepage' %}">Plateforme VDM Escape Game</a>
 							</li>
 							<li class="breadcrumb-item active">
-								Dashboard 360
+								Détails Salles
 							</li>
 						</ol>
 						<div class="clearfix"></div>
@@ -334,7 +322,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4><u>CA Total journalier & Prix Moyen par réservation</u></h4>
+						<h4><u>CA Total journalier par Salles & Répartition du CAD par Salles & Nombre de spectateurs par Salles</u></h4>
 					</div>
 				</div>
 			</div>
@@ -342,39 +330,12 @@
 			
 			<!-- Start Row -->
 			<div class="row">
-				<div id="chart_CADays" style="min-height: 450px; width: 100%"></div>
-			</div>
-			<!-- Row End -->
-
-			<!-- Start Row -->
-			<div class="row">
-				<div class="col-12">
-					<div class="page-title-box">
-						<h4><u>Nombres de réservations journalière & Nombre de spectateurs par réservation</u></h4>
-					</div>
+				<div id="chart_caRoomDays" style="min-height: 800px; width: 65%"></div>
+				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div class="col">
+					<div id="chart_cadRooms" style="min-height: 400px; width: 100%"></div>
+					<div id="chart_spectRooms" style="min-height: 400px; width: 100%"></div>
 				</div>
-			</div>
-			<!-- Row End -->
-			
-			<!-- Start Row -->
-			<div class="row">
-				<div id="chart_NbBookingsDays" style="min-height: 450px; width: 100%"></div>
-			</div>
-			<!-- Row End -->
-
-			<!-- Start Row -->
-			<div class="row">
-				<div class="col-12">
-					<div class="page-title-box">
-						<h4><u>Nombres de spectateurs journalier & Prix Moyen par Scpectateurs</u></h4>
-					</div>
-				</div>
-			</div>
-			<!-- Row End -->
-			
-			<!-- Start Row -->
-			<div class="row">
-				<div id="chart_NbSpectatorsDays" style="min-height: 450px; width: 100%"></div>
 			</div>
 			<!-- Row End -->
 

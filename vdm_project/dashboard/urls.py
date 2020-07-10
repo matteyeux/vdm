@@ -14,6 +14,17 @@ urlpatterns = [
     path('api/get_Nb_Bookings', views.get_Nb_Bookings, name='get_Nb_Bookings'),
     path('api/get_Nb_Spectators', views.get_Nb_Spectators, name='get_Nb_Spectators'),
 
+    # Display informations and charts about rooms
+    path('chart/dashboard_rooms', views.dashboard_rooms, name='dashboard_rooms'),
+
+    # Display informations and charts about themes
+    path('chart/dashboard_themes', views.dashboard_themes, name='dashboard_themes'),
+
+    # Display informations and charts about clients
+    path('chart/dashboard_client', views.dashboard_client, name='dashboard_client'),
+    
+
+
 
     path('api/get_CA_Rooms_Days', views.get_CA_Rooms_Days, name='get_CA_Rooms_Days'),
     path('api/get_CA_Rooms', views.get_CA_Rooms, name='get_CA_Rooms'),

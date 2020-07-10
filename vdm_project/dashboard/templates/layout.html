@@ -125,10 +125,9 @@
 								<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span> Dashboard</span><span class="menu-arrow"></span></a>
 								<ul class="list-unstyled">
 									<li><a href="{% url 'dashboard360' %}">Dashboard 360</a></li>
-									<li><a href="#">Perfs Commerciales</a></li>
-									<li><a href="#">Détails Clients</a></li>
-									<li><a href="#">Détails Salles</a></li>
-									<li><a href="#">Détails Thèmes</a></li>
+									<li><a href="{% url 'dashboard_rooms' %}">Détails Salles</a></li>
+									<li><a href="{% url 'dashboard_themes' %}">Détails Thèmes</a></li>
+									<li><a href="{% url 'dashboard_client' %}">Détails Clients</a></li>
 								</ul>
 							</li>
 

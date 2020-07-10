@@ -15,6 +15,15 @@ def booking_list(request):
 def dashboard360(request):
 	return render(request, 'chart/dashboard360.html', {})
 
+def dashboard_rooms(request):
+	return render(request, 'chart/dashboard_rooms.html', {})
+
+def dashboard_themes(request):
+	return render(request, 'chart/dashboard_themes.html', {})
+
+def dashboard_client(request):
+	return render(request, 'chart/dashboard_client.html', {})
+
 
 ############################################################################
 ######################      Chart to Dashboard 360      ####################

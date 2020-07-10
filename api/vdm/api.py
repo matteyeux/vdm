@@ -114,6 +114,7 @@ class BookingList(Resource):
                 }
             },
             { "$sort" : {"_id": 1}},
+            { "$limit": 100}
         ])
         data = []
         for reservation in cursor:
@@ -147,6 +148,7 @@ class IncrementBookingList(Resource):
                 }
             },
             {"$match": { "_id": { "$gt": ObjectId(lastId)}}},
+            { "$limit": 50}
         ])
         data = []
         for reservation in cursor:

@@ -2,31 +2,13 @@
 {% load static %}
 
 {% block title %}
-	Liste Booking - {{ block.super }}
+	Détails Salles - {{ block.super }}
 {% endblock %}
 
 {% block stylesheets %}
 	{{ block.super }}
-	<!-- DataTables -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
-	<!-- <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script> -->
-<!-- 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" type="text/javascript">></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'plugins/datatables/jquery.dataTables.min.css' %}"/> -->
-
-	<link data-require="datatables@*" data-semver="1.10.21" rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
-	<link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
-	<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
-	<link data-require="datatables@*" data-semver="1.10.21" rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
-   
 	<script data-require="jquery" data-semver="3.5.1" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-	<script data-require="datatables@*" data-semver="1.10.21" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-
-
-	<script src="{% static 'plugins/datatables/dataTables.buttons.min.js' %}" type="text/javascript">></script>
-	<script src="{% static 'plugins/datatables/buttons.bootstrap4.min.js' %}" type="text/javascript">></script>
-	<script src="{% static 'plugins/datatables/buttons.html5.min.js' %}" type="text/javascript">></script>
-
+	<link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />  
 
 	<script type="text/javascript">
 
@@ -99,11 +81,10 @@
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:5000/kpiBookingList/",
+			url: "http://127.0.0.1:5000/kpi/",
 			dataType: "json",
 			cache: true,
 			success: function(data) {
-				// console.log(data);
 				total_amount = 0;
 				nb_spectateur = 0;
 				nb_resa = 0;
@@ -121,7 +102,6 @@
 				$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
 				$("#avg_spec").text(numberFormat(avg_spec));
 				$("#avg_price").text(numberFormatMoney(avg_price));
-				// console.log(avg_price);
 			},
 			error: function(xhr, textStatus) {
 				console.log("error..");
@@ -129,114 +109,164 @@
 		});
 	});
 
-	$(document).ready(function() {
-		setInterval(function getData() {
-			$.ajax({
-				type: "GET",
-				url: "http://127.0.0.1:5000/kpiBookingList/",
-				dataType: "json",
-				cache: true,
-				success: function(data) {
-					total_amount = 0;
-					nb_spectateur = 0;
-					nb_resa = 0;
-					for (const line in data) {
-						total_amount += data[line].TotalPrice;
-						nb_spectateur += data[line].NbSpectateur;
-						nb_resa += 1
-					}
-					avg_price_resa = (total_amount/nb_resa);
-					avg_spec = (nb_spectateur/nb_resa);
-					avg_price = (total_amount/nb_spectateur);
-					$("#total_amount").text(numberFormatMoney(total_amount));
-					$("#nb_resa").text(numberFormatInt(nb_resa));
-					$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
-					$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
-					$("#avg_spec").text(numberFormat(avg_spec));
-					$("#avg_price").text(numberFormatMoney(avg_price));
-				},
-				error: function(xhr, textStatus) {
-					console.log("error..");
-				}
-			});
-		}, 200000);
-	});
+	</script>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
 	/*************************************************/
-	/************  Api call get Data list ************/
+	/*********  Api call get Data to Chart  **********/
 	/*************************************************/
-	$(document).ready(function() {
-		$.ajax({
-			url: 'http://127.0.0.1:5000/bookingList/',
-			method: 'get',
-			dataType: 'json',
-			cache: true,	
-			success: function(data) {
-				console.log(data);
-				var bookingListTable = $('#booking_list').DataTable({
-					"order": [[0, 'dsc']],
-					dom: 'Bfrtip',
-					buttons: [
-						'copy', 'csv', 'excel', 'pdf'
-					],
-					'columnDefs': [
-						{ 'width': '25px', 'targets': [0] },
-						{ 'sortable': true, 'targets': [0] }
-					],
-				});
-				counter = 0;
-				for (const line in data) {
-					bookingListTable.row.add([
-						counter,
-						data[line].Acheteur.Nom,
-						data[line].Acheteur.Prenom,
-						data[line].NbSpectateur,
-						data[line].Game.Nom,
-						data[line].Game.Jour,
-						data[line].TotalPrice
-					]).draw(false);
-					counter++;
-				}
-				lastData = data[data.length - 1];
-				updateData(lastData, counter);
-			}
-		});
-	});
 
-	function updateData(lastData, counter) {
-		objectId = lastData._id.$oid;
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.load('current', {'packages':['sankey']});
+
+	/* CA per theme per days */
+	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: 'http://127.0.0.1:5000/incrementBookingList/?lastId='+objectId,
+			url: "/api/get_CA_Themes_Days",
 			dataType: "json",
 			cache: true,
-			success: function(data) {
-				var bookingListTable = $('#booking_list').DataTable();
-				console.log(data);
-				for (const line in data) {
-					bookingListTable.row.add([
-						counter,
-						data[line].Acheteur.Nom,
-						data[line].Acheteur.Prenom,
-						data[line].NbSpectateur,
-						data[line].Game.Nom,
-						data[line].Game.Jour,
-						data[line].TotalPrice
-					]).draw(false);
-					counter++
+			success: function(dataCaThemesDays) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCaThemesDays);
+
+					var options = {
+						title: 'Projection de CA par Tème',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.ColumnChart(document.getElementById('chart_caThemesDays'));
+			        chart.draw(data, options);
 				}
-			if (data.length > 0) {
-				lastData = data[data.length - 1];
-			}
-			setTimeout(function(){updateData(lastData, counter)}, 100000);
-			// setTimeout(updateData(lastData, counter), 5000);
-			// setInterval(updateData(lastData, counter), 3000);
-			// updateData(lastData, counter);
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
 			}
 		});
-	}
+	});
 
-	</script>
+	/* CAD per Themes */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_CA_Themes",
+			dataType: "json",
+			cache: true,
+			success: function(dataCadThemes) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCadThemes);
+
+					var options = {
+						title: 'Projection du CAD par Thèmes',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_cadThemes'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD per Themes */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Themes",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectThemes) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataSpectThemes);
+
+					var options = {
+						title: 'Projection du Nombre de Spectateurs par Thèmes',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+			        var chart = new google.visualization.PieChart(document.getElementById('chart_spectThemes'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Correlation between Room and Thems with Points */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Points_Themes",
+			dataType: "json",
+			cache: true,
+			success: function(dataCorrPointsRoomsThemes) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per rooms and days
+					var data = google.visualization.arrayToDataTable(dataCorrPointsRoomsThemes);
+
+					var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f','#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+
+				    var options = {
+				    	sankey: {
+				    		node: {
+				        		colors: colors
+				        	},
+				        	link: {
+				        		colorMode: 'gradient',
+				        		colors: colors
+				        	}
+				      	}
+				    };
+
+			        var chart = new google.visualization.Sankey(document.getElementById('chart_corrPointsRoomThemes'));
+			        chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	// /* CAD per theme */
+	// $(document).ready(function() {
+	// 	$.ajax({
+	// 		type: "GET",
+	// 		url: "http://127.0.0.1:5000/cadTheme/",
+	// 		dataType: "json",
+	// 		cache: true,
+	// 		success: function(data) {
+	// 			console.log("CA Theme per days");
+	// 			console.log(data);
+	// 		},
+	// 		error: function(xhr, textStatus) {
+	// 			console.log("error..");
+	// 		}
+	// 	});
+	// });
+
+    </script>
 
 {% endblock %}
 
@@ -254,13 +284,13 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4 class="page-title">Liste des réservations</h4>
+						<h4 class="page-title">Détails Salles</h4>
 						<ol class="breadcrumb p-0 m-0">
 							<li class="breadcrumb-item">
-								<a href="#">Plateforme VDM Escape Game</a>
+								<a href="{% url 'homepage' %}">Plateforme VDM Escape Game</a>
 							</li>
 							<li class="breadcrumb-item active">
-								Liste des réservations
+								Détails Salles
 							</li>
 						</ol>
 						<div class="clearfix"></div>
@@ -270,12 +300,13 @@
 			<!-- End row -->
 
 
+			<div id="ChartCAdays" data="12"/>
 			<div>
 				<!-- Start Row -->
 				<div class="row">
 					<div class="col-12">
 						<div class="page-title-box">
-							<h4 class="page-title text-center">Indicateurs de Performance du {% now "d/m/Y" %}</h4>
+							<h4 class="page-title text-center">Indicateurs de Performance du ***DATE HERE***</h4>
 						</div>
 					</div>
 				</div>
@@ -336,31 +367,46 @@
 				</div>
 				<!-- Row End -->
 			</div>
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4><u>Projection de CA & du nombre de Spectateurs attribués à chaque thèmes</u></h4>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
 			
 			<!-- Start Row -->
 			<div class="row">
-				<div class="col-sm-12">
+				<div id="chart_caThemesDays" style="min-height: 800px; width: 65%"></div>
+				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div class="col">
+					<div id="chart_cadThemes" style="min-height: 400px; width: 100%"></div>
+					<div id="chart_spectThemes" style="min-height: 400px; width: 100%"></div>
+				</div>
+			</div>
+			<!-- Row End -->
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-12">
 					<div class="page-title-box">
-						<h4 class="page-title text-center">Liste des réservation depuis le <span id="datatable-date">***DATE HERE***</span></h4>
-					</div>
-					<div class="card-box">
-
-						<table id="booking_list" class="table table-striped table-bordered">
-							<thead>
-								<tr>
-									<th scope="col">N°</th>
-									<th scope="col">Nom</th>
-									<th scope="col">Prénom</th>
-									<th scope="col">nombre de participants</th>
-									<th scope="col">Thème Sélectionné</th>
-									<th scope="col">Date de la réservation</th>
-									<th scope="col">Montant total réservation</th>
-								</tr>
-							</thead>
-						</table>
-
+						<h4><u>Corrélation entre les attribués aux thèmes et les salles</u></h4>
 					</div>
 				</div>
+			</div>
+			<!-- Row End -->
+			
+			<!-- Start Row -->
+			<div class="row">
+				<div id="chart_corrPointsRoomThemes" style="min-height: 700px; width: 100%"></div>
+<!-- 				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div class="col">
+					<div id="#" style="min-height: 400px; width: 100%"></div>
+					<div id="#" style="min-height: 400px; width: 100%"></div>
+				</div> -->
 			</div>
 			<!-- Row End -->
 
