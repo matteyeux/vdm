@@ -1,20 +1,21 @@
 import datetime
 
+
 def handle_prices(data: dict) -> dict:
-	"""Set price according to rate."""
-	for reservation in data['Reservation']:
-		if reservation['Tarif'] == "Plein tarif":
-			price = 10.00
-		elif reservation['Tarif'] == "Tarif reduit":
-			price = 8.00
-		elif reservation['Tarif'] == "Senior":
-			price = 7.00
-		elif reservation['Tarif'] == "Tarif etudiant":
-			price = 7.00
-		else:
-			price = None
-		reservation['prix'] = price
-	return data
+    """Set price according to rate."""
+    for reservation in data['Reservation']:
+        if reservation['Tarif'] == "Plein tarif":
+            price = 10.00
+        elif reservation['Tarif'] == "Tarif reduit":
+            price = 8.00
+        elif reservation['Tarif'] == "Senior":
+            price = 7.00
+        elif reservation['Tarif'] == "Tarif etudiant":
+            price = 7.00
+        else:
+            price = None
+        reservation['prix'] = price
+    return data
 
 
 def handle_themes(data: dict) -> dict:
@@ -55,14 +56,14 @@ def handle_themes(data: dict) -> dict:
 
 
 def handle_datetime(data: dict) -> dict:
-	"""Set fields CreatedAt."""
-	data['CreatedAt'] = datetime.datetime.now()
-	return data
+    """Set fields CreatedAt."""
+    data['CreatedAt'] = datetime.datetime.now()
+    return data
 
 
 def handle_utilities(data: dict) -> dict:
-	"""Call each function to transform the data dict."""
-	data_w_price = handle_prices(data)
-	data_w_theme = handle_themes(data_w_price)
-	data_w_date = handle_datetime(data_w_theme)
-	return data_w_date
+    """Call each function to transform the data dict."""
+    data_w_price = handle_prices(data)
+    data_w_theme = handle_themes(data_w_price)
+    data_w_date = handle_datetime(data_w_theme)
+    return data_w_date
