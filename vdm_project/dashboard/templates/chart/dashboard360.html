@@ -8,7 +8,7 @@
 {% block stylesheets %}
 	{{ block.super }}
 	<script data-require="jquery" data-semver="3.5.1" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-	<link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />   
+	<link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />  
 
 	<script type="text/javascript">
 
@@ -81,11 +81,10 @@
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:5000/kpiBookingList/",
+			url: "http://127.0.0.1:5000/kpi/",
 			dataType: "json",
 			cache: true,
 			success: function(data) {
-				// console.log(data);
 				total_amount = 0;
 				nb_spectateur = 0;
 				nb_resa = 0;
@@ -103,8 +102,6 @@
 				$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
 				$("#avg_spec").text(numberFormat(avg_spec));
 				$("#avg_price").text(numberFormatMoney(avg_price));
-				// console.log(avg_price);
-
 			},
 			error: function(xhr, textStatus) {
 				console.log("error..");
@@ -127,13 +124,10 @@
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			// url: "http://127.0.0.1:5000/caDays/",
 			url: "/api/get_CA_days",
 			dataType: "json",
 			cache: true,
 			success: function(dataCaDays) {
-				// console.log("CA Days");
-				// console.log(dataCaDays);
 				google.charts.setOnLoadCallback(drawChart);
 
 				function drawChart() {
@@ -145,11 +139,7 @@
 						curveType: 'function',
 						legend: { position: 'top' },
 						vAxis: { format:'short'},
-						// animation: {
-						// 	duration: 2000,
-						// 	easing: 'out',
-						// 	"startup": true
-						// }
+						// colors:['#003366'],
 					};
 
 					var chart = new google.visualization.LineChart(document.getElementById('chart_CADays'));
@@ -162,8 +152,70 @@
 		});
 	});
 
-	// TODO
-	/* CAD Days split Old/New Customer */
+	/* Nb Bookings Days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Nb_Bookings",
+			dataType: "json",
+			cache: true,
+			success: function(dataNbBookingDays) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per Days
+					var data = google.visualization.arrayToDataTable(dataNbBookingDays);
+
+					var options = {
+						title: 'Nombre de réservations journalière',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						colors:['#367355'],
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_NbBookingsDays'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Nb Spectators Days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Nb_Spectators",
+			dataType: "json",
+			cache: true,
+			success: function(dataNbSpectDays) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart CA per Days
+					var data = google.visualization.arrayToDataTable(dataNbSpectDays);
+
+					var options = {
+						title: 'Nombre de Spectateurs journalier',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						colors:['#4b0082'],
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_NbSpectatorsDays'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
 
 	/* CA per rooms per days */
 	$(document).ready(function() {
@@ -173,8 +225,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataCaRoomsDays) {
-				// console.log("CA Rooms per days");
-				// console.log(dataCaRoomsDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -211,8 +261,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataCaRoomsDays) {
-				// console.log("CAD Rooms");
-				// console.log(dataCaRoomsDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -243,8 +291,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataSpectRoomsDays) {
-				// console.log("CAD Rooms");
-				// console.log(dataCaRoomsDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -275,8 +321,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataCaThemesDays) {
-				console.log("CA Theme per days");
-				console.log(dataCaThemesDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -307,8 +351,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataCadThemes) {
-				// console.log("CAD Rooms");
-				// console.log(dataCaRoomsDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -339,8 +381,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataSpectThemes) {
-				// console.log("CAD Rooms");
-				// console.log(dataCaRoomsDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -371,8 +411,6 @@
 			dataType: "json",
 			cache: true,
 			success: function(dataCorrPointsRoomsThemes) {
-				// console.log("CAD Rooms");
-				// console.log(dataCaRoomsDays);
 
 				google.charts.setOnLoadCallback(drawChart);
 
@@ -383,7 +421,6 @@
 					var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f','#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
 
 				    var options = {
-				    	// height: 650,
 				    	sankey: {
 				    		node: {
 				        		colors: colors
@@ -440,13 +477,13 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4 class="page-title">Liste des réservations</h4>
+						<h4 class="page-title">Dashboard 360</h4>
 						<ol class="breadcrumb p-0 m-0">
 							<li class="breadcrumb-item">
-								<a href="#">Plateforme VDM Escape Game</a>
+								<a href="{% url 'homepage' %}">Plateforme VDM Escape Game</a>
 							</li>
 							<li class="breadcrumb-item active">
-								Liste des réservations
+								Dashboard 360
 							</li>
 						</ol>
 						<div class="clearfix"></div>
@@ -462,7 +499,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="page-title-box">
-							<h4 class="page-title text-center">Indicateurs de Performance du {% now "d/m/Y" %}</h4>
+							<h4 class="page-title text-center">Indicateurs de Performance du ***DATE HERE***</h4>
 						</div>
 					</div>
 				</div>
@@ -528,7 +565,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4><u>CA Total journalier & Répartition du CAD entre anciens et nouveaux clients</u></h4>
+						<h4><u>CA Total journalier & ******************************</u></h4>
 					</div>
 				</div>
 			</div>
@@ -537,6 +574,42 @@
 			<!-- Start Row -->
 			<div class="row">
 				<div id="chart_CADays" style="min-height: 350px; width: 65%"></div>
+				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div id="#" style="min-height: 350px; width: 30%"></div>
+			</div>
+			<!-- Row End -->
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4><u>Nombres de réservations journalière & ******************************</u></h4>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
+			
+			<!-- Start Row -->
+			<div class="row">
+				<div id="chart_NbBookingsDays" style="min-height: 350px; width: 65%"></div>
+				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+				<div id="#" style="min-height: 350px; width: 30%"></div>
+			</div>
+			<!-- Row End -->
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4><u>Nombres de spectateurs journalier & ******************************</u></h4>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
+			
+			<!-- Start Row -->
+			<div class="row">
+				<div id="chart_NbSpectatorsDays" style="min-height: 350px; width: 65%"></div>
 				<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
 				<div id="#" style="min-height: 350px; width: 30%"></div>
 			</div>

@@ -5,18 +5,20 @@ from django.http import JsonResponse
 
 from . import numFormat
 
-# URL = 'http://127.0.0.1:5000/bookingList/'
 
-def vdm_report_page(request):
-	return render(request, 'order_report.html', {})
+def homepage(request):
+	return render(request, 'homepage/homepage.html', {})
 
-def vdm_booking_list_page(request):
-	return render(request, 'booking_list.html', {})
+def booking_list(request):
+	return render(request, 'bookingList/booking_list.html', {})
 
 def dashboard360(request):
 	return render(request, 'chart/dashboard360.html', {})
 
 
+############################################################################
+######################      Chart to Dashboard 360      ####################
+############################################################################
 # Request Chart CA per Days
 def get_CA_days(request, *args, **kwargs):
 	bookings_CAdays = requests.get('http://127.0.0.1:5000/caDays/').text
@@ -24,7 +26,7 @@ def get_CA_days(request, *args, **kwargs):
 	CAdays = [
 		['Jour', 'CA', {"role": "annotation"}]
 		]
-	for i in range(len(CAdays_list)):
+	for i in reversed(range(len(CAdays_list))):
 		date = CAdays_list[i]['_id']
 		CA = CAdays_list[i]['CA']
 		CA_anno = numFormat.formatNumberMoney(CA)
@@ -32,7 +34,40 @@ def get_CA_days(request, *args, **kwargs):
 		CAdays.append(CAday)
 	return JsonResponse(CAdays, safe=False) # http response
 
+# Request Chart Number of bookings per days
+def get_Nb_Bookings(request, *args, **kwargs):
+	bookings_NbBooks = requests.get('http://127.0.0.1:5000/nbBookingDays/').text
+	NbBooks_list = json.loads(bookings_NbBooks)
+	NbBooks = [
+		['Jour', 'Nombre de réservation', {"role": "annotation"}]
+		]
+	for i in reversed(range(len(NbBooks_list))):
+		date = NbBooks_list[i]['_id']
+		Nb_books = NbBooks_list[i]['Nb_Booking']
+		Nb_books_anno = numFormat.formatNumberInt(Nb_books)
+		NbBook = [date, Nb_books, Nb_books_anno]
+		NbBooks.append(NbBook)
+	return JsonResponse(NbBooks, safe=False) # http response
 
+# Request Chart Number of spectators per days
+def get_Nb_Spectators(request, *args, **kwargs):
+	bookings_NbSpects = requests.get('http://127.0.0.1:5000/nbSpectDays/').text
+	NbSpects_list = json.loads(bookings_NbSpects)
+	NbSpects = [
+		['Jour', 'Nombre de spectateurs', {"role": "annotation"}]
+		]
+	for i in reversed(range(len(NbSpects_list))):
+		date = NbSpects_list[i]['_id']
+		Nb_Spects = NbSpects_list[i]['Nb_Spec']
+		Nb_Spects_anno = numFormat.formatNumberInt(Nb_Spects)
+		NbSpect = [date, Nb_Spects, Nb_Spects_anno]
+		NbSpects.append(NbSpect)
+	return JsonResponse(NbSpects, safe=False) # http response 
+
+
+############################################################################
+######################      xxxxxxxxxxxxxxxxxxxxxx      ####################
+############################################################################
 # Request Chart CA per Rooms and per Days
 def get_CA_Rooms_Days(request, *args, **kwargs):
 	bookings_CARoomdays = requests.get('http://127.0.0.1:5000/caRoomDays/').text
@@ -51,7 +86,7 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
 			'Mariage sans alcool', {"role": "annotation"},
 		]
 	]
-	for i in reversed(range(len(CARoomdays_list))):
+	for i in range(len(CARoomdays_list)):
 		for elem in CARoomdays_list[i]['Rooms']:
 			if elem['Room'] == 'Interminable attente chez le medecin':
 				CARoom1 = elem['CA']
@@ -190,7 +225,6 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 				CATheme5 += elem['CA']
 				CATheme5_anno = numFormat.formatNumberMoney(CATheme5)
 			if elem['First_theme'] == 'Psychologique' or elem['Second_theme'] == 'Psychologique':
-				print("###################### Psychologique ###################")
 				CATheme6 += elem['CA']
 				CATheme6_anno = numFormat.formatNumberMoney(CATheme6)
 			if elem['First_theme'] == 'Santé' or elem['Second_theme'] == 'Santé':
@@ -202,10 +236,6 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 			if elem['First_theme'] == 'Horreur' or elem['Second_theme'] == 'Horreur':
 				CATheme9 += elem['CA']
 				CATheme9_anno = numFormat.formatNumberMoney(CATheme9)
-			print("=====================================")
-			print(elem['First_theme'])
-			print(elem['Second_theme'])
-			print("=====================================")
 		CAThemeday = [
 			date, 
 			CATheme1, CATheme1_anno,
