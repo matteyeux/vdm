@@ -15,7 +15,7 @@ ns_nbSpectDays = Namespace('nbSpectDays',
 @ns_caDays.route("/")
 class CADays(Resource):
     def get(self):
-        """Get bookinglist information."""
+        """Get CA and Nb Booking per days."""
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -26,6 +26,7 @@ class CADays(Resource):
                     "Nb_Booking": {"$sum": 1}
                 }
             },
+            {"$sort": {"_id": 1}},
             {
                 "$group": {
                     "_id": "$date",
@@ -49,7 +50,7 @@ class CADays(Resource):
 @ns_nbBookingDays.route("/")
 class NbBookingDays(Resource):
     def get(self):
-        """Get bookinglist information."""
+        """Get Nb Booking and Nb Spect per days."""
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -60,6 +61,7 @@ class NbBookingDays(Resource):
                     "Nb_Spec": {"$size": "$Reservation"}
                 }
             },
+            {"$sort": {"_id": 1}},
             {
                 "$group": {
                     "_id": "$date",
@@ -83,7 +85,7 @@ class NbBookingDays(Resource):
 @ns_nbSpectDays.route("/")
 class NbSpectDays(Resource):
     def get(self):
-        """Get bookinglist information."""
+        """Get CA and Nb Spect per days."""
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
@@ -94,6 +96,7 @@ class NbSpectDays(Resource):
                     "Nb_Spec": {"$size": "$Reservation"}
                 }
             },
+            {"$sort": {"_id": 1}},
             {
                 "$group": {
                     "_id": "$date",

@@ -14,7 +14,7 @@ ns_kpi = Namespace('kpi', description="KPI")
 @ns_dailyKPI.route("/")
 class DailyKPI(Resource):
     def get(self):
-        """Get bookinglist information."""
+        """Get Daily KPi."""
         now = datetime.now()
         gen_time = datetime(now.year, now.month, now.day)
         dummy_id = ObjectId.from_datetime(gen_time)
@@ -45,8 +45,7 @@ class DailyKPI(Resource):
 @ns_kpi.route("/")
 class KPI(Resource):
     def get(self):
-        """Get bookinglist information."""
-
+        """Get KPi."""
         vdm_database = config.setup_mongo()
         cursor = vdm_database.booking.aggregate([
             {
