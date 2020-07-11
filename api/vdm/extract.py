@@ -7,7 +7,8 @@ from datetime import datetime
 
 import config
 
-ns_extractKPI = Namespace('extractKPI', description="Daily KPI to extract")
+ns_extractKPIDaily = Namespace('extractKPIDaily', description="Daily KPI to extract")
+ns_extractKPIHisto = Namespace('extractKPIHisto', description="Historic KPI to extract")
 
 
 @ns_extractKPIDaily.route("/")
@@ -69,8 +70,8 @@ class ExtractKPIDaily(Resource):
         return response
 
 
-@ns_extractKPIDaily.route("/")
-class ExtractKPIDaily(Resource):
+@ns_extractKPIHisto.route("/")
+class ExtractKPIHisto(Resource):
     def get(self):
         """Get Hitoric KPI to extract with cronjob."""
         now = datetime.now()
@@ -91,6 +92,7 @@ class ExtractKPIDaily(Resource):
                     },
             },
             {"$match": {"_id": {"$lt": dummy_id}}},
+            {"$sort": {"_id": 1}},
             {
                 "$group": 
                     {

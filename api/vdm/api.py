@@ -9,7 +9,7 @@ from kpi import ns_dailyKPI, ns_kpi
 from rooms import ns_caRoomDays, ns_cadRoom
 from themes import (ns_caThemeDays, ns_cadThemeFirst,
                     ns_cadThemeSecond, ns_ptRoomThemesF, ns_ptRoomThemesS)
-from extract import ns_extractKPI
+from extract import ns_extractKPIDaily, ns_extractKPIHisto 
 
 app = Flask(__name__)
 api = Api(app=app, version='0.1.0', title='VDM Api',

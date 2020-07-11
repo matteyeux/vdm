@@ -41,7 +41,8 @@ class CaRoomDays(Resource):
                         "Nb_Spec": "$Nb_Spec",
                     }}
                 }
-            }
+            },
+            {"$sort": {"_id": 1}},
         ])
         data = []
         for reservation in cursor:

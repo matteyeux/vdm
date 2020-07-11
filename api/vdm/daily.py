@@ -26,14 +26,14 @@ class CADays(Resource):
                     "Nb_Booking": {"$sum": 1}
                 }
             },
-            {"$sort": {"_id": 1}},
             {
                 "$group": {
                     "_id": "$date",
                     "CA": {"$sum": "$CA"},
                     "Nb_Booking": {"$sum": "$Nb_Booking"}
                 }
-            }
+            },
+            {"$sort": {"_id": -1}},
         ])
 
         data = []
@@ -61,14 +61,14 @@ class NbBookingDays(Resource):
                     "Nb_Spec": {"$size": "$Reservation"}
                 }
             },
-            {"$sort": {"_id": 1}},
             {
                 "$group": {
                     "_id": "$date",
                     "Nb_Booking": {"$sum": "$Nb_Booking"},
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
-            }
+            },
+            {"$sort": {"_id": -1}},
         ])
 
         data = []
@@ -96,14 +96,14 @@ class NbSpectDays(Resource):
                     "Nb_Spec": {"$size": "$Reservation"}
                 }
             },
-            {"$sort": {"_id": 1}},
             {
                 "$group": {
                     "_id": "$date",
                     "CA": {"$sum": "$CA"},
                     "Nb_Spec": {"$sum": "$Nb_Spec"}
                 }
-            }
+            },
+            {"$sort": {"_id": -1}},
         ])
 
         data = []
