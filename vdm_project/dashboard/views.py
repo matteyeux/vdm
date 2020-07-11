@@ -25,11 +25,8 @@ def dashboard_client(request):
 	return render(request, 'chart/dashboard_client.html', {})
 
 
-############################################################################
-######################      Chart to Dashboard 360      ####################
-############################################################################
-# Request Chart CA per Days
 def get_CA_days(request, *args, **kwargs):
+	"""Request Chart CA per Days"""
 	bookings_CAdays = requests.get('http://127.0.0.1:5000/caDays/').text
 	CAdays_list = json.loads(bookings_CAdays)
 	CAdays = [
@@ -43,14 +40,21 @@ def get_CA_days(request, *args, **kwargs):
 		PM_anno = numFormat.formatNumberMoney(PM)
 		CAday = [date, CA, CA_anno, PM, PM_anno]
 		CAdays.append(CAday)
-	return JsonResponse(CAdays, safe=False) # http response
+	return JsonResponse(CAdays, safe=False)
 
-# Request Chart Number of bookings per days
+ 
 def get_Nb_Bookings(request, *args, **kwargs):
+	"""Request Chart Number of bookings per days"""
 	bookings_NbBooks = requests.get('http://127.0.0.1:5000/nbBookingDays/').text
 	NbBooks_list = json.loads(bookings_NbBooks)
 	NbBooks = [
-		['Jour', 'Nombre de réservation', {"role": "annotation"}, 'Nombre de spectateurs par réservations', {"role": "annotation"}]
+			[
+				'Jour', 
+				'Nombre de réservation', 
+				{"role": "annotation"}, 
+				'Nombre de spectateurs par réservations', 
+				{"role": "annotation"}
+			]
 		]
 	for i in reversed(range(len(NbBooks_list))):
 		date = NbBooks_list[i]['_id']
@@ -60,10 +64,11 @@ def get_Nb_Bookings(request, *args, **kwargs):
 		M_spec_anno = numFormat.formatNumberFloat(M_spec)
 		NbBook = [date, Nb_books, Nb_books_anno, M_spec, M_spec_anno]
 		NbBooks.append(NbBook)
-	return JsonResponse(NbBooks, safe=False) # http response
+	return JsonResponse(NbBooks, safe=False)
 
-# Request Chart Number of spectators per days
+
 def get_Nb_Spectators(request, *args, **kwargs):
+	"""Request Chart Number of spectators per days"""
 	bookings_NbSpects = requests.get('http://127.0.0.1:5000/nbSpectDays/').text
 	NbSpects_list = json.loads(bookings_NbSpects)
 	NbSpects = [
@@ -77,14 +82,11 @@ def get_Nb_Spectators(request, *args, **kwargs):
 		PM_Spects_anno = numFormat.formatNumberMoney(PM_Spects)
 		NbSpect = [date, Nb_Spects, Nb_Spects_anno, PM_Spects, PM_Spects_anno]
 		NbSpects.append(NbSpect)
-	return JsonResponse(NbSpects, safe=False) # http response 
+	return JsonResponse(NbSpects, safe=False) 
 
 
-############################################################################
-######################      xxxxxxxxxxxxxxxxxxxxxx      ####################
-############################################################################
-# Request Chart CA per Rooms and per Days
 def get_CA_Rooms_Days(request, *args, **kwargs):
+	"""Request Chart CA per Rooms and per Days"""
 	bookings_CARoomdays = requests.get('http://127.0.0.1:5000/caRoomDays/').text
 	CARoomdays_list = json.loads(bookings_CARoomdays)
 	CARoomdays = [
@@ -144,11 +146,11 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
 			CARoom9, CARoom9_anno,
 			]
 		CARoomdays.append(CARoomday)
-	return JsonResponse(CARoomdays, safe=False) # http response
+	return JsonResponse(CARoomdays, safe=False)
 
 
-# Request Chart CA per Days
 def get_CA_Rooms(request, *args, **kwargs):
+	"""Request Chart CA per Days"""
 	bookings_CArooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
 	CArooms_list = json.loads(bookings_CArooms)
 	CArooms = [
@@ -160,11 +162,11 @@ def get_CA_Rooms(request, *args, **kwargs):
 		CA_anno = numFormat.formatNumberMoney(CA)
 		CAroom = [room, CA, CA_anno]
 		CArooms.append(CAroom)
-	return JsonResponse(CArooms, safe=False) # http response
+	return JsonResponse(CArooms, safe=False)
 
-
-# Request Chart CA per Days
+ 
 def get_Spect_Rooms(request, *args, **kwargs):
+	"""Request Chart CA per Days"""
 	bookings_Spectrooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
 	Spectrooms_list = json.loads(bookings_Spectrooms)
 	Spectrooms = [
@@ -176,11 +178,11 @@ def get_Spect_Rooms(request, *args, **kwargs):
 		Spect_anno = numFormat.formatNumberMoney(Spect)
 		Spectroom = [room, Spect, Spect_anno]
 		Spectrooms.append(Spectroom)
-	return JsonResponse(Spectrooms, safe=False) # http response
+	return JsonResponse(Spectrooms, safe=False)
 
 
-# Request Chart CA per thems and per Days
 def get_CA_Themes_Days(request, *args, **kwargs):
+	"""Request Chart CA per thems and per Days"""
 	bookings_CAThemedays = requests.get('http://127.0.0.1:5000/caThemeDays/').text
 	CAThemedays_list = json.loads(bookings_CAThemedays)
 	CAThemedays = [
@@ -197,9 +199,6 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 			'Horreur', {"role": "annotation"},
 		]
 	]
-	# CATheme1, CATheme2, CATheme3, CATheme4, CATheme5, CATheme6, CATheme7, CATheme8, CATheme9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
-	# CATheme1_anno, CATheme2_anno, CATheme3_anno, CATheme4_anno, CATheme5_anno = "0", "0", "0", "0", "0"
-	# CATheme6_anno, CATheme7_anno, CATheme8_anno, CATheme9_anno = "0", "0", "0", "0"
 	print(type(CAThemedays_list))
 	for i in range(len(CAThemedays_list)):
 		CATheme1 = 0
@@ -264,11 +263,11 @@ def get_CA_Themes_Days(request, *args, **kwargs):
 			CATheme9, CATheme9_anno,
 			]
 		CAThemedays.append(CAThemeday)
-	return JsonResponse(CAThemedays, safe=False) # http response
+	return JsonResponse(CAThemedays, safe=False)
 
 
-# Request Chart CA per Themes
 def get_CA_Themes(request, *args, **kwargs):
+	"""Request Chart CA per Themes"""
 	bookings_CAthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
 	bookings_CAthemesS = requests.get('http://127.0.0.1:5000/cadThemeSecond/').text
 	CAthemesF_list = json.loads(bookings_CAthemesF)
@@ -289,11 +288,11 @@ def get_CA_Themes(request, *args, **kwargs):
 			if elem['_id']['ThemeS'] == CAthemes[i][0]:
 				CAthemes[i][1] = CAthemes[i][1] + elem['CA']
 				CAthemes[i][2] = numFormat.formatNumberMoney(CAthemes[i][1])
-	return JsonResponse(CAthemes, safe=False) # http response
+	return JsonResponse(CAthemes, safe=False)
 
 
-# Request Chart CA per Themes
 def get_Spect_Themes(request, *args, **kwargs):
+	"""Request Chart spectator per Themes"""
 	bookings_SpectthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
 	bookings_SpectthemesS = requests.get('http://127.0.0.1:5000/cadThemeSecond/').text
 	SpectthemesF_list = json.loads(bookings_SpectthemesF)
@@ -314,11 +313,11 @@ def get_Spect_Themes(request, *args, **kwargs):
 			if elem['_id']['ThemeS'] == Spectthemes[i][0]:
 				Spectthemes[i][1] = Spectthemes[i][1] + elem['Nb_Spec']
 				Spectthemes[i][2] = numFormat.formatNumberMoney(Spectthemes[i][1])
-	return JsonResponse(Spectthemes, safe=False) # http response
+	return JsonResponse(Spectthemes, safe=False)
 
 
-# Request Chart Points per Themes
 def get_Points_Themes(request, *args, **kwargs):
+	"""Request Chart Points per Themes"""
 	bookings_pointThemesF = requests.get('http://127.0.0.1:5000/ptRoomThemesF/').text
 	bookings_pointThemesS = requests.get('http://127.0.0.1:5000/ptRoomThemesS/').text
 	pointThemesF_list = json.loads(bookings_pointThemesF)
@@ -343,6 +342,6 @@ def get_Points_Themes(request, *args, **kwargs):
 		pointTheme = [room, theme, point, point_anno]
 		pointThemes.append(pointTheme)
 
-	return JsonResponse(pointThemes, safe=False) # http response
+	return JsonResponse(pointThemes, safe=False)
 
 
