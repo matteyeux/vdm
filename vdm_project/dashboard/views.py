@@ -11,8 +11,23 @@ def homepage(request):
 
 
 def booking_list(request):
-    """Render to display 'Réservation'"""
+    """Render to display all 'Réservations'"""
     return render(request, 'bookingList/booking_list.html', {})
+
+
+def booking_list_day(request):
+    """Render to display daily 'Réservations'"""
+    return render(request, 'bookingList/booking_list_day.html', {})
+
+
+def booking_detail(request, bookingId):
+    """Render to display detail 'Réservation'"""
+    booking_detail_tmp = requests.get('http://127.0.0.1:5000/bookingDetail/?bookingId='+bookingId).text
+    booking_detail = json.loads(booking_detail_tmp)
+    print(type(booking_detail))
+    return render(request, 'bookingList/booking_detail.html', {
+        'booking_detail': booking_detail
+        })
 
 
 def dashboard360(request):

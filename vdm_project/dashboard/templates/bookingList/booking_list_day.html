@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-	Liste Booking - {{ block.super }}
+	Liste Booking Daily - {{ block.super }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -107,7 +107,7 @@
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:5000/kpi/",
+			url: "http://127.0.0.1:5000/dailyKPI/",
 			dataType: "json",
 			cache: true,
 			success: function(data) {
@@ -137,12 +137,45 @@
 		});
 	});
 
+	$(document).ready(function() {
+		setInterval(function getData() {
+			$.ajax({
+				type: "GET",
+				url: "http://127.0.0.1:5000/dailyKPI/",
+				dataType: "json",
+				cache: true,
+				success: function(data) {
+					total_amount = 0;
+					nb_spectateur = 0;
+					nb_resa = 0;
+					for (const line in data) {
+						total_amount += data[line].TotalPrice;
+						nb_spectateur += data[line].NbSpectateur;
+						nb_resa += 1
+					}
+					avg_price_resa = (total_amount/nb_resa);
+					avg_spec = (nb_spectateur/nb_resa);
+					avg_price = (total_amount/nb_spectateur);
+					$("#total_amount").text(numberFormatMoney(total_amount));
+					$("#nb_resa").text(numberFormatInt(nb_resa));
+					$("#avg_price_resa").text(numberFormatMoney(avg_price_resa));
+					$("#nb_spectateur").text(numberFormatInt(nb_spectateur));
+					$("#avg_spec").text(numberFormat(avg_spec));
+					$("#avg_price").text(numberFormatMoney(avg_price));
+				},
+				error: function(xhr, textStatus) {
+					console.log("error..");
+				}
+			});
+		}, 1000);
+	});
+
 	/*************************************************/
 	/************  Api call get Data list ************/
 	/*************************************************/
 	$(document).ready(function() {
 		$.ajax({
-			url: 'http://127.0.0.1:5000/bookingList/',
+			url: 'http://127.0.0.1:5000/bookingListDay/',
 			method: 'get',
 			dataType: 'json',
 			cache: true,	
@@ -162,7 +195,6 @@
 				});
 				counter = 0;
 				for (const line in data) {
-					console.log(data[line]);
 					bookingListTable.row.add([
 						counter,
 						data[line].Acheteur.Nom,
@@ -170,14 +202,48 @@
 						data[line].NbSpectateur,
 						data[line].Game.Nom,
 						data[line].Game.Jour,
-						data[line].TotalPrice,
-						'<a href="/booking_detail/' + data[line]._id.$oid + '">Détail</a>'
-					]).draw(true);
+						data[line].TotalPrice
+					]).draw(false);
 					counter++;
 				}
+				lastData = data[data.length - 1];
+				updateData(lastData, counter);
 			}
 		});
 	});
+
+	function updateData(lastData, counter) {
+		objectId = lastData._id.$oid;
+		$.ajax({
+			type: "GET",
+			url: 'http://127.0.0.1:5000/incrementBookingList/?lastId='+objectId,
+			dataType: "json",
+			cache: true,
+			success: function(data) {
+				var bookingListTable = $('#booking_list').DataTable();
+				console.log(data);
+				for (const line in data) {
+					bookingListTable.row.add([
+						counter,
+						data[line].Acheteur.Nom,
+						data[line].Acheteur.Prenom,
+						data[line].NbSpectateur,
+						data[line].Game.Nom,
+						data[line].Game.Jour,
+						data[line].TotalPrice
+					]).draw(false);
+					counter++
+				}
+			if (data.length > 0) {
+				lastData = data[data.length - 1];
+			}
+			setTimeout(function(){updateData(lastData, counter)}, 500);
+			// setTimeout(updateData(lastData, counter), 5000);
+			// setInterval(updateData(lastData, counter), 3000);
+			// updateData(lastData, counter);
+			}
+		});
+	}
 
 	</script>
 
@@ -197,13 +263,13 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box">
-						<h4 class="page-title">Liste des réservations</h4>
+						<h4 class="page-title">Liste des réservations du jour</h4>
 						<ol class="breadcrumb p-0 m-0">
 							<li class="breadcrumb-item">
 								<a href="{% url 'homepage' %}">Plateforme VDM Escape Game</a>
 							</li>
 							<li class="breadcrumb-item active">
-								Liste des réservations
+								Liste des réservations du jour
 							</li>
 						</ol>
 						<div class="clearfix"></div>
@@ -218,7 +284,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="page-title-box">
-							<h4 class="page-title text-center">Indicateurs de Performance depuis le ***DATE HERE***</h4>
+							<h4 class="page-title text-center">Indicateurs de Performance du {% now "d/m/Y" %}</h4>
 						</div>
 					</div>
 				</div>
@@ -284,7 +350,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="page-title-box">
-						<h4 class="page-title text-center">Liste des réservation depuis le <span id="datatable-date">***DATE HERE***</span></h4>
+						<h4 class="page-title text-center">Liste des réservation du {% now "d/m/Y" %}</h4>
 					</div>
 					<div class="card-box">
 
@@ -298,7 +364,6 @@
 									<th scope="col">Thème Sélectionné</th>
 									<th scope="col">Date de la réservation</th>
 									<th scope="col">Montant total réservation</th>
-									<th scope="col">Détail réservation</th>
 								</tr>
 							</thead>
 						</table>

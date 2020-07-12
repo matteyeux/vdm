@@ -1,0 +1,206 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	Liste Booking - {{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<!-- DataTables -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+	<!-- <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script> -->
+<!-- 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" type="text/javascript">></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/datatables/jquery.dataTables.min.css' %}"/> -->
+
+
+            <!-- App Data Table css/js/jquery -->
+            <!-- <script src='https://code.jquery.com/jquery-3.5.1.js'></script> -->
+            <!-- <link rel="stylesheet" type="text/css" href="{% static 'plugins/datatables/jquery.dataTables.min.css' %}"> -->
+            <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"> -->
+            <!-- <script type="text/javascript" charset="utf8" src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script> -->
+            <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
+
+	<link data-require="datatables@*" data-semver="1.10.21" rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+	<link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
+	<!-- <link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" /> -->
+	<link data-require="datatables@*" data-semver="1.10.21" rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
+   
+	<script data-require="jquery" data-semver="3.5.1" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+	<script data-require="datatables@*" data-semver="1.10.21" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+	<script src="{% static 'plugins/datatables/dataTables.buttons.min.js' %}" type="text/javascript">></script>
+	<script src="{% static 'plugins/datatables/buttons.bootstrap4.min.js' %}" type="text/javascript">></script>
+	<script src="{% static 'plugins/datatables/buttons.html5.min.js' %}" type="text/javascript">></script>
+
+
+{% endblock %}
+
+{% block platform_body %}
+
+	{% load custom_filters %}
+
+	<!-- Start content -->
+	<div class="content">
+
+		<!-- Start Container -->
+		<div class="container-fluid">
+
+			<!-- Start row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4 class="page-title">
+							{% if booking_detail.0.Acheteur.Civilite == "Monsieur" %}
+								Détail de la réservation de Mr {{ booking_detail.0.Acheteur.Nom }} du {{ booking_detail.0.Game.Jour | string_to_date:"%Y-%m-%d" }}
+							{% elif booking_detail.0.Acheteur.Civilite == "Madame" %}
+								Détail de la réservation de Mme {{ booking_detail.0.Acheteur.Nom }} du {{ booking_detail.0.Game.Jour | string_to_date:"%Y-%m-%d" }}
+							{% else %}
+								Détail de la réservation de {{ booking_detail.0.Acheteur.Nom }} du {{ booking_detail.0.Game.Jour | string_to_date:"%Y-%m-%d" }}
+							{% endif %}
+						</h4>
+						<ol class="breadcrumb p-0 m-0">
+							<li class="breadcrumb-item">
+								<a href="{% url 'homepage' %}">Plateforme VDM Escape Game</a>
+							</li>
+							<li class="breadcrumb-item active">
+								Détail réservation
+							</li>
+						</ol>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<!-- End row -->
+
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-sm-12">
+					<!-- Start Row -->
+					<div class="row">
+
+						<div class="card-box col-md-5 mb-3 mx-auto">
+							<h4 class="page-title text-left mb-3">Information de l'acheteur</span></h4>
+							<div class="row">
+								<div class="col-md-4 mb-3">
+									<label for="firstName">Prénom</label>
+									<input type="text" class="form-control" id="firstName" value="{{ booking_detail.0.Acheteur.Prenom }}" disabled="">
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="lastName">Nom</label>
+									<input type="text" class="form-control" id="lastName" value="{{ booking_detail.0.Acheteur.Nom }}" disabled="">
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="age">Age</label>
+									<input type="text" class="form-control" id="age" value="{{ booking_detail.0.Acheteur.Age }}" disabled="">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-8 mb-3">
+									<label for="email">Email</label>
+									<input type="email" class="form-control" id="email" value="{{ booking_detail.0.Acheteur.Email }}" disabled="">
+								</div>
+								<div class="col-md-4 mb-3">
+									<label for="sizeSpect">Nombre de places acheté</label>
+									<input type="text" class="form-control" id="sizeSpect" value="{{ booking_detail.0.Reservation | length }}" disabled="">
+								</div>
+							</div>
+						</div>
+
+						<div class="card-box col-md-5 mb-3 mx-auto">
+							<h4 class="page-title text-left mb-3">Information du jeu</span></h4>
+							<div class="row">
+								<div class="col-md-5 mb-3">
+									<label for="salle">Salle</label>
+									<input type="text" class="form-control" id="salle" value="{{ booking_detail.0.Game.Nom }}" disabled="">
+								</div>
+								<div class="col-md-1 mb-3">
+<!-- 									<label for="secondtheme">Thème Secondaire</label>
+									<input type="text" class="form-control" id="secondtheme" value="{{ booking_detail.0.Game.theme_secondaire }}" disabled=""> -->
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="vr">VR</label>
+									<input type="text" class="form-control" id="vr" value="{{ booking_detail.0.Game.VR }}" disabled="">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<label for="firsttheme">Thème Principal</label>
+									<input type="text" class="form-control" id="firsttheme" value="{{ booking_detail.0.Game.theme_pricipal }}" disabled="">
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="secondtheme">Thème Secondaire</label>
+									<input type="text" class="form-control" id="secondtheme" value="{{ booking_detail.0.Game.theme_secondaire }}" disabled="">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-3 mb-3">
+									<label for="jour">Jour </label>
+									<input type="text" class="form-control" id="jour" value="{{ booking_detail.0.Game.Jour | string_to_date:'%Y-%m-%d' }}" disabled="">
+								</div>
+								<div class="col-md-3 mb-3">
+<!-- 									<label for="secondtheme">Thème Secondaire</label>
+									<input type="text" class="form-control" id="secondtheme" value="{{ booking_detail.0.Game.theme_secondaire }}" disabled=""> -->
+								</div>
+								<div class="col-md-3 mb-3">
+									<label for="heure">Heure</label>
+									<input type="text" class="form-control" id="heure" value="{{ booking_detail.0.Game.Horaire }}" disabled="">
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- Row End -->
+
+					<div class="card-box col-md-11 mb-3 mx-auto">
+						<h4 class="page-title text-left mb-3">Information des spectateurs</span></h4>
+						{% for spectator in booking_detail.0.Reservation %}
+							<div class="row">
+								<div class="col-md-2 mb-3">
+									<label for="civilite">Civilité</label>
+									<input type="text" class="form-control" id="civilite" value="{{ spectator.Spectateur.Civilite }}" disabled="">
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="lastName">Nom</label>
+									<input type="text" class="form-control" id="lastName" value="{{ spectator.Spectateur.Nom }}" disabled="">
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="firstName">Prénom</label>
+									<input type="text" class="form-control" id="firstName" value="{{ spectator.Spectateur.Prenom }}" disabled="">
+								</div>
+								<div class="col-md-1 mb-3">
+									<label for="age">Age</label>
+									<input type="text" class="form-control" id="age" value="{{ spectator.Spectateur.Age }}" disabled="">
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="tarif">Tarif</label>
+									<input type="text" class="form-control" id="tarif" value="{{ spectator.Tarif }}" disabled="">
+								</div>
+								<div class="col-md-1 mb-3">
+									<label for="age">Prix</label>
+									<input type="text" class="form-control" id="age" value="{{ spectator.prix }} €" disabled="">
+								</div>
+							</div>
+						{% endfor %}
+
+					</div>
+
+
+				</div>
+			</div>
+			<!-- Row End -->
+
+
+		</div> 
+		<!-- container-fluid End -->
+
+	</div> 
+	<!-- content End -->
+
+{% endblock %}

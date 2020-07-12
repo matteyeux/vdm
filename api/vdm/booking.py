@@ -3,6 +3,7 @@ from flask import jsonify, request
 from flask_restplus import Namespace, Resource
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+from datetime import datetime
 
 import config
 import utilities
@@ -10,9 +11,12 @@ import utilities
 ns_reservations = Namespace('reservations', description="reservations stuff")
 ns_reservation = Namespace('reservation', description="reservation stuff")
 ns_bookingList = Namespace('bookingList', description="booking list stuff")
+ns_bookingListDay = Namespace('bookingListDay', 
+                                    description="booking list stuff of day")
 ns_incrementBookingList = Namespace('incrementBookingList',
                                     description="incremental booking \
                                                    list stuff")
+ns_bookingDetail = Namespace('bookingDetail', description="booking detail")
 
 
 @ns_reservation.route("")
@@ -68,7 +72,43 @@ class BookingList(Resource):
                 }
             },
             {"$sort": {"_id": 1}},
-            {"$limit": 100}
+            # {"$limit": 100}
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_bookingListDay.route("/")
+class BookingListDay(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        now = datetime.now()
+        gen_time = datetime(now.year, now.month, now.day)
+        dummy_id = ObjectId.from_datetime(gen_time)
+
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project":
+                {
+                    "_id": 1,
+                    "Acheteur.Nom": 1,
+                    "Acheteur.Prenom": 1,
+                    "NbSpectateur": {"$size": "$Reservation"},
+                    "Game.Nom": 1,
+                    "Game.Jour": 1,
+                    "TotalPrice": {"$sum": "$Reservation.prix"}
+                }
+            },
+            {"$match": {"_id": {"$gte": dummy_id}}},
+            {"$sort": {"_id": 1}}
         ])
         data = []
         for reservation in cursor:
@@ -101,8 +141,26 @@ class IncrementBookingList(Resource):
                 }
             },
             {"$match": {"_id": {"$gt": ObjectId(lastId)}}},
-            {"$limit": 50}
+            # {"$limit": 50}
         ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_bookingDetail.route("/")
+class bookingDetail(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        bookingId = request.args.get('bookingId')
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.find({ '_id': ObjectId(bookingId) })
         data = []
         for reservation in cursor:
             res_str = json.loads(dumps(reservation))
