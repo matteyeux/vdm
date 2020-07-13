@@ -12,7 +12,19 @@ def homepage(request):
 
 def booking_list(request):
     """Render to display all 'Réservations'"""
-    return render(request, 'bookingList/booking_list.html', {})
+    bookings_data = requests.get('http://127.0.0.1:5000/bookingList/').text
+    bookings = json.loads(bookings_data)
+    # price = 0.0
+    # for booking in bookings:
+    #   for spectator in booking['Reservation']:
+    #       price += spectator['prix']
+    #   price = float("{:.2f}".format(price))   
+    #   total_price = {'total_prix': f'{price:.2f}' + " €"}
+    #   booking.update(total_price)
+    #   price = 0.0
+    return render(request, 'bookingList/booking_list.html', {
+            'bookings': bookings,
+        })
 
 
 def booking_list_day(request):
@@ -26,7 +38,7 @@ def booking_detail(request, bookingId):
     booking_detail = json.loads(booking_detail_tmp)
     print(type(booking_detail))
     return render(request, 'bookingList/booking_detail.html', {
-        'booking_detail': booking_detail
+            'booking_detail': booking_detail
         })
 
 
@@ -368,3 +380,8 @@ def get_Points_Themes(request, *args, **kwargs):
 def dashboard_client(request):
     """Render to display 'Détails Clients'"""
     return render(request, 'chart/dashboard_client.html', {})
+
+
+def data_extrator(request):
+    """Render to display 'data extractor'"""
+    return render(request, 'data/data_extractor.html', {})

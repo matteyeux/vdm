@@ -25,4 +25,6 @@ urlpatterns = [
     path('api/get_Points_Themes', views.get_Points_Themes, name='get_Points_Themes'),
 
     path('chart/dashboard_client', views.dashboard_client, name='dashboard_client'),
+
+    path('data/data_extrator', views.data_extrator, name='data_extrator'),
 ]
