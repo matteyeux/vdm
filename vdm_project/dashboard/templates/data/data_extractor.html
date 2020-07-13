@@ -51,13 +51,13 @@
 					// document.body.appendChild(link); // Required for FF
 
 					// link.click(); // This will download the data file named "my_data.csv".
-				
-					var csv = obj2csv(data);
+					var csvName = startDate + '_' + endDate + 'detail_bookings_list.csv';
+					var csvContent = obj2csv(data);
 					var downloadLink = document.createElement("a");
-					var blob = new Blob(["\ufeff", csv]);
+					var blob = new Blob(["\ufeff", csvContent]);
 					var url = URL.createObjectURL(blob);
 					downloadLink.href = url;
-					downloadLink.download = "data.csv";
+					downloadLink.download = csvName;
 
 					document.body.appendChild(downloadLink);
 					downloadLink.click();
@@ -166,7 +166,7 @@
 					</div>
 					<!-- Row End -->
 					
-				<button id="dateChoose" type="button" class="btn btn-primary ml-5">Valider les dates</button>
+				<button id="dateChoose" type="button" class="btn btn-primary ml-5">Extraction du CSV</button>
 
 		</div> 
 		<!-- container-fluid End -->
