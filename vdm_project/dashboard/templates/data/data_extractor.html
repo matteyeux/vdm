@@ -1,0 +1,177 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+	Data Extracteur - {{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
+
+	<link data-require="datatables@*" data-semver="1.10.21" rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+	<link data-require="font-awesome@*" data-semver="4.5.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
+	<!-- <link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" /> -->
+	<link data-require="datatables@*" data-semver="1.10.21" rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
+   
+	<script data-require="jquery" data-semver="3.5.1" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+	<script data-require="datatables@*" data-semver="1.10.21" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+	<script src="{% static 'plugins/datatables/dataTables.buttons.min.js' %}" type="text/javascript">></script>
+	<script src="{% static 'plugins/datatables/buttons.bootstrap4.min.js' %}" type="text/javascript">></script>
+	<script src="{% static 'plugins/datatables/buttons.html5.min.js' %}" type="text/javascript">></script>
+
+<script type="text/javascript">
+	
+	/*************************************************/
+	/************  Api call get Data list ************/
+	/*************************************************/
+	$(document).ready(function() {
+		$('#dateChoose').click(function () {
+			// var startDate = '11/07/2020';
+			// var endDate = '14/07/2020';
+			console.log("blop");
+			var startDate = document.getElementById("startDate").value;
+			var endDate = document.getElementById("endDate").value;
+			$.ajax({
+				url: 'http://127.0.0.1:5000/bookingListExtract/?startDate=' + startDate + '&endDate=' + endDate,
+				method: 'get',
+				dataType: 'json',
+				cache: true,
+
+				success: function(data) {
+					console.log(data);
+					// console.log(obj2csv(data));
+					// var csvName = startDate + '_' + endDate + 'detail_bookings_list.csv';
+					// var csvContent = obj2csv(data);
+					// var encodedUri = encodeURI(csvContent);
+					// var link = document.createElement("a");
+					// link.setAttribute("href", encodedUri);
+					// link.setAttribute("download", "my_data.csv");
+					// document.body.appendChild(link); // Required for FF
+
+					// link.click(); // This will download the data file named "my_data.csv".
+				
+					var csv = obj2csv(data);
+					var downloadLink = document.createElement("a");
+					var blob = new Blob(["\ufeff", csv]);
+					var url = URL.createObjectURL(blob);
+					downloadLink.href = url;
+					downloadLink.download = "data.csv";
+
+					document.body.appendChild(downloadLink);
+					downloadLink.click();
+					document.body.removeChild(downloadLink);
+
+
+				}
+			});
+		});
+	});
+
+
+	function obj2csv(obj, opt) {
+		if (typeof obj !== 'object') return null;
+		opt = opt || {};
+		var scopechar = opt.scopechar || '/';
+		var delimeter = opt.delimeter || ',';
+		if (Array.isArray(obj) === false) obj = [obj];
+		var curs, name, rownum, key, queue, values = [], rows = [], headers = {}, headersArr = [];
+		for (rownum = 0; rownum < obj.length; rownum++) {
+			queue = [obj[rownum], ''];
+			rows[rownum] = {};
+			while (queue.length > 0) {
+				name = queue.pop();
+				curs = queue.pop();
+				if (curs !== null && typeof curs === 'object') {
+					for (key in curs) {
+						if (curs.hasOwnProperty(key)) {
+							queue.push(curs[key]);
+							queue.push(name + (name ? scopechar : '') + key);
+						}
+					}
+				} else {
+					if (headers[name] === undefined) headers[name] = true;
+					rows[rownum][name] = curs;
+				}
+			}
+			values[rownum] = [];
+		}
+		// create csv text
+		for (key in headers) {
+			if (headers.hasOwnProperty(key)) {
+				headersArr.push(key);
+				for (rownum = 0; rownum < obj.length; rownum++) {
+					values[rownum].push(rows[rownum][key] === undefined
+						? ''
+						: JSON.stringify(rows[rownum][key]));
+				}
+			}
+		}
+		for (rownum = 0; rownum < obj.length; rownum++) {
+			values[rownum] = values[rownum].join(delimeter);
+		}
+		return '"' + headersArr.join('"' + delimeter + '"') + '"\n' + values.join('\n');
+	}
+
+</script>
+
+{% endblock %}
+
+{% block platform_body %}
+
+	{% load custom_filters %}
+
+	<!-- Start content -->
+	<div class="content">
+
+		<!-- Start Container -->
+		<div class="container-fluid">
+
+			<!-- Start row -->
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title-box">
+						<h4 class="page-title">Data Extracteur</h4>
+						<ol class="breadcrumb p-0 m-0">
+							<li class="breadcrumb-item">
+								<a href="{% url 'homepage' %}">Plateforme VDM Escape Game</a>
+							</li>
+							<li class="breadcrumb-item active">
+								Data Extracteur
+							</li>
+						</ol>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<!-- End row -->
+
+			<!-- Start Row -->
+			<div class="row">
+				<div class="col-sm-12">
+					<!-- Start Row -->
+					<div class="row">
+
+						<div class="card-box col-md-5 mb-3 mx-auto">
+							<h4 class="page-title text-left mb-3">Date de début</span></h4>
+							<input type="date" id="startDate" value="2020-07-01">
+						</div>
+
+						<div class="card-box col-md-5 mb-3 mx-auto">
+							<h4 class="page-title text-left mb-3">Date de fin</span></h4>
+							<input type="date" id="endDate" value="2020-07-30">
+						</div>
+
+					</div>
+					<!-- Row End -->
+					
+				<button id="dateChoose" type="button" class="btn btn-primary ml-5">Valider les dates</button>
+
+		</div> 
+		<!-- container-fluid End -->
+
+	</div> 
+	<!-- content End -->
+
+{% endblock %}
