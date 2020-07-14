@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<body class="bg-transparent">
+
+	{{ block.super }}
+
+	<!-- HOME -->
+	<section>
+
+		<!-- Start Container -->
+		<div class="container-alt">
+
+			<!-- Start Row -->
+			<div class="row">
+
+				<div class="col-sm-12">
+
+					<!-- Start Wrapper -->
+					<div class="wrapper-page">
+
+						<!-- Start Card-box-->
+						<div class="m-t-40 account-pages">
+							<div class="text-center account-logo-box">
+								<div class="m-t-10 m-b-10">
+									<a href="#">
+										<h4 class="text-light">VDM Escape Game</h4>
+									</a>
+									<br>
+									<span class="text-light">Plateforme à destination des équipes Internes</span>
+								</div>
+							</div>
+							<div class="account-content">
+
+								<fieldset class="text-center">
+									<div class="form-group mt-4 mb-5">
+										<a href="{% url 'login' %}" class="text-primary m-l-5"><b>Connexion</b></a>
+									</div>
+									<div class="form-group m-5">
+										<a href="{% url 'register' %}" class="text-primary m-l-5"><b>Créer un compte</b></a>
+									</div>
+<!-- 									<div class="form-group mt-5 mb-4">
+										<a href="#" class="text-primary m-l-5"><b>Mot de passe oublié</b></a>
+									</div> -->
+								</fieldset>
+
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<!-- Card-box End -->
+
+					</div>
+					<!-- Wrapper End -->
+
+				</div>
+
+			</div>
+			<!-- Row End -->
+
+		</div>
+		<!-- Container End -->
+
+	</section>
+	<!-- END HOME -->
+
+</body>
+
+{% endblock %}

@@ -1,25 +1,30 @@
 import requests 
 import json
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from . import numFormat
 
 
+@login_required
 def homepage(request):
     return render(request, 'homepage/homepage.html', {})
 
 
+@login_required
 def booking_list(request):
     """Render to display all 'Réservations'"""
     return render(request, 'bookingList/booking_list.html', {})
 
 
+@login_required
 def booking_list_day(request):
     """Render to display daily 'Réservations'"""
     return render(request, 'bookingList/booking_list_day.html', {})
 
 
+@login_required
 def booking_detail(request, bookingId):
     """Render to display detail 'Réservation'"""
     booking_detail_tmp = requests.get('http://127.0.0.1:5000/bookingDetail/?bookingId='+bookingId).text
@@ -30,11 +35,13 @@ def booking_detail(request, bookingId):
         })
 
 
+@login_required
 def dashboard360(request):
     """Render to display 'Dashboard360'"""
     return render(request, 'chart/dashboard360.html', {})
 
 
+@login_required
 def get_CA_days(request, *args, **kwargs):
     """Request Chart CA per Days"""
     bookings_CAdays = requests.get('http://127.0.0.1:5000/caDays/').text
@@ -53,6 +60,7 @@ def get_CA_days(request, *args, **kwargs):
     return JsonResponse(CAdays, safe=False)
 
  
+@login_required
 def get_Nb_Bookings(request, *args, **kwargs):
     """Request Chart Number of bookings per days"""
     bookings_NbBooks = requests.get('http://127.0.0.1:5000/nbBookingDays/').text
@@ -77,6 +85,7 @@ def get_Nb_Bookings(request, *args, **kwargs):
     return JsonResponse(NbBooks, safe=False)
 
 
+@login_required
 def get_Nb_Spectators(request, *args, **kwargs):
     """Request Chart Number of spectators per days"""
     bookings_NbSpects = requests.get('http://127.0.0.1:5000/nbSpectDays/').text
@@ -95,11 +104,13 @@ def get_Nb_Spectators(request, *args, **kwargs):
     return JsonResponse(NbSpects, safe=False) 
 
 
+@login_required
 def dashboard_rooms(request):
     """Render to display 'Détails Salles'"""
     return render(request, 'chart/dashboard_rooms.html', {})
 
 
+@login_required
 def get_CA_Rooms_Days(request, *args, **kwargs):
     """Request Chart CA per Rooms and per Days"""
     bookings_CARoomdays = requests.get('http://127.0.0.1:5000/caRoomDays/').text
@@ -164,6 +175,7 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
     return JsonResponse(CARoomdays, safe=False)
 
 
+@login_required
 def get_CA_Rooms(request, *args, **kwargs):
     """Request Chart CA per Days"""
     bookings_CArooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
@@ -179,7 +191,8 @@ def get_CA_Rooms(request, *args, **kwargs):
         CArooms.append(CAroom)
     return JsonResponse(CArooms, safe=False)
 
- 
+
+@login_required
 def get_Spect_Rooms(request, *args, **kwargs):
     """Request Chart CA per Days"""
     bookings_Spectrooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
@@ -196,11 +209,13 @@ def get_Spect_Rooms(request, *args, **kwargs):
     return JsonResponse(Spectrooms, safe=False)
 
 
+@login_required
 def dashboard_themes(request):
     """Render to display 'Détails Thèmes'"""
     return render(request, 'chart/dashboard_themes.html', {})
 
 
+@login_required
 def get_CA_Themes_Days(request, *args, **kwargs):
     """Request Chart CA per thems and per Days"""
     bookings_CAThemedays = requests.get('http://127.0.0.1:5000/caThemeDays/').text
@@ -286,6 +301,7 @@ def get_CA_Themes_Days(request, *args, **kwargs):
     return JsonResponse(CAThemedays, safe=False)
 
 
+@login_required
 def get_CA_Themes(request, *args, **kwargs):
     """Request Chart CA per Themes"""
     bookings_CAthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
@@ -311,6 +327,7 @@ def get_CA_Themes(request, *args, **kwargs):
     return JsonResponse(CAthemes, safe=False)
 
 
+@login_required
 def get_Spect_Themes(request, *args, **kwargs):
     """Request Chart spectator per Themes"""
     bookings_SpectthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
@@ -336,6 +353,7 @@ def get_Spect_Themes(request, *args, **kwargs):
     return JsonResponse(Spectthemes, safe=False)
 
 
+@login_required
 def get_Points_Themes(request, *args, **kwargs):
     """Request Chart Points per Themes"""
     bookings_pointThemesF = requests.get('http://127.0.0.1:5000/ptRoomThemesF/').text
@@ -365,6 +383,7 @@ def get_Points_Themes(request, *args, **kwargs):
     return JsonResponse(pointThemes, safe=False)
 
 
+@login_required
 def dashboard_client(request):
     """Render to display 'Détails Clients'"""
     return render(request, 'chart/dashboard_client.html', {})
