@@ -180,8 +180,8 @@ class BookingListExtract(Resource):
         """Get bookinglist information."""
         start_date_tmp = request.args.get('startDate')
         end_date_tmp = request.args.get('endDate')
-        startDate = datetime.strptime(start_date_tmp, '%Y-%m-%d')
-        endDate = datetime.strptime(end_date_tmp, '%Y-%m-%d')
+        startDate = datetime.strptime(start_date_tmp, '%Y-%d-%m')
+        endDate = datetime.strptime(end_date_tmp, '%Y-%d-%m')
 
         start_gen_time = datetime(startDate.year, startDate.month, startDate.day)
         end_gen_time = datetime(endDate.year, endDate.month, endDate.day)
