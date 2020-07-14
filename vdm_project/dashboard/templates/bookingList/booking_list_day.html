@@ -107,7 +107,7 @@
 	$(document).ready(function() {
 		$.ajax({
 			type: "GET",
-			url: "http://vdm.0day.cool:5000/dailyKPI/",
+			url: "https://vdm.0day.cool:5000/dailyKPI/",
 			dataType: "json",
 			cache: true,
 			success: function(data) {
@@ -141,7 +141,7 @@
 		setInterval(function getData() {
 			$.ajax({
 				type: "GET",
-				url: "http://vdm.0day.cool:5000/dailyKPI/",
+				url: "https://vdm.0day.cool:5000/dailyKPI/",
 				dataType: "json",
 				cache: true,
 				success: function(data) {
@@ -175,7 +175,7 @@
 	/*************************************************/
 	$(document).ready(function() {
 		$.ajax({
-			url: 'http://vdm.0day.cool:5000/bookingListDay/',
+			url: 'https://vdm.0day.cool:5000/bookingListDay/',
 			method: 'get',
 			dataType: 'json',
 			cache: true,	
@@ -217,7 +217,7 @@
 		objectId = lastData._id.$oid;
 		$.ajax({
 			type: "GET",
-			url: 'http://vdm.0day.cool:5000/incrementBookingList/?lastId='+objectId,
+			url: 'https://vdm.0day.cool:5000/incrementBookingList/?lastId='+objectId,
 			dataType: "json",
 			cache: true,
 			success: function(data) {

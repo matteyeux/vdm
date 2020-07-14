@@ -14,3 +14,6 @@ watcher/processed
 watcher/failed
 # use Flexmonster ? 
 vdm_project/pivot-mongo/*
+
+# ignore sqllite3
+vdm_project/db.sqlite3
