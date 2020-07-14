@@ -4,7 +4,8 @@ from flask_cors import CORS
 
 from booking import (ns_reservations, ns_reservation,
                      ns_bookingList, ns_bookingListDay,
-                      ns_incrementBookingList, ns_bookingDetail)
+                      ns_incrementBookingList, ns_bookingDetail,
+                      ns_bookingListExtract)
 from daily import ns_caDays, ns_nbBookingDays, ns_nbSpectDays
 from kpi import ns_dailyKPI, ns_kpi
 from rooms import ns_caRoomDays, ns_cadRoom
@@ -26,6 +27,7 @@ api.add_namespace(ns_bookingList)
 api.add_namespace(ns_bookingListDay)
 api.add_namespace(ns_incrementBookingList)
 api.add_namespace(ns_bookingDetail)
+api.add_namespace(ns_bookingListExtract)
 
 api.add_namespace(ns_caDays)
 api.add_namespace(ns_nbBookingDays)

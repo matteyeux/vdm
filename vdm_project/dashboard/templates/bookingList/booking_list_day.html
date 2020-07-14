@@ -202,7 +202,8 @@
 						data[line].NbSpectateur,
 						data[line].Game.Nom,
 						data[line].Game.Jour,
-						data[line].TotalPrice
+						data[line].TotalPrice,
+						'<a href="/booking_detail/' + data[line]._id.$oid + '">Détail</a>'
 					]).draw(false);
 					counter++;
 				}
@@ -230,7 +231,8 @@
 						data[line].NbSpectateur,
 						data[line].Game.Nom,
 						data[line].Game.Jour,
-						data[line].TotalPrice
+						data[line].TotalPrice,
+						'<a href="/booking_detail/' + data[line]._id.$oid + '">Détail</a>'
 					]).draw(false);
 					counter++
 				}
@@ -364,6 +366,7 @@
 									<th scope="col">Thème Sélectionné</th>
 									<th scope="col">Date de la réservation</th>
 									<th scope="col">Montant total réservation</th>
+									<th scope="col">Détail réservation</th>
 								</tr>
 							</thead>
 						</table>
