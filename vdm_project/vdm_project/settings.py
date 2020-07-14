@@ -25,7 +25,7 @@ SECRET_KEY = 'odg1vr$+pznqqa8*joxzte%yni+52pfrqo)_vc56*r(a#9c0c+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "vdm.0day.cool"]
 
 STATICFILES_DIRS = [
     "vdm_project/static/",
@@ -73,6 +73,8 @@ TEMPLATES = [
         },
     },
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Work with ASGI (asinc server) 
 # WSGI_APPLICATION = 'vdm_project.wsgi.application'
