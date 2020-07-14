@@ -270,7 +270,6 @@ def get_CA_Themes_Days(request, *args, **kwargs):
         print("here")
         for elem in CAThemedays_list[i]['Themes']:
             if elem['First_theme'] == 'Braquage' or elem['Second_theme'] == 'Braquage':
-                print("###################### Braquage ###################")
                 CATheme1 += elem['CA']
                 CATheme1_anno = numFormat.formatNumberMoney(CATheme1)
             if elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
