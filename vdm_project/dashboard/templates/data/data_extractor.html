@@ -33,6 +33,7 @@
 			console.log("blop");
 			var startDate = document.getElementById("startDate").value;
 			var endDate = document.getElementById("endDate").value;
+			console.log(startDate);
 			$.ajax({
 				url: 'https://vdm.0day.cool:5000/bookingListExtract/?startDate=' + startDate + '&endDate=' + endDate,
 				method: 'get',
