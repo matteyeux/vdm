@@ -3,6 +3,8 @@ import json
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from bson import ObjectId
+from datetime import datetime
 
 from . import numFormat
 
@@ -41,9 +43,11 @@ def booking_detail(request, bookingId):
     """Render to display detail 'Réservation'"""
     booking_detail_tmp = requests.get('http://127.0.0.1:5000/bookingDetail/?bookingId='+bookingId).text
     booking_detail = json.loads(booking_detail_tmp)
-    print(type(booking_detail))
+    booking_datetime = ObjectId(bookingId).generation_time
+    booking_date = datetime.strftime(booking_datetime, "%d/%m/%Y")
     return render(request, 'bookingList/booking_detail.html', {
-            'booking_detail': booking_detail
+            'booking_detail': booking_detail,
+            'booking_date': booking_date
         })
 
 
