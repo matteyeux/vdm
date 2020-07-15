@@ -12,19 +12,19 @@ ns_customer_civilities_daily = Namespace('customer/civilities/daily', descriptio
 ns_spectator_civilities = Namespace('spectator/civilities', description="Histo split man / wooman")
 ns_spectator_civilities_daily = Namespace('spectator/civilities/daily', description="Daily split man / wooman")
 
-ns_customer_version = Namespace('version', description="Histo split VR / Not VR")
-ns_customer_version_daily = Namespace('version/daily', description="Daily split VR / Not VR")
+ns_customer_version = Namespace('customer/version', description="Histo split VR / Not VR")
+ns_customer_version_daily = Namespace('customer/version/daily', description="Daily split VR / Not VR")
 ns_spectator_version = Namespace('spectator/version', description="Histo split VR / Not VR")
 ns_spectator_version_daily = Namespace('spectator/version/daily', description="Daily split VR / Not VR")
 
-ns_customerBookingsHours = Namespace('customer/hours', description="dispatch customer by hours")
-ns_spectatorsBookingsHours = Namespace('spectators/hours', description="dispatch Spectators by hours")
+ns_customer_bookings_ours = Namespace('customer/hours', description="dispatch customer by hours")
+ns_spectators_bookings_hours = Namespace('spectators/hours', description="dispatch Spectators by hours")
 
 ns_customer_game_hours = Namespace('customer/game/hours', description="dispatch customer by Games hours")
-ns_spectatorGamehours = Namespace('spectator/game/hours', description="dispatch Spectators by Games hours")
+ns_spectator_game_hours = Namespace('spectator/game/hours', description="dispatch Spectators by Games hours")
 
-ns_customerSplitAge = Namespace('customerhours', description="dispatch customer by hours")
-ns_spectatorSplitAge = Namespace('spectator/hours', description="dispatch Spectators by hours")
+ns_customer_split_age = Namespace('customerhours', description="dispatch customer by hours")
+ns_spectator_split_age = Namespace('spectator/hours', description="dispatch Spectators by hours")
 
 
 @ns_customer_civilities.route("/")

@@ -17,9 +17,9 @@ from customer import (ns_customer_civilities, ns_customer_civilities_daily,
                     ns_spectator_civilities, ns_spectator_civilities_daily,
                     ns_customer_version, ns_customer_version_daily,
                     ns_spectator_version, ns_spectator_version_daily,
-                    #ns_customerBookingsHours, #ns_spectatorsBookingsHours                
-                    ns_customer_game_hours, #ns_spectatorGamehours,
-                    #ns_customerSplitAge, #ns_spectatorSplitAge                    
+                    #ns_customer_bookings_hours, #ns_spectators_bookings_hours                
+                    ns_customer_game_hours, #ns_spectator_game_hours,
+                    #ns_customer_split_age, #ns_spectator_split_age                    
                     )
 
 app = Flask(__name__)
