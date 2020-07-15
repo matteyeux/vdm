@@ -401,6 +401,7 @@ def dashboard_client(request):
     return render(request, 'chart/dashboard_client.html', {})
 
 
+@login_required
 def data_extrator(request):
     """Render to display 'data extractor'"""
     return render(request, 'data/data_extractor.html', {})
