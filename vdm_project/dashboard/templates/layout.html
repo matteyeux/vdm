@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+{% load static %}
 
 	<body class="fixed-left">
 
@@ -54,10 +55,10 @@
 		
 									<li class="dropdown user-box">
 										<a href="" class="dropdown-toggle waves-effect user-link" data-toggle="dropdown" aria-expanded="true">
-											{% if app.user %}
-												<img src="#" alt="user-img" class="rounded-circle user-img">
+											{% if user.is_authenticated %}
+												<img src="{% static 'users/chat_pas_content.png' %}" alt="user-img" class="rounded-circle user-img">
 											{% else %}
-												<img src="#" alt="user-img" class="rounded-circle user-img">
+												<img src="{% static 'users/avatar-12.png' %}" alt="user-img" class="rounded-circle user-img">
 											{% endif %}
 										</a>
 		
