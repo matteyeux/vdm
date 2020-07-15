@@ -242,9 +242,28 @@ def get_Spect_Rooms(request, *args, **kwargs):
 @login_required
 def dashboard_themes(request):
     """Render to display 'Détails Thèmes'"""
+    bookings_pointThemesF = requests.get('http://127.0.0.1:5000/ptRoomThemesF/').text
+    bookings_pointThemesS = requests.get('http://127.0.0.1:5000/ptRoomThemesS/').text
+    pointThemesF_list = json.loads(bookings_pointThemesF)
+    pointThemesS_list = json.loads(bookings_pointThemesS)
+    pointThemes = []
+
+    for elem in pointThemesF_list:
+        theme = elem['_id']['ThemeF']
+        point = elem['Nb_Spec']*3
+        pointTheme = [theme, point]
+        pointThemes.append(pointTheme)
+
+    for elem in pointThemesS_list:
+        for i in range(len(pointThemes)):
+            if elem['_id']['ThemeS'] == pointThemes[i][0]:
+                pointThemes[i][1] = pointThemes[i][1] + elem['Nb_Spec']
+    sort_pointTheme = sorted(pointThemes, key=lambda theme: theme[1], reverse = True) 
+
     first_date = utilities.first_date_bookings()
     last_date = utilities.last_date_bookings()
     return render(request, 'chart/dashboard_themes.html', {
+            'pointThemes': sort_pointTheme,
             'first_date': first_date,
             'last_date': last_date
         })
