@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from bson import ObjectId
 from datetime import datetime
 
-from . import numFormat
+from . import numFormat, utilities
 
 
 @login_required
@@ -27,8 +27,12 @@ def booking_list(request):
     #   total_price = {'total_prix': f'{price:.2f}' + " €"}
     #   booking.update(total_price)
     #   price = 0.0
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
     return render(request, 'bookingList/booking_list.html', {
             'bookings': bookings,
+            'first_date': first_date,
+            'last_date': last_date
         })
 
 
@@ -54,7 +58,12 @@ def booking_detail(request, bookingId):
 @login_required
 def dashboard360(request):
     """Render to display 'Dashboard360'"""
-    return render(request, 'chart/dashboard360.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard360.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
 @login_required
@@ -123,7 +132,12 @@ def get_Nb_Spectators(request, *args, **kwargs):
 @login_required
 def dashboard_rooms(request):
     """Render to display 'Détails Salles'"""
-    return render(request, 'chart/dashboard_rooms.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard_rooms.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
 @login_required
@@ -228,7 +242,12 @@ def get_Spect_Rooms(request, *args, **kwargs):
 @login_required
 def dashboard_themes(request):
     """Render to display 'Détails Thèmes'"""
-    return render(request, 'chart/dashboard_themes.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard_themes.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
 @login_required
@@ -274,7 +293,6 @@ def get_CA_Themes_Days(request, *args, **kwargs):
         print("here")
         for elem in CAThemedays_list[i]['Themes']:
             if elem['First_theme'] == 'Braquage' or elem['Second_theme'] == 'Braquage':
-                print("###################### Braquage ###################")
                 CATheme1 += elem['CA']
                 CATheme1_anno = numFormat.formatNumberMoney(CATheme1)
             if elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
@@ -402,7 +420,12 @@ def get_Points_Themes(request, *args, **kwargs):
 @login_required
 def dashboard_client(request):
     """Render to display 'Détails Clients'"""
-    return render(request, 'chart/dashboard_client.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard_client.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
 @login_required
