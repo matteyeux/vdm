@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<body class="bg-transparent">
+
+	{{ block.super }}
+
+	{% load crispy_forms_tags %}
+
+	<!-- HOME -->
+	<section>
+
+		<!-- Start Container -->
+		<div class="container-alt">
+
+			<!-- Start Row -->
+			<div class="row">
+
+				<div class="col-sm-12">
+
+					<!-- Start Wrapper -->
+					<div class="wrapper-page">
+
+						<!-- Start Card-box-->
+						<div class="m-t-40 account-pages">
+							<div class="text-center account-logo-box">
+								<div class="m-t-10 m-b-10">
+									<a href="{% url 'index' %}">
+										<h3 class="text-light">VDM Escape Game</h3>
+									</a>
+									<span class="text-light">Plateforme à destination des équipes Internes</span>
+								</div>
+								<br>
+								<h3 class="text-uppercase font-bold m-b-0 text-primary">Connexion</h3>
+							</div>
+							<div class="account-content">
+
+								<form class="form-horizontal form-group" method="post">
+
+									{% csrf_token %}
+									{{ form | crispy }}
+
+									<div class="form-group text-center m-t-30">
+										<div class="col-sm-12">
+											<a href="#" class="text-muted"><i class="fa fa-lock m-r-5"></i>Mot de passe oublié?</a>
+										</div>
+									</div>
+
+									<div class="form-group account-btn text-center m-t-10">
+										<div class="col-12">
+											
+											<button type="submit" class="btn btn-primary">Connexion !</button>
+										</div>
+									</div>
+
+								</form>
+
+								<div class="clearfix"></div>
+							</div>
+						</div>
+						<!-- Card-box End -->
+
+						<div class="row m-t-50">
+							<div class="col-sm-12 text-center">
+								<p class="text-muted">Vous n'avez pas de compte? <a href="{% url 'register' %}" class="text-primary m-l-5"><b>Enregistrez Vous</b></a></p>
+							</div>
+						</div>
+
+					</div>
+					<!-- Wrapper End -->
+
+				</div>
+
+			</div>
+			<!-- Row End -->
+
+		</div>
+		<!-- Container End -->
+		
+	</section>
+	<!-- END HOME -->
+
+</body>
+
+{% endblock %}

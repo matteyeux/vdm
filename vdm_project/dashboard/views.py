@@ -1,25 +1,78 @@
 import requests 
 import json
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from bson import ObjectId
+from datetime import datetime
 
-from . import numFormat
+from . import numFormat, utilities
 
 
+@login_required
 def homepage(request):
     return render(request, 'homepage/homepage.html', {})
 
 
+@login_required
 def booking_list(request):
-    """Render to display 'Réservation'"""
-    return render(request, 'bookingList/booking_list.html', {})
+    """Render to display all 'Réservations'"""
+    bookings_data = requests.get('http://127.0.0.1:5000/bookingList/').text
+    bookings = json.loads(bookings_data)
+    counter = 0
+    for booking in bookings:
+        num = {'Compteur': counter}
+        price = booking['TotalPrice']
+        price = float("{:.2f}".format(price))   
+        total_price = {'TotalPrice': f'{price:.2f}' + " €"}
+        booking_id = booking['_id']['$oid']
+        new_booking_id = {'oid': booking_id}
+        booking.update(total_price)
+        booking.update(num)
+        booking.update(new_booking_id)
+        counter += 1
+    # bookings = {k: v for k, v in sorted(bookings, key=lambda x: x['Compteur'])}
+
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'bookingList/booking_list.html', {
+            'bookings': bookings,
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
+@login_required
+def booking_list_day(request):
+    """Render to display daily 'Réservations'"""
+    return render(request, 'bookingList/booking_list_day.html', {})
+
+
+@login_required
+def booking_detail(request, bookingId):
+    """Render to display detail 'Réservation'"""
+    booking_detail_tmp = requests.get('http://127.0.0.1:5000/bookingDetail/?bookingId='+bookingId).text
+    booking_detail = json.loads(booking_detail_tmp)
+    booking_datetime = ObjectId(bookingId).generation_time
+    booking_date = datetime.strftime(booking_datetime, "%d/%m/%Y")
+    return render(request, 'bookingList/booking_detail.html', {
+            'booking_detail': booking_detail,
+            'booking_date': booking_date
+        })
+
+
+@login_required
 def dashboard360(request):
     """Render to display 'Dashboard360'"""
-    return render(request, 'chart/dashboard360.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard360.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
+@login_required
 def get_CA_days(request, *args, **kwargs):
     """Request Chart CA per Days"""
     bookings_CAdays = requests.get('http://127.0.0.1:5000/caDays/').text
@@ -38,6 +91,7 @@ def get_CA_days(request, *args, **kwargs):
     return JsonResponse(CAdays, safe=False)
 
  
+@login_required
 def get_Nb_Bookings(request, *args, **kwargs):
     """Request Chart Number of bookings per days"""
     bookings_NbBooks = requests.get('http://127.0.0.1:5000/nbBookingDays/').text
@@ -62,6 +116,7 @@ def get_Nb_Bookings(request, *args, **kwargs):
     return JsonResponse(NbBooks, safe=False)
 
 
+@login_required
 def get_Nb_Spectators(request, *args, **kwargs):
     """Request Chart Number of spectators per days"""
     bookings_NbSpects = requests.get('http://127.0.0.1:5000/nbSpectDays/').text
@@ -80,11 +135,18 @@ def get_Nb_Spectators(request, *args, **kwargs):
     return JsonResponse(NbSpects, safe=False) 
 
 
+@login_required
 def dashboard_rooms(request):
     """Render to display 'Détails Salles'"""
-    return render(request, 'chart/dashboard_rooms.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard_rooms.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
+@login_required
 def get_CA_Rooms_Days(request, *args, **kwargs):
     """Request Chart CA per Rooms and per Days"""
     bookings_CARoomdays = requests.get('http://127.0.0.1:5000/caRoomDays/').text
@@ -92,44 +154,44 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
     CARoomdays = [
         [
             'Jour',
+            'Plus de PQ dans les toilettes', {"role": "annotation"},
+            'Mariage sans alcool', {"role": "annotation"},
             'Interminable attente chez le medecin', {"role": "annotation"}, 
-            'Diner de famille insoutenable', {"role": "annotation"},
+            'Impot sur le revenu', {"role": "annotation"},
             'En plein dans la Friendzone', {"role": "annotation"},
             'Mon compte en banque en fin du mois', {"role": "annotation"},
-            'Soutenance finale', {"role": "annotation"},
-            'Plus de PQ dans les toilettes', {"role": "annotation"},
-            'Impot sur le revenu', {"role": "annotation"},
             'Greve de la SNCF', {"role": "annotation"},
-            'Mariage sans alcool', {"role": "annotation"},
+            'Diner de famille insoutenable', {"role": "annotation"},
+            'Soutenance finale', {"role": "annotation"},
         ]
     ]
     for i in range(len(CARoomdays_list)):
         for elem in CARoomdays_list[i]['Rooms']:
-            if elem['Room'] == 'Interminable attente chez le medecin':
+            if elem['Room'] == 'Plus de PQ dans les toilettes':
                 CARoom1 = elem['CA']
                 CARoom1_anno = numFormat.formatNumberMoney(CARoom1)
-            elif elem['Room'] == 'Diner de famille insoutenable':
+            elif elem['Room'] == 'Mariage sans alcool':
                 CARoom2 = elem['CA']
                 CARoom2_anno = numFormat.formatNumberMoney(CARoom2)
-            elif elem['Room'] == 'En plein dans la Friendzone':
+            elif elem['Room'] == 'Interminable attente chez le medecin':
                 CARoom3 = elem['CA']
                 CARoom3_anno = numFormat.formatNumberMoney(CARoom3)
-            elif elem['Room'] == 'Mon compte en banque en fin du mois':
+            elif elem['Room'] == 'Impot sur le revenu':
                 CARoom4 = elem['CA']
                 CARoom4_anno = numFormat.formatNumberMoney(CARoom4)
-            elif elem['Room'] == 'Soutenance finale':
+            elif elem['Room'] == 'En plein dans la Friendzone':
                 CARoom5 = elem['CA']
                 CARoom5_anno = numFormat.formatNumberMoney(CARoom5)
-            elif elem['Room'] == 'Plus de PQ dans les toilettes':
+            elif elem['Room'] == 'Mon compte en banque en fin du mois':
                 CARoom6 = elem['CA']
                 CARoom6_anno = numFormat.formatNumberMoney(CARoom6)
-            elif elem['Room'] == 'Impot sur le revenu':
+            elif elem['Room'] == 'Greve de la SNCF':
                 CARoom7 = elem['CA']
                 CARoom7_anno = numFormat.formatNumberMoney(CARoom7)
-            elif elem['Room'] == 'Greve de la SNCF':
+            elif elem['Room'] == 'Diner de famille insoutenable':
                 CARoom8 = elem['CA']
                 CARoom8_anno = numFormat.formatNumberMoney(CARoom8)
-            elif elem['Room'] == 'Mariage sans alcool':
+            elif elem['Room'] == 'Soutenance finale':
                 CARoom9 = elem['CA']
                 CARoom9_anno = numFormat.formatNumberMoney(CARoom9)
         date = CARoomdays_list[i]['_id']
@@ -149,6 +211,7 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
     return JsonResponse(CARoomdays, safe=False)
 
 
+@login_required
 def get_CA_Rooms(request, *args, **kwargs):
     """Request Chart CA per Days"""
     bookings_CArooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
@@ -164,7 +227,8 @@ def get_CA_Rooms(request, *args, **kwargs):
         CArooms.append(CAroom)
     return JsonResponse(CArooms, safe=False)
 
- 
+
+@login_required
 def get_Spect_Rooms(request, *args, **kwargs):
     """Request Chart CA per Days"""
     bookings_Spectrooms = requests.get('http://127.0.0.1:5000/cadRoom/').text
@@ -181,11 +245,37 @@ def get_Spect_Rooms(request, *args, **kwargs):
     return JsonResponse(Spectrooms, safe=False)
 
 
+@login_required
 def dashboard_themes(request):
     """Render to display 'Détails Thèmes'"""
-    return render(request, 'chart/dashboard_themes.html', {})
+    bookings_pointThemesF = requests.get('http://127.0.0.1:5000/ptRoomThemesF/').text
+    bookings_pointThemesS = requests.get('http://127.0.0.1:5000/ptRoomThemesS/').text
+    pointThemesF_list = json.loads(bookings_pointThemesF)
+    pointThemesS_list = json.loads(bookings_pointThemesS)
+    pointThemes = []
+
+    for elem in pointThemesF_list:
+        theme = elem['_id']['ThemeF']
+        point = elem['Nb_Spec']*3
+        pointTheme = [theme, point]
+        pointThemes.append(pointTheme)
+
+    for elem in pointThemesS_list:
+        for i in range(len(pointThemes)):
+            if elem['_id']['ThemeS'] == pointThemes[i][0]:
+                pointThemes[i][1] = pointThemes[i][1] + elem['Nb_Spec']
+    sort_pointTheme = sorted(pointThemes, key=lambda theme: theme[1], reverse = True) 
+
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard_themes.html', {
+            'pointThemes': sort_pointTheme,
+            'first_date': first_date,
+            'last_date': last_date
+        })
 
 
+@login_required
 def get_CA_Themes_Days(request, *args, **kwargs):
     """Request Chart CA per thems and per Days"""
     bookings_CAThemedays = requests.get('http://127.0.0.1:5000/caThemeDays/').text
@@ -228,7 +318,6 @@ def get_CA_Themes_Days(request, *args, **kwargs):
         print("here")
         for elem in CAThemedays_list[i]['Themes']:
             if elem['First_theme'] == 'Braquage' or elem['Second_theme'] == 'Braquage':
-                print("###################### Braquage ###################")
                 CATheme1 += elem['CA']
                 CATheme1_anno = numFormat.formatNumberMoney(CATheme1)
             if elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
@@ -271,6 +360,7 @@ def get_CA_Themes_Days(request, *args, **kwargs):
     return JsonResponse(CAThemedays, safe=False)
 
 
+@login_required
 def get_CA_Themes(request, *args, **kwargs):
     """Request Chart CA per Themes"""
     bookings_CAthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
@@ -296,6 +386,7 @@ def get_CA_Themes(request, *args, **kwargs):
     return JsonResponse(CAthemes, safe=False)
 
 
+@login_required
 def get_Spect_Themes(request, *args, **kwargs):
     """Request Chart spectator per Themes"""
     bookings_SpectthemesF = requests.get('http://127.0.0.1:5000/cadThemeFirst/').text
@@ -321,6 +412,7 @@ def get_Spect_Themes(request, *args, **kwargs):
     return JsonResponse(Spectthemes, safe=False)
 
 
+@login_required
 def get_Points_Themes(request, *args, **kwargs):
     """Request Chart Points per Themes"""
     bookings_pointThemesF = requests.get('http://127.0.0.1:5000/ptRoomThemesF/').text
@@ -350,6 +442,18 @@ def get_Points_Themes(request, *args, **kwargs):
     return JsonResponse(pointThemes, safe=False)
 
 
+@login_required
 def dashboard_client(request):
     """Render to display 'Détails Clients'"""
-    return render(request, 'chart/dashboard_client.html', {})
+    first_date = utilities.first_date_bookings()
+    last_date = utilities.last_date_bookings()
+    return render(request, 'chart/dashboard_client.html', {
+            'first_date': first_date,
+            'last_date': last_date
+        })
+
+
+@login_required
+def data_extrator(request):
+    """Render to display 'data extractor'"""
+    return render(request, 'data/data_extractor.html', {})

@@ -5,6 +5,8 @@ urlpatterns = [
 	path('homepage', views.homepage, name='homepage'),
 
     path('report/booking_list', views.booking_list, name='booking_list'),
+    path('report/booking_list_day', views.booking_list_day, name='booking_list_day'),
+    path('booking_detail/<str:bookingId>', views.booking_detail, name='booking_detail'),
 
     path('chart/dashboard360', views.dashboard360, name='dashboard360'),
     path('api/get_CA_days', views.get_CA_days, name='get_CA_days'),
@@ -23,4 +25,6 @@ urlpatterns = [
     path('api/get_Points_Themes', views.get_Points_Themes, name='get_Points_Themes'),
 
     path('chart/dashboard_client', views.dashboard_client, name='dashboard_client'),
+
+    path('data/data_extrator', views.data_extrator, name='data_extrator'),
 ]

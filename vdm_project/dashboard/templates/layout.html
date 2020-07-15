@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+{% load static %}
 
 	<body class="fixed-left">
 
@@ -54,24 +55,24 @@
 		
 									<li class="dropdown user-box">
 										<a href="" class="dropdown-toggle waves-effect user-link" data-toggle="dropdown" aria-expanded="true">
-											{% if app.user %}
-												<img src="#" alt="user-img" class="rounded-circle user-img">
+											{% if user.is_authenticated %}
+												<img src="{% static 'users/chat_pas_content.png' %}" alt="user-img" class="rounded-circle user-img">
 											{% else %}
-												<img src="#" alt="user-img" class="rounded-circle user-img">
+												<img src="{% static 'users/avatar-12.png' %}" alt="user-img" class="rounded-circle user-img">
 											{% endif %}
 										</a>
 		
 										<ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
-											
-											<li>
-												<h5>Bonjour {{ app.user.username }}</h5>
-											</li>
-											<li><a href="#" class="dropdown-item"><i class="ti-user m-r-5"></i>Profil</a></li>
-											<li><a href="#" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Déconnexion</a></li>
-										
-											<li><a href="#" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Créer un compte</a></li>  
-											<li><a href="#" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Connexion</a></li>
-											
+											{% if user.is_authenticated %}
+												<li>
+													<h5>Bonjour {{ user.username }}</h5>
+												</li>
+												<!-- <li><a href="#" class="dropdown-item"><i class="ti-user m-r-5"></i>Profil</a></li> -->
+												<li><a href="{% url 'logout' %}" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Déconnexion</a></li>
+											{% else %}
+												<li><a href="{% url 'register' %}" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Créer un compte</a></li>  
+												<li><a href="{% url 'login' %}" class="dropdown-item"><i class="ti-power-off m-r-5"></i>Connexion</a></li>
+											{% endif %}
 										</ul>
 									</li>
 
@@ -110,15 +111,11 @@
 							<li class="menu-title">Navigation</li>
 
 							<li class="has_sub">
-								<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-invert-colors"></i><span> Interface User</span><span class="menu-arrow"></span></a>
+								<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i><span> Réservations</span><span class="menu-arrow"></span></a>
 								<ul class="list-unstyled">
-									<li><a href="#">Profil</a></li>
+									<li><a href="{% url 'booking_list_day' %}">Liste des réservations du jour</a></li>
+									<li><a href="{% url 'booking_list' %}">Liste des Réservations</a></li>
 								</ul>
-							</li>
-
-							<li>
-								<!-- <a href="{% url 'booking_list' %}" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i><span>Liste des Réseravations</span></a> -->
-								<a href="{% url 'booking_list' %}" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i><span> Réseravations</span></a>
 							</li>
 
 							<li class="has_sub">
@@ -132,8 +129,7 @@
 							</li>
 
 							<li>
-								<!-- <a href="#" class="waves-effect"><i class="mdi mdi-database-export"></i><span> Extracteur de données</span></a> -->
-								<a href="#" class="waves-effect"><i class="mdi mdi-database-export"></i><span> Extracteur</span></a>
+								<a href="{% url 'data_extrator' %}" class="waves-effect"><i class="mdi mdi-database-export"></i><span> Extracteur</span></a>
 							</li>
 
 							<!-- ======================================== -->
@@ -149,6 +145,13 @@
 							<!-- ==========       A Venir      ========== -->
 							<!-- ======================================== -->
 							<li class="menu-title">A Venir</li>
+
+							<li class="has_sub">
+								<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-invert-colors"></i><span> Interface User</span><span class="menu-arrow"></span></a>
+								<ul class="list-unstyled">
+									<li><a href="#">Profil</a></li>
+								</ul>
+							</li>
 
 						</ul>
 					</div>
