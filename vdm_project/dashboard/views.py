@@ -148,44 +148,44 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
     CARoomdays = [
         [
             'Jour',
+            'Plus de PQ dans les toilettes', {"role": "annotation"},
+            'Mariage sans alcool', {"role": "annotation"},
             'Interminable attente chez le medecin', {"role": "annotation"}, 
-            'Diner de famille insoutenable', {"role": "annotation"},
+            'Impot sur le revenu', {"role": "annotation"},
             'En plein dans la Friendzone', {"role": "annotation"},
             'Mon compte en banque en fin du mois', {"role": "annotation"},
-            'Soutenance finale', {"role": "annotation"},
-            'Plus de PQ dans les toilettes', {"role": "annotation"},
-            'Impot sur le revenu', {"role": "annotation"},
             'Greve de la SNCF', {"role": "annotation"},
-            'Mariage sans alcool', {"role": "annotation"},
+            'Diner de famille insoutenable', {"role": "annotation"},
+            'Soutenance finale', {"role": "annotation"},
         ]
     ]
     for i in range(len(CARoomdays_list)):
         for elem in CARoomdays_list[i]['Rooms']:
-            if elem['Room'] == 'Interminable attente chez le medecin':
+            if elem['Room'] == 'Plus de PQ dans les toilettes':
                 CARoom1 = elem['CA']
                 CARoom1_anno = numFormat.formatNumberMoney(CARoom1)
-            elif elem['Room'] == 'Diner de famille insoutenable':
+            elif elem['Room'] == 'Mariage sans alcool':
                 CARoom2 = elem['CA']
                 CARoom2_anno = numFormat.formatNumberMoney(CARoom2)
-            elif elem['Room'] == 'En plein dans la Friendzone':
+            elif elem['Room'] == 'Interminable attente chez le medecin':
                 CARoom3 = elem['CA']
                 CARoom3_anno = numFormat.formatNumberMoney(CARoom3)
-            elif elem['Room'] == 'Mon compte en banque en fin du mois':
+            elif elem['Room'] == 'Impot sur le revenu':
                 CARoom4 = elem['CA']
                 CARoom4_anno = numFormat.formatNumberMoney(CARoom4)
-            elif elem['Room'] == 'Soutenance finale':
+            elif elem['Room'] == 'En plein dans la Friendzone':
                 CARoom5 = elem['CA']
                 CARoom5_anno = numFormat.formatNumberMoney(CARoom5)
-            elif elem['Room'] == 'Plus de PQ dans les toilettes':
+            elif elem['Room'] == 'Mon compte en banque en fin du mois':
                 CARoom6 = elem['CA']
                 CARoom6_anno = numFormat.formatNumberMoney(CARoom6)
-            elif elem['Room'] == 'Impot sur le revenu':
+            elif elem['Room'] == 'Greve de la SNCF':
                 CARoom7 = elem['CA']
                 CARoom7_anno = numFormat.formatNumberMoney(CARoom7)
-            elif elem['Room'] == 'Greve de la SNCF':
+            elif elem['Room'] == 'Diner de famille insoutenable':
                 CARoom8 = elem['CA']
                 CARoom8_anno = numFormat.formatNumberMoney(CARoom8)
-            elif elem['Room'] == 'Mariage sans alcool':
+            elif elem['Room'] == 'Soutenance finale':
                 CARoom9 = elem['CA']
                 CARoom9_anno = numFormat.formatNumberMoney(CARoom9)
         date = CARoomdays_list[i]['_id']
