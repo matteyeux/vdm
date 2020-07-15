@@ -72,6 +72,7 @@ class BookingList(Resource):
                     "NbSpectateur": {"$size": "$Reservation"},
                     "Game.Nom": 1,
                     "Game.Jour": 1,
+                    "Game.Horaire": 1,
                     "TotalPrice": {"$sum": "$Reservation.prix"}
                 }
             },

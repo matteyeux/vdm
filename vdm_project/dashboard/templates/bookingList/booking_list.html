@@ -140,44 +140,60 @@
 	/*************************************************/
 	/************  Api call get Data list ************/
 	/*************************************************/
-	$(document).ready(function() {
-		$.ajax({
-			url: 'http://127.0.0.1:5000/bookingList/',
-			method: 'get',
-			dataType: 'json',
-			cache: true,	
+	// $(document).ready(function() {
+	// 	$.ajax({
+	// 		url: 'http://127.0.0.1:5000/bookingList/',
+	// 		method: 'get',
+	// 		dataType: 'json',
+	// 		cache: true,	
 
-			success: function(data) {
-				console.log(data);
-				var bookingListTable = $('#booking_list').DataTable({
-					"order": [[0, 'dsc']],
-					dom: 'Bfrtip',
-					buttons: [
-						'copy', 'csv', 'excel', 'pdf'
-					],
-					'columnDefs': [
-						{ 'width': '25px', 'targets': [0] },
-						{ 'sortable': true, 'targets': [0] }
-					],
-				});
-				counter = 0;
-				for (const line in data) {
-					console.log(data[line]);
-					bookingListTable.row.add([
-						counter,
-						data[line].Acheteur.Nom,
-						data[line].Acheteur.Prenom,
-						data[line].NbSpectateur,
-						data[line].Game.Nom,
-						data[line].Game.Jour,
-						data[line].TotalPrice,
-						'<a href="/booking_detail/' + data[line]._id.$oid + '">Détail</a>'
-					]).draw(true);
-					counter++;
-				}
-			}
-		});
-	});
+	// 		success: function(data) {
+	// 			console.log(data);
+	// 			var bookingListTable = $('#booking_list').DataTable({
+	// 				"order": [[0, 'dsc']],
+	// 				dom: 'Bfrtip',
+	// 				buttons: [
+	// 					'copy', 'csv', 'excel', 'pdf'
+	// 				],
+	// 				'columnDefs': [
+	// 					{ 'width': '25px', 'targets': [0] },
+	// 					{ 'sortable': true, 'targets': [0] }
+	// 				],
+	// 			});
+	// 			counter = 0;
+	// 			for (const line in data) {
+	// 				console.log(data[line]);
+	// 				bookingListTable.row.add([
+	// 					counter,
+	// 					data[line].Acheteur.Nom,
+	// 					data[line].Acheteur.Prenom,
+	// 					data[line].NbSpectateur,
+	// 					data[line].Game.Nom,
+	// 					data[line].Game.Jour,
+	// 					data[line].TotalPrice,
+	// 					'<a href="/booking_detail/' + data[line]._id.$oid + '">Détail</a>'
+	// 				]).draw(true);
+	// 				counter++;
+	// 			}
+	// 		}
+	// 	});
+	// });
+	
+	// $(document).ready(function() {
+	//     $('#booking_list').DataTable();
+	// } );
+
+	$(document).ready(function() {
+	    $('#booking_list').DataTable( {
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copyHtml5',
+	            'excelHtml5',
+	            'csvHtml5',
+	            'pdfHtml5'
+	        ]
+	    } );
+	} );
 
 	</script>
 
@@ -288,7 +304,7 @@
 					</div>
 					<div class="card-box">
 
-						<table id="booking_list" class="table table-striped table-bordered">
+						<!-- <table id="booking_list" class="table table-striped table-bordered">
 							<thead>
 								<tr>
 									<th scope="col">N°</th>
@@ -301,6 +317,36 @@
 									<th scope="col">Détail réservation</th>
 								</tr>
 							</thead>
+						</table> -->
+
+						<table id="booking_list" class="table table-striped table-bordered dtr-inline" role="grid">
+							<thead>
+								<tr role="row">
+									<th scope="col">N°</th>
+									<th scope="col">Nom</th>
+									<th scope="col">Prénom</th>
+									<th scope="col">nombre de participants</th>
+									<th scope="col">Salle Sélectionnée</th>
+									<th scope="col">Date de la réservation</th>
+									<th scope="col">Montant total réservation</th>
+									<th scope="col">Détail réservation</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								{% for elem in bookings reversed %}
+								    <tr role="row" class="odd">
+								        <td>{{ elem.Compteur }}</td>
+								        <td>{{ elem.Acheteur.Nom }}</td>
+										<td>{{ elem.Acheteur.Prenom }}</th>
+										<td>{{ elem.NbSpectateur }}</th>
+										<td>{{ elem.Game.Nom }}</th>
+										<td>{{ elem.Game.Jour }} à {{ elem.Game.Horaire }}</th>
+										<td>{{ elem.TotalPrice }}</th>
+										<td><a href="/booking_detail/{{ elem.oid }}">Détail</a></th>
+								    </tr>
+							    {% endfor %}
+							</tbody>
 						</table>
 
 					</div>

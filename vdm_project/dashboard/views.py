@@ -19,14 +19,20 @@ def booking_list(request):
     """Render to display all 'Réservations'"""
     bookings_data = requests.get('http://127.0.0.1:5000/bookingList/').text
     bookings = json.loads(bookings_data)
-    # price = 0.0
-    # for booking in bookings:
-    #   for spectator in booking['Reservation']:
-    #       price += spectator['prix']
-    #   price = float("{:.2f}".format(price))   
-    #   total_price = {'total_prix': f'{price:.2f}' + " €"}
-    #   booking.update(total_price)
-    #   price = 0.0
+    counter = 0
+    for booking in bookings:
+        num = {'Compteur': counter}
+        price = booking['TotalPrice']
+        price = float("{:.2f}".format(price))   
+        total_price = {'TotalPrice': f'{price:.2f}' + " €"}
+        booking_id = booking['_id']['$oid']
+        new_booking_id = {'oid': booking_id}
+        booking.update(total_price)
+        booking.update(num)
+        booking.update(new_booking_id)
+        counter += 1
+    # bookings = {k: v for k, v in sorted(bookings, key=lambda x: x['Compteur'])}
+
     first_date = utilities.first_date_bookings()
     last_date = utilities.last_date_bookings()
     return render(request, 'bookingList/booking_list.html', {
