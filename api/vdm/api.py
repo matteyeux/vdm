@@ -10,6 +10,7 @@ from rooms import ns_caRoomDays, ns_cadRoom
 from themes import (ns_caThemeDays, ns_cadThemeFirst,
                     ns_cadThemeSecond, ns_ptRoomThemesF, ns_ptRoomThemesS)
 from extract import ns_extractKPIDaily, ns_extractKPIHisto 
+from customer import (ns_customer_civilities, ns_customer_civilities_daily)
 
 app = Flask(__name__)
 api = Api(app=app, version='0.1.0', title='VDM Api',
@@ -42,6 +43,9 @@ api.add_namespace(ns_ptRoomThemesS)
 
 api.add_namespace(ns_extractKPIDaily)
 api.add_namespace(ns_extractKPIHisto)
+
+api.add_namespace(ns_customer_civilities)
+api.add_namespace(ns_customer_civilities_daily)
 
 
 @ns_root.route('/')
