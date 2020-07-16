@@ -154,58 +154,49 @@ def get_CA_Rooms_Days(request, *args, **kwargs):
     CARoomdays = [
         [
             'Jour',
-            'Plus de PQ dans les toilettes', {"role": "annotation"},
-            'Mariage sans alcool', {"role": "annotation"},
-            'Interminable attente chez le medecin', {"role": "annotation"}, 
-            'Impot sur le revenu', {"role": "annotation"},
-            'En plein dans la Friendzone', {"role": "annotation"},
-            'Mon compte en banque en fin du mois', {"role": "annotation"},
-            'Greve de la SNCF', {"role": "annotation"},
-            'Diner de famille insoutenable', {"role": "annotation"},
-            'Soutenance finale', {"role": "annotation"},
+            'Plus de PQ dans les toilettes',
+            'Mariage sans alcool',
+            'Interminable attente chez le medecin', 
+            'Impot sur le revenu',
+            'En plein dans la Friendzone',
+            'Mon compte en banque en fin du mois',
+            'Greve de la SNCF',
+            'Diner de famille insoutenable',
+            'Soutenance finale',
         ]
     ]
     for i in range(len(CARoomdays_list)):
         for elem in CARoomdays_list[i]['Rooms']:
             if elem['Room'] == 'Plus de PQ dans les toilettes':
                 CARoom1 = elem['CA']
-                CARoom1_anno = numFormat.formatNumberMoney(CARoom1)
             elif elem['Room'] == 'Mariage sans alcool':
                 CARoom2 = elem['CA']
-                CARoom2_anno = numFormat.formatNumberMoney(CARoom2)
             elif elem['Room'] == 'Interminable attente chez le medecin':
                 CARoom3 = elem['CA']
-                CARoom3_anno = numFormat.formatNumberMoney(CARoom3)
             elif elem['Room'] == 'Impot sur le revenu':
                 CARoom4 = elem['CA']
-                CARoom4_anno = numFormat.formatNumberMoney(CARoom4)
             elif elem['Room'] == 'En plein dans la Friendzone':
                 CARoom5 = elem['CA']
-                CARoom5_anno = numFormat.formatNumberMoney(CARoom5)
             elif elem['Room'] == 'Mon compte en banque en fin du mois':
                 CARoom6 = elem['CA']
-                CARoom6_anno = numFormat.formatNumberMoney(CARoom6)
             elif elem['Room'] == 'Greve de la SNCF':
                 CARoom7 = elem['CA']
-                CARoom7_anno = numFormat.formatNumberMoney(CARoom7)
             elif elem['Room'] == 'Diner de famille insoutenable':
                 CARoom8 = elem['CA']
-                CARoom8_anno = numFormat.formatNumberMoney(CARoom8)
             elif elem['Room'] == 'Soutenance finale':
                 CARoom9 = elem['CA']
-                CARoom9_anno = numFormat.formatNumberMoney(CARoom9)
         date = CARoomdays_list[i]['_id']
         CARoomday = [
             date, 
-            CARoom1, CARoom1_anno,
-            CARoom2, CARoom2_anno,
-            CARoom3, CARoom3_anno,
-            CARoom4, CARoom4_anno,
-            CARoom5, CARoom5_anno,
-            CARoom6, CARoom6_anno,
-            CARoom7, CARoom7_anno,
-            CARoom8, CARoom8_anno,
-            CARoom9, CARoom9_anno,
+            CARoom1,
+            CARoom2,
+            CARoom3,
+            CARoom4,
+            CARoom5,
+            CARoom6,
+            CARoom7,
+            CARoom8,
+            CARoom9,
             ]
         CARoomdays.append(CARoomday)
     return JsonResponse(CARoomdays, safe=False)
@@ -283,78 +274,60 @@ def get_CA_Themes_Days(request, *args, **kwargs):
     CAThemedays = [
         [
             'Jour',
-            'Braquage', {"role": "annotation"},
-            'Stress', {"role": "annotation"},
-            'Rapidité', {"role": "annotation"},
-            'Mythologique', {"role": "annotation"},
-            'Stratégie', {"role": "annotation"},
-            'Psychologique', {"role": "annotation"},
-            'Santé', {"role": "annotation"},
-            'Amour', {"role": "annotation"},
-            'Horreur', {"role": "annotation"},
+            'Braquage',
+            'Stress',
+            'Rapidité',
+            'Mythologique',
+            'Stratégie',
+            'Psychologique',
+            'Santé',
+            'Amour',
+            'Horreur',
         ]
     ]
     print(type(CAThemedays_list))
     for i in range(len(CAThemedays_list)):
         CATheme1 = 0
-        CATheme1_anno = "0"
         CATheme2 = 0
-        CATheme2_anno = "0"
         CATheme3 = 0
-        CATheme3_anno = "0"
         CATheme4 = 0
-        CATheme4_anno = "0"
         CATheme5 = 0
-        CATheme5_anno = "0"
         CATheme6 = 0
-        CATheme6_anno = "0"
         CATheme7 = 0
-        CATheme7_anno = "0"
         CATheme8 = 0
-        CATheme8_anno = "0"
         CATheme9 = 0
-        CATheme9_anno = "0"
         date = CAThemedays_list[i]['_id']
         print("here")
         for elem in CAThemedays_list[i]['Themes']:
             if elem['First_theme'] == 'Braquage' or elem['Second_theme'] == 'Braquage':
                 CATheme1 += elem['CA']
-                CATheme1_anno = numFormat.formatNumberMoney(CATheme1)
             if elem['First_theme'] == 'Stress' or elem['Second_theme'] == 'Stress':
                 CATheme2 += elem['CA']
-                CATheme2_anno = numFormat.formatNumberMoney(CATheme2)
             if elem['First_theme'] == 'Rapidité' or elem['Second_theme'] == 'Rapidité':
                 CATheme3 += elem['CA']
-                CATheme3_anno = numFormat.formatNumberMoney(CATheme3)
             if elem['First_theme'] == 'Mythologique' or elem['Second_theme'] == 'Mythologique':
                 CATheme4 += elem['CA']
-                CATheme4_anno = numFormat.formatNumberMoney(CATheme4)
             if elem['First_theme'] == 'Stratégie' or elem['Second_theme'] == 'Stratégie':
                 CATheme5 += elem['CA']
-                CATheme5_anno = numFormat.formatNumberMoney(CATheme5)
             if elem['First_theme'] == 'Psychologique' or elem['Second_theme'] == 'Psychologique':
                 CATheme6 += elem['CA']
-                CATheme6_anno = numFormat.formatNumberMoney(CATheme6)
             if elem['First_theme'] == 'Santé' or elem['Second_theme'] == 'Santé':
                 CATheme7 += elem['CA']
-                CATheme7_anno = numFormat.formatNumberMoney(CATheme7)
             if elem['First_theme'] == 'Amour' or elem['Second_theme'] == 'Amour':
                 CATheme8 += elem['CA']
-                CATheme8_anno = numFormat.formatNumberMoney(CATheme8)
             if elem['First_theme'] == 'Horreur' or elem['Second_theme'] == 'Horreur':
                 CATheme9 += elem['CA']
-                CATheme9_anno = numFormat.formatNumberMoney(CATheme9)
         CAThemeday = [
             date, 
-            CATheme1, CATheme1_anno,
-            CATheme2, CATheme2_anno,
-            CATheme3, CATheme3_anno,
-            CATheme4, CATheme4_anno,
-            CATheme5, CATheme5_anno,
-            CATheme6, CATheme6_anno,
-            CATheme7, CATheme7_anno,
-            CATheme8, CATheme8_anno,
-            CATheme9, CATheme9_anno,
+            CATheme1,
+            CATheme2,
+            CATheme3,
+            CATheme4,
+            CATheme5,
+            CATheme6,
+            CATheme7,
+            CATheme8,
+            CATheme9,
             ]
         CAThemedays.append(CAThemeday)
     return JsonResponse(CAThemedays, safe=False)
