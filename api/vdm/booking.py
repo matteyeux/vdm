@@ -19,6 +19,8 @@ ns_incrementBookingList = Namespace('incrementBookingList',
 ns_bookingDetail = Namespace('bookingDetail', description="booking detail")
 ns_bookingListExtract = Namespace('bookingListExtract', 
                     description="extract bookings between two dates")
+ns_firstDate = Namespace('firstDate', description="extract first date")
+ns_lastDate = Namespace('lastDate', description="extract last date")
 
 
 @ns_reservation.route("")
@@ -70,6 +72,7 @@ class BookingList(Resource):
                     "NbSpectateur": {"$size": "$Reservation"},
                     "Game.Nom": 1,
                     "Game.Jour": 1,
+                    "Game.Horaire": 1,
                     "TotalPrice": {"$sum": "$Reservation.prix"}
                 }
             },
@@ -196,6 +199,58 @@ class BookingListExtract(Resource):
             {"$match": {"_id": {"$gte": start_date}}},
             {"$match": {"_id": {"$lte": end_date}}},
             {"$sort": {"_id": 1}}
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_firstDate.route("/")
+class FirstDate(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project":
+                {
+                    "_id": 1,
+                }
+            },
+            {"$sort": {"_id": 1}},
+            {"$limit": 1}
+        ])
+        data = []
+        for reservation in cursor:
+            res_str = json.loads(dumps(reservation))
+            data.append(res_str)
+
+        response = jsonify(data)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.status_code = 200
+        return response
+
+
+@ns_lastDate.route("/")
+class LastDate(Resource):
+    def get(self):
+        """Get bookinglist information."""
+        vdm_database = config.setup_mongo()
+        cursor = vdm_database.booking.aggregate([
+            {
+                "$project":
+                {
+                    "_id": 1,
+                }
+            },
+            {"$sort": {"_id": -1}},
+            {"$limit": 1}
         ])
         data = []
         for reservation in cursor:

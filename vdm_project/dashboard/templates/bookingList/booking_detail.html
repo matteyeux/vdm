@@ -54,11 +54,11 @@
 					<div class="page-title-box">
 						<h4 class="page-title">
 							{% if booking_detail.0.Acheteur.Civilite == "Monsieur" %}
-								Détail de la réservation de Mr {{ booking_detail.0.Acheteur.Nom }} du {{ booking_detail.0.Game.Jour | string_to_date:"%Y-%m-%d" }}
+								Détail de la réservation de Mr {{ booking_detail.0.Acheteur.Nom }} du {{ booking_date }}
 							{% elif booking_detail.0.Acheteur.Civilite == "Madame" %}
-								Détail de la réservation de Mme {{ booking_detail.0.Acheteur.Nom }} du {{ booking_detail.0.Game.Jour | string_to_date:"%Y-%m-%d" }}
+								Détail de la réservation de Mme {{ booking_detail.0.Acheteur.Nom }} du {{ booking_date }}
 							{% else %}
-								Détail de la réservation de {{ booking_detail.0.Acheteur.Nom }} du {{ booking_detail.0.Game.Jour | string_to_date:"%Y-%m-%d" }}
+								Détail de la réservation de {{ booking_detail.0.Acheteur.Nom }} du {{ booking_date }}
 							{% endif %}
 						</h4>
 						<ol class="breadcrumb p-0 m-0">

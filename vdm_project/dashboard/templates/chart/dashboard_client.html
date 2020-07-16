@@ -27,6 +27,485 @@
 	<script src="{% static 'plugins/datatables/buttons.bootstrap4.min.js' %}" type="text/javascript"></script>
 	<script src="{% static 'plugins/datatables/buttons.html5.min.js' %}" type="text/javascript"></script>
 
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+	/*************************************************/
+	/*********  Api call get Data to Chart  **********/
+	/*************************************************/
+
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.load('current', {'packages':['sankey']});
+
+	/* Split customer per sex and days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Split_Sex_Daily",
+			dataType: "json",
+			cache: true,
+			success: function(dataCustSplitSexDays) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split customer per sex and days
+					var data = google.visualization.arrayToDataTable(dataCustSplitSexDays);
+
+					var options = {
+						title: 'Répartition des Acheteurs Hommes Femmes par jours',
+						legend: {position: 'top', maxLines: 3},
+						vAxis: { format:'short'},
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						},
+						isStacked: true,
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_custSplitSexDays'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD Split customer per sex */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Split_Sex",
+			dataType: "json",
+			cache: true,
+			success: function(dataCustSplitSex) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split customer per sex
+					var data = google.visualization.arrayToDataTable(dataCustSplitSex);
+
+					var options = {
+						title: 'Répartitions cumulé du nombre d\'Hommes et de Femmes',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+					var chart = new google.visualization.PieChart(document.getElementById('chart_custSplitSex'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Split customer per VR and days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Split_VR_Daily",
+			dataType: "json",
+			cache: true,
+			success: function(dataCustSplitVRDays) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split customer per VR and days
+					var data = google.visualization.arrayToDataTable(dataCustSplitVRDays);
+
+					var options = {
+						title: 'Répartition du nombre de réservation avec VR et sans VR',
+						legend: {position: 'top', maxLines: 3},
+						vAxis: { format:'short'},
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						},
+						isStacked: true,
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_custSplitVRDays'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD Split customer per VR */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Split_VR",
+			dataType: "json",
+			cache: true,
+			success: function(dataCustSplitVR) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split customer per VR
+					var data = google.visualization.arrayToDataTable(dataCustSplitVR);
+
+					var options = {
+						title: 'Répartitions cumulé du nombre de réservations avec VR et sans VR',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+					var chart = new google.visualization.PieChart(document.getElementById('chart_custSplitVR'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Nb bookings per hours */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Bookings_Hours",
+			dataType: "json",
+			cache: true,
+			success: function(dataBookingsHours) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Nb bookings per hours
+					var data = google.visualization.arrayToDataTable(dataBookingsHours);
+
+					var options = {
+						title: 'Nombre de réservations par heures',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// colors:['#003366'],
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_custBookingsHours'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Nb Game per hours */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Game_Hours",
+			dataType: "json",
+			cache: true,
+			success: function(dataGameHours) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Nb Game per hours
+					var data = google.visualization.arrayToDataTable(dataGameHours);
+
+					var options = {
+						title: 'Nombre de réservations par heures',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// colors:['#003366'],
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_custGameHours'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Split customer per age */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Cust_Split_Age",
+			dataType: "json",
+			cache: true,
+			success: function(dataCustSplitAge) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split customer per sex and days
+					var data = google.visualization.arrayToDataTable(dataCustSplitAge);
+
+					var options = {
+						title: 'Répartition des Acheteurs par tranches d\'age',
+						legend: {position: 'top', maxLines: 3},
+						vAxis: { format:'short'},
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						},
+						isStacked: true,
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_custSplitAge'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+
+
+	/* Split spectator per sex and days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Split_Sex_Daily",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectSplitSexDays) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split spectator per sex and days
+					var data = google.visualization.arrayToDataTable(dataSpectSplitSexDays);
+
+					var options = {
+						title: 'Répartition des Acheteurs Hommes Femmes par jours',
+						legend: {position: 'top', maxLines: 3},
+						vAxis: { format:'short'},
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						},
+						isStacked: true,
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_spectSplitSexDays'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD Split spectator per sex */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Split_Sex",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectSplitSex) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split spectator per sex
+					var data = google.visualization.arrayToDataTable(dataSpectSplitSex);
+
+					var options = {
+						title: 'Répartitions cumulé du nombre d\'Hommes et de Femmes',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+					var chart = new google.visualization.PieChart(document.getElementById('chart_spectSplitSex'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Split spectator per VR and days */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Split_VR_Daily",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectSplitVRDays) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split spectator per VR and days
+					var data = google.visualization.arrayToDataTable(dataSpectSplitVRDays);
+
+					var options = {
+						title: 'Répartition du nombre de réservation avec VR et sans VR',
+						legend: {position: 'top', maxLines: 3},
+						vAxis: { format:'short'},
+						animation: {
+							duration: 1000,
+							easing: 'out',
+							"startup": true
+						},
+						isStacked: true,
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_spectSplitVRDays'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* CAD Split spectator per VR */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Split_VR",
+			dataType: "json",
+			cache: true,
+			success: function(dataSpectSplitVR) {
+
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split spectator per VR
+					var data = google.visualization.arrayToDataTable(dataSpectSplitVR);
+
+					var options = {
+						title: 'Répartitions cumulé du nombre de réservations avec VR et sans VR',
+						legend: {position: 'top', maxLines: 3}
+					};
+
+					var chart = new google.visualization.PieChart(document.getElementById('chart_spectSplitVR'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Nb bookings per hours */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Bookings_Hours",
+			dataType: "json",
+			cache: true,
+			success: function(dataBookingsHours) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Nb bookings per hours
+					var data = google.visualization.arrayToDataTable(dataBookingsHours);
+
+					var options = {
+						title: 'Nombre de réservations par heures',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// colors:['#003366'],
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_spectBookingsHours'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Nb Game per hours */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Game_Hours",
+			dataType: "json",
+			cache: true,
+			success: function(dataGameHours) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Nb Game per hours
+					var data = google.visualization.arrayToDataTable(dataGameHours);
+
+					var options = {
+						title: 'Nombre de personnes ayant réservé pour un jeu par heures',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// colors:['#003366'],
+					};
+
+					var chart = new google.visualization.LineChart(document.getElementById('chart_spectGameHours'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+	/* Split Customer per age */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Split_Age",
+			dataType: "json",
+			cache: true,
+			success: function(dataSplitSpectAge) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split Customer per age
+					var data = google.visualization.arrayToDataTable(dataSplitSpectAge);
+
+					var options = {
+						title: 'Répartition des Spectateurs par tranches d\'age',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// colors:['#003366'],
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_spectSplitAge'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
+
+	</script>
+
 
 {% endblock %}
 
@@ -60,6 +539,239 @@
 			<!-- End row -->
 
 
+			<!-- ======================================== -->
+			<!-- ============ Config Box Tab ============ -->
+			<!-- ======================================== -->
+			<div class="col-lg-12">
+				<div class="card-box">
+
+					<ul class="nav nav-tabs nav-justified" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="detailsBuyers-tab" data-toggle="tab" href="#detailsBuyers" role="tab" aria-controls="detailsBuyers" aria-selected="false">
+								<span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+								<span class="d-none d-sm-block" style="font-size: 15px">Détails Acheteurs</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="detailsSpectators-tab" data-toggle="tab" href="#detailsSpectators" role="tab" aria-controls="detailsSpectators" aria-selected="true">
+								<span class="d-block d-sm-none"><i class="fas fa-user"></i></span>
+								<span class="d-none d-sm-block" style="font-size: 15px">Détails Spectateurs</span>
+							</a>
+						</li>
+					</ul>
+
+					<!-- ======================================== -->
+					<!-- ================ All Tab =============== -->
+					<!-- ======================================== -->
+					<div class="tab-content">
+						<!-- ======================================== -->
+						<!-- ============== First Tab =============== -->
+						<!-- ======================================== -->
+						<div class="tab-pane show active" id="detailsBuyers" role="tabpanel" aria-labelledby="detailsBuyers-tab">
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition quotidienne du nombre d'acheteur Hommes / Femmes</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_custSplitSexDays" style="min-height: 600px; width: 65%"></div>
+								<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+								<div class="col">
+									<div id="chart_custSplitSex" style="min-height: 600px; width: 90%"></div>
+									<!-- <div id="chart_spectRooms" style="min-height: 400px; width: 100%"></div> -->
+								</div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition quotidienne du nombre de réservation avec VR et sans VR</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_custSplitVRDays" style="min-height: 600px; width: 65%"></div>
+								<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+								<div class="col">
+									<div id="chart_custSplitVR" style="min-height: 600px; width: 90%"></div>
+									<!-- <div id="chart_spectRooms" style="min-height: 400px; width: 100%"></div> -->
+								</div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre de réservation par heure (Achat de la réservation)</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_custBookingsHours" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre de réservation par heure (Heure de réservation)</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_custGameHours" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre d'Acheteur par tranche d'age</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_custSplitAge" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+						</div>
+						<!-- ======================================== -->
+						<!-- ============ First Tab End ============= -->
+						<!-- ======================================== -->
+
+
+						<!-- ======================================== -->
+						<!-- =============== Second Tab ============= -->
+						<!-- ======================================== -->
+						<div class="tab-pane" id="detailsSpectators" role="tabpanel" aria-labelledby="detailsSpectators-tab">
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition par jour & Cumul du nombre de spectateurs Hommes / Femmes</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_spectSplitSexDays" style="min-height: 600px; width: 65%"></div>
+								<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+								<div class="col">
+									<div id="chart_spectSplitSex" style="min-height: 600px; width: 90%"></div>
+									<!-- <div id="chart_spectRooms" style="min-height: 400px; width: 100%"></div> -->
+								</div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition par jour & Cumul du nombre de spectateurs avec VR et sans VR</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_spectSplitVRDays" style="min-height: 600px; width: 65%"></div>
+								<div style="border-left: 1px solid blue; min-height: 350px; margin-left: 10px; margin-right: 10px"></div>
+								<div class="col">
+									<div id="chart_spectSplitVR" style="min-height: 600px; width: 90%"></div>
+									<!-- <div id="chart_spectRooms" style="min-height: 400px; width: 100%"></div> -->
+								</div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre de spectateurs par heure d'achat</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_spectBookingsHours" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre de spectateurs par heure de jeu</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_spectGameHours" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre de Spectateur par tranche d'age</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_spectSplitAge" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+						</div>
+						<!-- ======================================== -->
+						<!-- ============= Second Tab End =========== -->
+						<!-- ======================================== -->
+					</div>
+					<!-- ======================================== -->
+					<!-- ============== All Tab End ============= -->
+					<!-- ======================================== -->
+
+				</div>
+			</div> 
+			<!-- end col -->
 
 
 		</div> 
@@ -67,5 +779,20 @@
 
 	</div> 
 	<!-- content End -->
+
+
+	<style type="text/css">
+		.tab-content>.tab-pane {
+		  height: 1px;
+		  overflow: hidden;
+		  display: block;
+		 visibility: hidden;
+		}
+		.tab-content>.active {
+		  height: auto;
+		  overflow: auto;
+		  visibility: visible;
+		}
+	</style>	
 
 {% endblock %}
