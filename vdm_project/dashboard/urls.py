@@ -39,6 +39,7 @@ urlpatterns = [
     path('api/get_Spect_Split_VR', views.get_Spect_Split_VR, name='get_Spect_Split_VR'),
     path('api/get_Spect_Bookings_Hours', views.get_Spect_Bookings_Hours, name='get_Spect_Bookings_Hours'),
     path('api/get_Spect_Game_Hours', views.get_Spect_Game_Hours, name='get_Spect_Game_Hours'),
+    path('api/get_Spect_Split_Age', views.get_Spect_Split_Age, name='get_Spect_Split_Age'),
 
     path('data/data_extrator', views.data_extrator, name='data_extrator'),
 ]

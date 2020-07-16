@@ -521,22 +521,22 @@ def get_Cust_Split_VR_Daily(request, *args, **kwargs):
 @login_required
 def get_Cust_Split_VR(request, *args, **kwargs):
     """Request Chart Points per Themes"""
-    bookings_splitSex = requests.get('http://127.0.0.1:5000/customer/version').text
-    splitSex_list = json.loads(bookings_splitSex)
-    NbCustSplitSex = [
+    bookings_splitVR = requests.get('http://127.0.0.1:5000/customer/version').text
+    splitVR_list = json.loads(bookings_splitVR)
+    NbCustSplitVR = [
         ['VR', 'Nombre', {"role": "annotation"}]
         ]
 
-    for elem in splitSex_list:
+    for elem in splitVR_list:
+        if elem['_id'] == "Oui":
+            vr = "Réservation avec VR"
         if elem['_id'] == "Non":
             vr = "Réservation sans VR"
-        if elem['_id'] == "Madame":
-            vr = "Réservation avec VR"
         nb = elem['total']
-        NbCustSplitSex_tmp = [vr, nb, nb]
-        NbCustSplitSex.append(NbCustSplitSex_tmp)
+        NbCustSplitVR_tmp = [vr, nb, nb]
+        NbCustSplitVR.append(NbCustSplitVR_tmp)
 
-    return JsonResponse(NbCustSplitSex, safe=False)
+    return JsonResponse(NbCustSplitVR, safe=False)
 
 
 @login_required
@@ -549,7 +549,7 @@ def get_Cust_Bookings_Hours(request, *args, **kwargs):
         ]
 
     for elem in bookings_Hours_list:
-        hours = elem['_id']['hours']
+        hours = elem['_id']['hours'] + ":00"
         nb = elem['total']
         bookings_Hours_tmp = [hours, nb, nb]
         bookings_Hours.append(bookings_Hours_tmp)
@@ -596,43 +596,59 @@ def get_Cust_Split_Age(request, *args, **kwargs):
 
 @login_required
 def get_Spect_Split_Sex_Daily(request, *args, **kwargs):
-    """Request Chart Points per Themes"""
+    """Request Spectator Split Sex Daily"""
     bookings_splitSex = requests.get('http://127.0.0.1:5000/spectator/civilities/daily').text
     splitSex_list = json.loads(bookings_splitSex)
     NbCustSplitSex = [
         ['Jour', 'Nombre d\'Hommes', {"role": "annotation"}, 'Nombre de Femmes', {"role": "annotation"}]
         ]
 
+    nb_man = 0
+    nb_woman = 0
+    counter = 1
+    current_date = None
     for elem in splitSex_list:
-        if elem['_id']['Civilite'] == "Monsieur":
-            date = elem['_id']['date']
-            nb_man = elem['total']
-            for elem_n in splitSex_list:
-                if date == elem_n['_id']['date'] and elem_n['_id']['Civilite'] == "Madame":
-                    nb_woman = elem_n['total']
-            NbCustSplitSex_tmp = [date, nb_man, nb_man, nb_woman, nb_woman]
+        if current_date == None:
+            current_date = elem['date']
+        if elem['date'] != current_date or counter == len(splitSex_list):
+            NbCustSplitSex_tmp = [current_date, nb_man, nb_man, nb_woman, nb_woman]
             NbCustSplitSex.append(NbCustSplitSex_tmp)
+            nb_man = 0
+            nb_woman = 0
+        current_date = elem['date']
+        for resa in elem['Reservation']:
+            if resa['Spectateur']['Civilite'] == "Monsieur": 
+                nb_man += 1
+            elif resa['Spectateur']['Civilite'] == "Madame":
+                nb_woman += 1
+        counter += 1
 
     return JsonResponse(NbCustSplitSex, safe=False)
 
 
 @login_required
 def get_Spect_Split_Sex(request, *args, **kwargs):
-    """Request Chart Points per Themes"""
+    """Request Chart Spectator Split Sex"""
     bookings_splitSex = requests.get('http://127.0.0.1:5000/spectator/civilities').text
     splitSex_list = json.loads(bookings_splitSex)
     NbCustSplitSex = [
         ['Civilité', 'Nombre', {"role": "annotation"}]
         ]
 
+    nb_man = 0
+    nb_woman = 0
     for elem in splitSex_list:
-        if elem['_id'] == "Monsieur":
-            civilite = "Hommes"
-        if elem['_id'] == "Madame":
-            civilite = "Femmes"
-        nb = elem['total']
-        NbCustSplitSex_tmp = [civilite, nb, nb]
-        NbCustSplitSex.append(NbCustSplitSex_tmp)
+        for resa in elem['Reservation']:
+            if resa['Spectateur']['Civilite'] == "Monsieur":
+                man = "Hommes"
+                nb_man += 1
+            elif resa['Spectateur']['Civilite'] == "Madame":
+                woman = "Femmes"
+                nb_woman += 1
+    NbCustSplitSex_tmp = [man, nb_man, nb_man]
+    NbCustSplitSex.append(NbCustSplitSex_tmp)
+    NbCustSplitSex_tmp = [woman, nb_woman, nb_woman]
+    NbCustSplitSex.append(NbCustSplitSex_tmp)
 
     return JsonResponse(NbCustSplitSex, safe=False)
 
@@ -662,22 +678,22 @@ def get_Spect_Split_VR_Daily(request, *args, **kwargs):
 @login_required
 def get_Spect_Split_VR(request, *args, **kwargs):
     """Request Chart Points per Themes"""
-    bookings_splitSex = requests.get('http://127.0.0.1:5000/spectator/version').text
-    splitSex_list = json.loads(bookings_splitSex)
-    NbCustSplitSex = [
+    bookings_splitVR = requests.get('http://127.0.0.1:5000/spectator/version').text
+    splitVR_list = json.loads(bookings_splitVR)
+    NbCustSplitVR = [
         ['VR', 'Nombre', {"role": "annotation"}]
         ]
 
-    for elem in splitSex_list:
+    for elem in splitVR_list:
+        if elem['_id'] == "Oui":
+            vr = "Réservation avec VR"
         if elem['_id'] == "Non":
             vr = "Réservation sans VR"
-        if elem['_id'] == "Madame":
-            vr = "Réservation avec VR"
         nb = elem['total']
-        NbCustSplitSex_tmp = [vr, nb, nb]
-        NbCustSplitSex.append(NbCustSplitSex_tmp)
+        NbCustSplitVR_tmp = [vr, nb, nb]
+        NbCustSplitVR.append(NbCustSplitVR_tmp)
 
-    return JsonResponse(NbCustSplitSex, safe=False)
+    return JsonResponse(NbCustSplitVR, safe=False)
 
 
 @login_required
@@ -690,7 +706,7 @@ def get_Spect_Bookings_Hours(request, *args, **kwargs):
         ]
 
     for elem in bookings_Hours_list:
-        hours = elem['_id']['hours']
+        hours = elem['_id']['hours'] + ":00"
         nb = elem['total']
         bookings_Hours_tmp = [hours, nb, nb]
         bookings_Hours.append(bookings_Hours_tmp)
@@ -714,6 +730,52 @@ def get_Spect_Game_Hours(request, *args, **kwargs):
         Game_Hours.append(Game_Hours_tmp)
 
     return JsonResponse(Game_Hours, safe=False)
+
+
+@login_required
+def get_Spect_Split_Age(request, *args, **kwargs):
+    """Request Chart Split Spectator Age"""
+    Split_A_tmp = requests.get('http://127.0.0.1:5000/spectator/age').text
+    Split_Age_list = json.loads(Split_A_tmp)
+    Split_Age = [
+        ['Age', 'Nombre de Spectateurs', {"role": "annotation"}]
+        ]
+
+    nb_0_18 = 0
+    nb_18_25 = 0
+    nb_25_39 = 0
+    nb_40_54 = 0
+    nb_55 = 0
+    for elem in Split_Age_list:
+        for resa in elem['Reservation']:
+            if resa['Spectateur']['Age'] < 18:
+                Spect_0_18 = "[0-18["
+                nb_0_18 += 1
+            if resa['Spectateur']['Age'] >= 18 and resa['Spectateur']['Age'] < 25:
+                Spect_18_25 = "[18-25["
+                nb_18_25 += 1
+            if resa['Spectateur']['Age'] >= 25 and resa['Spectateur']['Age'] < 39:
+                Spect_25_39 = "[25-39["
+                nb_25_39 += 1
+            if resa['Spectateur']['Age'] >= 40 and resa['Spectateur']['Age'] <= 54:
+                Spect_40_54 = "[40-54]"
+                nb_40_54 += 1
+            if resa['Spectateur']['Age'] >= 55:
+                Spect_55 = "[55 et plus"
+                nb_55 += 1
+
+    Split_Age_tmp = [Spect_0_18, nb_0_18, nb_0_18]
+    Split_Age.append(Split_Age_tmp)
+    Split_Age_tmp = [Spect_18_25, nb_18_25, nb_18_25]
+    Split_Age.append(Split_Age_tmp)
+    Split_Age_tmp = [Spect_25_39, nb_25_39, nb_25_39]
+    Split_Age.append(Split_Age_tmp)
+    Split_Age_tmp = [Spect_40_54, nb_40_54, nb_40_54]
+    Split_Age.append(Split_Age_tmp)
+    Split_Age_tmp = [Spect_55, nb_55, nb_55]
+    Split_Age.append(Split_Age_tmp)
+
+    return JsonResponse(Split_Age, safe=False)
 
 
 @login_required

@@ -217,7 +217,7 @@
 					var data = google.visualization.arrayToDataTable(dataGameHours);
 
 					var options = {
-						title: 'Nombre de personnes ayant réservé pour un jeu par heures',
+						title: 'Nombre de réservations par heures',
 						curveType: 'function',
 						legend: { position: 'top' },
 						vAxis: { format:'short'},
@@ -471,6 +471,38 @@
 		});
 	});
 
+	/* Split Customer per age */
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/api/get_Spect_Split_Age",
+			dataType: "json",
+			cache: true,
+			success: function(dataSplitSpectAge) {
+				google.charts.setOnLoadCallback(drawChart);
+
+				function drawChart() {
+					// Draw Chart Split Customer per age
+					var data = google.visualization.arrayToDataTable(dataSplitSpectAge);
+
+					var options = {
+						title: 'Répartition des Spectateurs par tranches d\'age',
+						curveType: 'function',
+						legend: { position: 'top' },
+						vAxis: { format:'short'},
+						// colors:['#003366'],
+					};
+
+					var chart = new google.visualization.ColumnChart(document.getElementById('chart_spectSplitAge'));
+					chart.draw(data, options);
+				}
+			},
+			error: function(xhr, textStatus) {
+				console.log("error..");
+			}
+		});
+	});
+
 
 	</script>
 
@@ -541,7 +573,7 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="page-title-box">
-										<h4><u>Répartition par jours & Cumul du nombre d'acheteur Hommes / Femmes</u></h4>
+										<h4><u>Répartition quotidienne du nombre d'acheteur Hommes / Femmes</u></h4>
 									</div>
 								</div>
 							</div>
@@ -562,7 +594,7 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="page-title-box">
-										<h4><u>Répartition par jour & Cumul du nombre de réservation avec VR et sans VR</u></h4>
+										<h4><u>Répartition quotidienne du nombre de réservation avec VR et sans VR</u></h4>
 									</div>
 								</div>
 							</div>
@@ -583,7 +615,7 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="page-title-box">
-										<h4><u>Répartition du nombre de réserations par heure d'achat</u></h4>
+										<h4><u>Répartition du nombre de réservation par heure (Achat de la réservation)</u></h4>
 									</div>
 								</div>
 							</div>
@@ -599,7 +631,7 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="page-title-box">
-										<h4><u>Répartition du nombre de réserations par heure de jeu</u></h4>
+										<h4><u>Répartition du nombre de réservation par heure (Heure de réservation)</u></h4>
 									</div>
 								</div>
 							</div>
@@ -615,7 +647,7 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="page-title-box">
-										<h4><u>Répartition du nombre d'Acheteur par Age</u></h4>
+										<h4><u>Répartition du nombre d'Acheteur par tranche d'age</u></h4>
 									</div>
 								</div>
 							</div>
@@ -709,6 +741,22 @@
 							<!-- Start Row -->
 							<div class="row">
 								<div id="chart_spectGameHours" style="min-height: 450px; width: 100%"></div>
+							</div>
+							<!-- Row End -->
+
+							<!-- Start Row -->
+							<div class="row">
+								<div class="col-12">
+									<div class="page-title-box">
+										<h4><u>Répartition du nombre de Spectateur par tranche d'age</u></h4>
+									</div>
+								</div>
+							</div>
+							<!-- Row End -->
+							
+							<!-- Start Row -->
+							<div class="row">
+								<div id="chart_spectSplitAge" style="min-height: 450px; width: 100%"></div>
 							</div>
 							<!-- Row End -->
 
