@@ -454,6 +454,270 @@ def dashboard_client(request):
 
 
 @login_required
+def get_Cust_Split_Sex_Daily(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitSex = requests.get('http://127.0.0.1:5000/customer/civilities/daily').text
+    splitSex_list = json.loads(bookings_splitSex)
+    NbCustSplitSex = [
+        ['Jour', 'Nombre d\'Hommes', {"role": "annotation"}, 'Nombre de Femmes', {"role": "annotation"}]
+        ]
+
+    for elem in splitSex_list:
+        if elem['_id']['Civilite'] == "Monsieur":
+            date = elem['_id']['date']
+            nb_man = elem['total']
+            for elem_n in splitSex_list:
+                if date == elem_n['_id']['date'] and elem_n['_id']['Civilite'] == "Madame":
+                    nb_woman = elem_n['total']
+            NbCustSplitSex_tmp = [date, nb_man, nb_man, nb_woman, nb_woman]
+            NbCustSplitSex.append(NbCustSplitSex_tmp)
+
+    return JsonResponse(NbCustSplitSex, safe=False)
+
+
+@login_required
+def get_Cust_Split_Sex(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitSex = requests.get('http://127.0.0.1:5000/customer/civilities').text
+    splitSex_list = json.loads(bookings_splitSex)
+    NbCustSplitSex = [
+        ['Civilité', 'Nombre', {"role": "annotation"}]
+        ]
+
+    for elem in splitSex_list:
+        if elem['_id'] == "Monsieur":
+            civilite = "Hommes"
+        if elem['_id'] == "Madame":
+            civilite = "Femmes"
+        nb = elem['total']
+        NbCustSplitSex_tmp = [civilite, nb, nb]
+        NbCustSplitSex.append(NbCustSplitSex_tmp)
+
+    return JsonResponse(NbCustSplitSex, safe=False)
+
+
+@login_required
+def get_Cust_Split_VR_Daily(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitVR = requests.get('http://127.0.0.1:5000/customer/version/daily').text
+    splitVR_list = json.loads(bookings_splitVR)
+    NbCustSplitVR = [
+        ['Jour', 'Réservation Jeu avec VR', {"role": "annotation"}, 'Réservation Jeu sans VR', {"role": "annotation"}]
+        ]
+
+    for elem in splitVR_list:
+        if elem['_id']['VR'] == "Oui":
+            date = elem['_id']['date']
+            nb_yes = elem['total']
+            for elem_n in splitVR_list:
+                if date == elem_n['_id']['date'] and elem_n['_id']['VR'] == "Non":
+                    nb_no = elem_n['total']
+            NbCustSplitVR_tmp = [date, nb_yes, nb_yes, nb_no, nb_no]
+            NbCustSplitVR.append(NbCustSplitVR_tmp)
+
+    return JsonResponse(NbCustSplitVR, safe=False)
+
+
+@login_required
+def get_Cust_Split_VR(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitSex = requests.get('http://127.0.0.1:5000/customer/version').text
+    splitSex_list = json.loads(bookings_splitSex)
+    NbCustSplitSex = [
+        ['VR', 'Nombre', {"role": "annotation"}]
+        ]
+
+    for elem in splitSex_list:
+        if elem['_id'] == "Non":
+            vr = "Réservation sans VR"
+        if elem['_id'] == "Madame":
+            vr = "Réservation avec VR"
+        nb = elem['total']
+        NbCustSplitSex_tmp = [vr, nb, nb]
+        NbCustSplitSex.append(NbCustSplitSex_tmp)
+
+    return JsonResponse(NbCustSplitSex, safe=False)
+
+
+@login_required
+def get_Cust_Bookings_Hours(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_H_tmp = requests.get('http://127.0.0.1:5000/customer/bookings/hours').text
+    bookings_Hours_list = json.loads(bookings_H_tmp)
+    bookings_Hours = [
+        ['Heures', 'Nombre de réservations', {"role": "annotation"}]
+        ]
+
+    for elem in bookings_Hours_list:
+        hours = elem['_id']['hours']
+        nb = elem['total']
+        bookings_Hours_tmp = [hours, nb, nb]
+        bookings_Hours.append(bookings_Hours_tmp)
+
+    return JsonResponse(bookings_Hours, safe=False)
+
+
+@login_required
+def get_Cust_Game_Hours(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    Game_H_tmp = requests.get('http://127.0.0.1:5000/customer/game/hours').text
+    Game_Hours_list = json.loads(Game_H_tmp)
+    Game_Hours = [
+        ['Heures', 'Nombre de réservations', {"role": "annotation"}]
+        ]
+
+    for elem in Game_Hours_list:
+        hours = elem['_id']
+        nb = elem['total']
+        Game_Hours_tmp = [hours, nb, nb]
+        Game_Hours.append(Game_Hours_tmp)
+
+    return JsonResponse(Game_Hours, safe=False)
+
+
+@login_required
+def get_Cust_Split_Age(request, *args, **kwargs):
+    """Request Chart Customer SPlit Age"""
+    Split_A_tmp = requests.get('http://127.0.0.1:5000/customer/age').text
+    Split_Age_list = json.loads(Split_A_tmp)
+    Split_Age = [
+        ['Age', 'Nombre d\'Acheteur', {"role": "annotation"}]
+        ]
+    print(Split_Age_list)
+    for key, elem in Split_Age_list[0].items():
+        if key != "_id":
+            Age = key
+            nb = elem
+            Split_Age_tmp = [Age, nb, nb]
+            Split_Age.append(Split_Age_tmp)
+
+    return JsonResponse(Split_Age, safe=False)
+
+
+@login_required
+def get_Spect_Split_Sex_Daily(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitSex = requests.get('http://127.0.0.1:5000/spectator/civilities/daily').text
+    splitSex_list = json.loads(bookings_splitSex)
+    NbCustSplitSex = [
+        ['Jour', 'Nombre d\'Hommes', {"role": "annotation"}, 'Nombre de Femmes', {"role": "annotation"}]
+        ]
+
+    for elem in splitSex_list:
+        if elem['_id']['Civilite'] == "Monsieur":
+            date = elem['_id']['date']
+            nb_man = elem['total']
+            for elem_n in splitSex_list:
+                if date == elem_n['_id']['date'] and elem_n['_id']['Civilite'] == "Madame":
+                    nb_woman = elem_n['total']
+            NbCustSplitSex_tmp = [date, nb_man, nb_man, nb_woman, nb_woman]
+            NbCustSplitSex.append(NbCustSplitSex_tmp)
+
+    return JsonResponse(NbCustSplitSex, safe=False)
+
+
+@login_required
+def get_Spect_Split_Sex(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitSex = requests.get('http://127.0.0.1:5000/spectator/civilities').text
+    splitSex_list = json.loads(bookings_splitSex)
+    NbCustSplitSex = [
+        ['Civilité', 'Nombre', {"role": "annotation"}]
+        ]
+
+    for elem in splitSex_list:
+        if elem['_id'] == "Monsieur":
+            civilite = "Hommes"
+        if elem['_id'] == "Madame":
+            civilite = "Femmes"
+        nb = elem['total']
+        NbCustSplitSex_tmp = [civilite, nb, nb]
+        NbCustSplitSex.append(NbCustSplitSex_tmp)
+
+    return JsonResponse(NbCustSplitSex, safe=False)
+
+
+@login_required
+def get_Spect_Split_VR_Daily(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitVR = requests.get('http://127.0.0.1:5000/spectator/version/daily').text
+    splitVR_list = json.loads(bookings_splitVR)
+    NbCustSplitVR = [
+        ['Jour', 'Réservation Jeu avec VR', {"role": "annotation"}, 'Réservation Jeu sans VR', {"role": "annotation"}]
+        ]
+
+    for elem in splitVR_list:
+        if elem['_id']['VR'] == "Oui":
+            date = elem['_id']['date']
+            nb_yes = elem['total']
+            for elem_n in splitVR_list:
+                if date == elem_n['_id']['date'] and elem_n['_id']['VR'] == "Non":
+                    nb_no = elem_n['total']
+            NbCustSplitVR_tmp = [date, nb_yes, nb_yes, nb_no, nb_no]
+            NbCustSplitVR.append(NbCustSplitVR_tmp)
+
+    return JsonResponse(NbCustSplitVR, safe=False)
+
+
+@login_required
+def get_Spect_Split_VR(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_splitSex = requests.get('http://127.0.0.1:5000/spectator/version').text
+    splitSex_list = json.loads(bookings_splitSex)
+    NbCustSplitSex = [
+        ['VR', 'Nombre', {"role": "annotation"}]
+        ]
+
+    for elem in splitSex_list:
+        if elem['_id'] == "Non":
+            vr = "Réservation sans VR"
+        if elem['_id'] == "Madame":
+            vr = "Réservation avec VR"
+        nb = elem['total']
+        NbCustSplitSex_tmp = [vr, nb, nb]
+        NbCustSplitSex.append(NbCustSplitSex_tmp)
+
+    return JsonResponse(NbCustSplitSex, safe=False)
+
+
+@login_required
+def get_Spect_Bookings_Hours(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    bookings_H_tmp = requests.get('http://127.0.0.1:5000/spectator/bookings/hours').text
+    bookings_Hours_list = json.loads(bookings_H_tmp)
+    bookings_Hours = [
+        ['Heures', 'Nombre de réservations', {"role": "annotation"}]
+        ]
+
+    for elem in bookings_Hours_list:
+        hours = elem['_id']['hours']
+        nb = elem['total']
+        bookings_Hours_tmp = [hours, nb, nb]
+        bookings_Hours.append(bookings_Hours_tmp)
+
+    return JsonResponse(bookings_Hours, safe=False)
+
+
+@login_required
+def get_Spect_Game_Hours(request, *args, **kwargs):
+    """Request Chart Points per Themes"""
+    Game_H_tmp = requests.get('http://127.0.0.1:5000/spectator/game/hours').text
+    Game_Hours_list = json.loads(Game_H_tmp)
+    Game_Hours = [
+        ['Heures', 'Nombre de réservations', {"role": "annotation"}]
+        ]
+
+    for elem in Game_Hours_list:
+        hours = elem['_id']
+        nb = elem['total']
+        Game_Hours_tmp = [hours, nb, nb]
+        Game_Hours.append(Game_Hours_tmp)
+
+    return JsonResponse(Game_Hours, safe=False)
+
+
+@login_required
 def data_extrator(request):
     """Render to display 'data extractor'"""
     return render(request, 'data/data_extractor.html', {})
+# customer/bookings/hours
