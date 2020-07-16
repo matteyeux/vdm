@@ -22,10 +22,10 @@ Enable virtual env : `source env/bin/activate`
 Install Python modules : `pip3 install -r requirements.txt`
 
 
-<img src="https://github.com/matteyeux/vdm/raw/develop/misc/vdm1.PNG">
+<img src="misc/vdm1.PNG">
 
 
-<img src="https://github.com/matteyeux/vdm/raw/develop/misc/vdm2.PNG">
+<img src="misc/vdm2.PNG">
 
 
-<img src="https://github.com/matteyeux/vdm/raw/develop/misc/vdm3.PNG">
+<img src="misc/vdm3.PNG">
