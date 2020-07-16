@@ -17,3 +17,7 @@ vdm_project/pivot-mongo/*
 
 # ignore sqllite3
 vdm_project/db.sqlite3
+
+
+vdm_error.log
+mail.txt
